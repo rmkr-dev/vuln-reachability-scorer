@@ -53,3 +53,20 @@ See [usage cookbook](../usage/README.md#exit-codes) for `0` / `1` / `2` semantic
 ## Typing
 
 The package includes `src/vuln_reachability_scorer/py.typed` (PEP 561) so type checkers can use inline annotations when the wheel/sdist is installed.
+
+## Config validation tests
+
+Config loading is covered without adding CLI flags ([ADR-007](../decisions/ADR-007-config-first-cli.md)):
+
+| Module | Focus |
+| --- | --- |
+| `tests/test_config.py` | Load TOML/JSON, CLI override, relative paths |
+| `tests/test_config_validation.py` | Types, parse errors, merge helpers, exit 2 |
+| `tests/test_config_enums.py` | `format` / `sort` / `band` choices |
+| `tests/test_config_ranges.py` | Numeric ranges |
+| `tests/test_config_hop_window.py` | `min_hops` ≤ `max_hops` |
+| `tests/test_config_extends.py` | `extends` overlay, cycles, max depth |
+| `tests/test_config_cli_enum_sync.py` | ALLOWED_* stays synced with argparse |
+| `tests/test_example_configs.py` | Shipped `examples/vrscore-*.toml` load/run |
+
+Prefer growing these tests when changing `config.py`.

@@ -18,3 +18,4 @@ Operators want shared estate paths (`topology` / `findings`) with specialized tr
 
 - Examples can share `vrscore-base.toml` from triage/CI configs.
 - Documented in the config schema; unknown other keys remain errors.
+- Extends chains are capped at depth 8 (`MAX_EXTENDS_DEPTH`) in addition to cycle detection.
