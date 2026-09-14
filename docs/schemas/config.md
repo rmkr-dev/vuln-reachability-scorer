@@ -1,6 +1,6 @@
 # Config file schema (`--config`)
 
-Optional JSON or TOML defaults for the CLI ([ADR-006](../decisions/ADR-006-config-file.md)). Pass `--config` / `-c`; there is no cwd auto-discovery.
+Optional JSON or TOML defaults for the CLI ([ADR-006](../decisions/ADR-006-config-file.md)). Pass `--config` / `-c`, or set `VRSCORE_CONFIG` to an explicit path; there is no cwd auto-discovery.
 
 ## Precedence
 
