@@ -55,8 +55,8 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 - [SECURITY.md](SECURITY.md) — vulnerability reporting
 - [CHANGELOG.md](CHANGELOG.md) — release notes
 - [docs/architecture/](docs/architecture/) — system shape and Mermaid diagram
-- [docs/decisions/](docs/decisions/) — ADRs (scoring model)
 - [docs/schemas/](docs/schemas/) — topology and findings field reference
+- [docs/usage/](docs/usage/) — cookbook recipes
 - [docs/references/](docs/references/) — background links
 - [docs/security/security.md](docs/security/security.md) — security posture
 - [docs/development/development.md](docs/development/development.md) — contributor workflow and CI

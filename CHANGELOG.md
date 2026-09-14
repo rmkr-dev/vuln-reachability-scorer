@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Usage cookbook under `docs/usage/`.
+- ADR-002 documenting tag-based exposure boosts.
 - Tag-based exposure boosts (`pii` / `identity` / `secrets` defaults; override via topology `tag_boosts`).
 - `--asset-report` per-asset reachability inventory (topology only).
 - `--explain` to attach human-readable score rationales (table comments / JSON `explain` field).
