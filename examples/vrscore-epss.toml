@@ -1,0 +1,5 @@
+# EPSS floor overlay — extends triage; keeps band/hop filters (ADR-007 / ADR-008).
+extends = "vrscore-triage.toml"
+min_epss = 0.5
+format = "table"
+summary = true

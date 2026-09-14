@@ -42,6 +42,7 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 | `vrscore-kev.toml` | Extends triage with `only_kev` (layered overlay demo) |
 | `vrscore-medium.toml` | Extends triage; **replaces** `band` with medium only |
 | `vrscore-tag-focus.toml` | Extends triage; **replaces** `tag` with pii/identity focus |
+| `vrscore-epss.toml` | Extends triage with `min_epss = 0.5` floor |
 | `overlays/vrscore-ci.toml` | Extends `../vrscore-base.toml` from a subdirectory |
 | `overlays/README.md` | How defining-file path resolve works for overlays |
 | `overlays/vrscore-strict-ci.toml` | Extends overlay CI with `strict = true` |
@@ -56,6 +57,7 @@ vrscore -c examples/vrscore-exclude.toml
 vrscore -c examples/vrscore-kev.toml
 vrscore -c examples/vrscore-medium.toml
 vrscore -c examples/vrscore-tag-focus.toml
+vrscore -c examples/vrscore-epss.toml
 vrscore -c examples/overlays/vrscore-ci.toml -o /tmp/reachability.sarif
 vrscore -c examples/overlays/vrscore-strict-ci.toml -o /tmp/reachability.sarif
 # Override one knob without re-listing filters:
