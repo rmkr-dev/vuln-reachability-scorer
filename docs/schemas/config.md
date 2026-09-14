@@ -55,3 +55,5 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 ## Examples
 
 See `examples/vrscore.toml`, `examples/vrscore.json`, `examples/vrscore-triage.toml`, and `examples/vrscore-ci.toml`.
+
+Cross-format `extends` is supported (e.g. a `.json` overlay may `extends` a `.toml` base). List keys in the child **replace** the base list.

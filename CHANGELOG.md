@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Tests for config `extends` list-replace, JSON←TOML composition, and depth-at-max success.
+
 ### Fixed
 
 - Config `extends` re-validates `min_hops` ≤ `max_hops` on the merged result (split across base/overlay no longer slips through).
