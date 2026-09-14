@@ -38,3 +38,5 @@ flowchart LR
 ```
 
 CLI flags that shape scoring/output: `--asset-report`, `--explain`, `--summary`, `--strict`, `--fail-under`, `--only-kev`, `--show-title`, `--min-priority`, `--limit`, `--format`, `--output`.
+
+Config (`--config` / `VRSCORE_CONFIG`) feeds CLI defaults before scoring; graph hop maps are precomputed once per run.
