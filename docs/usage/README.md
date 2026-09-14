@@ -102,6 +102,14 @@ vrscore -t examples/topology.json -f examples/findings.json --band critical --ba
 
 Bands match `--summary`: `critical` ≥ 9, `high` ≥ 7, `medium` ≥ 4, `low` < 4. Repeat `--band` to union bands.
 
+## Filter by EPSS floor
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --min-epss 0.5 --explain
+```
+
+Keeps findings with `epss >= P`. Findings that omit `epss` are dropped when this flag is set. `P` must be in `[0, 1]`.
+
 ## Topology pitfalls
 
 Edges are **directed**. A path `db -> api` does not make `db` reachable from an ingress `api`. Other cases the scorer already covers:
@@ -137,5 +145,6 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--only-reachable` | Drop unreachable assets |
 | `--max-hops N` | Keep hop_distance <= N |
 | `--band BAND` | Keep priority band(s); repeatable |
+| `--min-epss P` | Keep epss >= P (omitters dropped) |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |
