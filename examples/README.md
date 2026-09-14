@@ -25,3 +25,13 @@ vrscore -t examples/topology.json -f examples/findings.json --min-base 7 --sort 
 vrscore -t examples/topology.json -f examples/findings.json --format tsv -o /tmp/scores.tsv
 vrscore -t examples/topology.json -f examples/findings.json --format junit -o /tmp/scores.xml
 ```
+
+## Config samples
+
+- `vrscore.toml` — table defaults for the sample estate
+- `vrscore.json` — JSON format with band + reachable filters
+
+```bash
+vrscore --config examples/vrscore.toml
+vrscore -c examples/vrscore.json
+```

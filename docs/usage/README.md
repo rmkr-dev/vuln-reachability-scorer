@@ -174,6 +174,18 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 
 Filter composition order is fixed; see [ADR-005](../decisions/ADR-005-triage-filter-order.md).
 
+## Config file defaults
+
+Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the config file's directory. See [ADR-006](../decisions/ADR-006-config-file.md).
+
+```bash
+vrscore --config examples/vrscore.toml
+vrscore -c examples/vrscore.json --format table --band low
+vrscore -c examples/vrscore.toml --fail-under 7 --summary
+```
+
+There is no automatic cwd discovery; omit `--config` to keep today's flag-only behavior.
+
 ## Large topologies
 
 Scoring and `--asset-report` run **one** multi-source BFS from all ingress / internet-facing nodes, then look up hop distance per asset (`all_hop_distances`). `--explain` likewise builds every shortest path in one BFS (`all_shortest_paths`). Cost is O(V+E) in the topology size, not O(findings × (V+E)).
@@ -184,7 +196,8 @@ For estates with tens of thousands of assets, prefer JSON/JSONL/CSV over the tab
 
 | Flag | Purpose |
 | --- | --- |
-| `-t` / `--topology` | Topology JSON (required) |
+| `-c` / `--config` | JSON/TOML defaults (flags override) |
+| `-t` / `--topology` | Topology JSON (required; or via config) |
 | `-f` / `--findings` | Findings JSON (required unless `--asset-report`) |
 | `--format` | `table` \| `json` \| `jsonl` \| `csv` \| `tsv` \| `sarif` \| `html` \| `markdown` \| `junit` |
 | `-o` / `--output` | Write to file |
