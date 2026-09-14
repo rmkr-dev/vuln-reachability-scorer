@@ -1,0 +1,4 @@
+# Strict CI overlay — extends overlays/vrscore-ci.toml (ADR-007 / ADR-008).
+extends = "vrscore-ci.toml"
+strict = true
+quiet = false

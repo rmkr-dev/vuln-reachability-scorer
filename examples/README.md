@@ -43,6 +43,7 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 | `vrscore-medium.toml` | Extends triage; **replaces** `band` with medium only |
 | `overlays/vrscore-ci.toml` | Extends `../vrscore-base.toml` from a subdirectory |
 | `overlays/README.md` | How defining-file path resolve works for overlays |
+| `overlays/vrscore-strict-ci.toml` | Extends overlay CI with `strict = true` |
 
 ```bash
 vrscore --config examples/vrscore.toml
@@ -54,6 +55,7 @@ vrscore -c examples/vrscore-exclude.toml
 vrscore -c examples/vrscore-kev.toml
 vrscore -c examples/vrscore-medium.toml
 vrscore -c examples/overlays/vrscore-ci.toml -o /tmp/reachability.sarif
+vrscore -c examples/overlays/vrscore-strict-ci.toml -o /tmp/reachability.sarif
 # Override one knob without re-listing filters:
 vrscore -c examples/vrscore-triage.toml --format json --limit 10
 ```

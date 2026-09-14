@@ -9,3 +9,5 @@ vrscore -c examples/overlays/vrscore-ci.toml -o /tmp/reachability.sarif
 ```
 
 Prefer this pattern over long CLI flag chains ([ADR-007](../../docs/decisions/ADR-007-config-first-cli.md)).
+
+`vrscore-strict-ci.toml` layers `strict = true` on the CI overlay for topology hygiene gates.
