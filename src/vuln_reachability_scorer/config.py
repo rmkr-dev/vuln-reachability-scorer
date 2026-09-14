@@ -36,7 +36,9 @@ CONFIG_KEYS: dict[str, type | tuple[type, ...]] = {
 }
 
 _LIST_KEYS = {"band", "asset", "cve", "tag"}
-_PATH_KEYS = {"topology", "findings", "output"}
+_MERGE_LIST_KEYS = {"band", "asset", "cve", "tag", "findings"}
+_PATH_KEYS = {"topology", "output"}
+_FINDINGS_KEY = "findings"
 _BOOL_KEYS = {
     "explain",
     "strict",
@@ -106,6 +108,15 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
                     f"config: {key} must be a list of strings in {path}"
                 )
             out[key] = list(value)
+        elif key == "findings":
+            if isinstance(value, str) and value.strip():
+                out[key] = value
+            elif isinstance(value, list) and value and all(isinstance(x, str) and x.strip() for x in value):
+                out[key] = list(value)
+            else:
+                raise ConfigError(
+                    f"config: findings must be a non-empty string or list of strings in {path}"
+                )
         elif key in _PATH_KEYS:
             if not isinstance(value, str) or not value.strip():
                 raise ConfigError(f"config: {key} must be a non-empty string in {path}")
@@ -142,29 +153,37 @@ def resolve_path_defaults(
 ) -> dict[str, Any]:
     """Copy defaults; resolve relative path values against ``config_dir``."""
     resolved = dict(defaults)
-    if config_dir is not None:
-        for key in _PATH_KEYS:
-            if key in resolved and isinstance(resolved[key], str):
-                p = Path(resolved[key])
-                if not p.is_absolute():
-                    resolved[key] = str((config_dir / p).resolve())
-    for key in _PATH_KEYS:
-        if key in resolved:
-            resolved[key] = Path(resolved[key])
+    def _resolve_one(val: str) -> Path:
+        p = Path(val)
+        if config_dir is not None and not p.is_absolute():
+            return (config_dir / p).resolve()
+        return p
+
+    if "findings" in resolved:
+        fval = resolved["findings"]
+        if isinstance(fval, list):
+            resolved["findings"] = [_resolve_one(x) for x in fval]
+        elif isinstance(fval, str):
+            resolved["findings"] = [_resolve_one(fval)]
+    for key in ("topology", "output"):
+        if key in resolved and isinstance(resolved[key], str):
+            resolved[key] = _resolve_one(resolved[key])
     return resolved
 
 
-def apply_config_defaults(parser, defaults: dict[str, Any], config_dir: Path | None = None) -> None:
-    """Set argparse defaults from config (skips append-list keys; see merge_list_defaults)."""
+def apply_config_defaults(parser, defaults: dict[str, Any], config_dir: Path | None = None) -> dict[str, Any]:
+    """Set argparse defaults from config (skips append-list keys). Returns resolved defaults."""
     resolved = resolve_path_defaults(defaults, config_dir)
-    scalar = {k: v for k, v in resolved.items() if k not in _LIST_KEYS}
+    scalar = {k: v for k, v in resolved.items() if k not in _MERGE_LIST_KEYS}
     parser.set_defaults(**scalar)
+    return resolved
 
 
-def merge_list_defaults(args: Any, defaults: dict[str, Any]) -> None:
+def merge_list_defaults(args: Any, resolved_defaults: dict[str, Any]) -> None:
     """Apply list-valued config keys only when the CLI did not pass the flag."""
-    for key in _LIST_KEYS:
-        if key not in defaults:
+    for key in _MERGE_LIST_KEYS:
+        if key not in resolved_defaults:
             continue
         if getattr(args, key, None) is None:
-            setattr(args, key, list(defaults[key]))
+            val = resolved_defaults[key]
+            setattr(args, key, list(val) if isinstance(val, list) else [val])
