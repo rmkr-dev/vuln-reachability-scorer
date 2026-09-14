@@ -6,3 +6,5 @@
 | [ADR-002](ADR-002-tag-exposure-boosts.md) | Tag-based exposure boosts | Accepted |
 | [ADR-003](ADR-003-kev-multiplier.md) | Known Exploited Vulnerability multiplier | Accepted |
 | [ADR-004](ADR-004-epss-factor.md) | Optional EPSS input factor | Accepted |
+
+| [ADR-005](ADR-005-triage-filter-order.md) | Triage filter application order |

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- [ADR-005](docs/decisions/ADR-005-triage-filter-order.md) documents CLI triage filter application order.
 - `--asset-report` honors `--limit`, `--max-hops`, and `--only-reachable`.
 - Usage and development docs for CLI exit codes (`0` / `1` / `2`).
 
