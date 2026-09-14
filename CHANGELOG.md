@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- References index links draft config JSON Schema and ADR-007/008.
+- References index links draft config JSON Schema and ADR-007/008; table cleaned up.
 - ADR-008 notes rejection of directory `extends` targets.
 
 ## [0.3.4] - 2026-09-14
