@@ -7,3 +7,4 @@
 | [ADR-003](ADR-003-kev-multiplier.md) | Known Exploited Vulnerability multiplier | Accepted |
 | [ADR-004](ADR-004-epss-factor.md) | Optional EPSS input factor | Accepted |
 | [ADR-005](ADR-005-triage-filter-order.md) | Triage filter application order | Accepted |
+| [ADR-006](ADR-006-config-file.md) | Optional CLI config file | Accepted |

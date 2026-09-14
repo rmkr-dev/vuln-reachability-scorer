@@ -1,0 +1,8 @@
+{
+  "topology": "topology.json",
+  "findings": "findings.json",
+  "format": "json",
+  "summary": true,
+  "band": ["critical", "high"],
+  "only_reachable": true
+}

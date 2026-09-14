@@ -41,6 +41,7 @@ vrscore -t examples/topology.json -f examples/findings.json --explain
 vrscore -t examples/topology.json -f examples/findings.json --summary
 vrscore -t examples/topology.json -f examples/findings.json --fail-under 7
 vrscore -t examples/topology.json --asset-report
+vrscore --config examples/vrscore.toml
 # alias:
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
