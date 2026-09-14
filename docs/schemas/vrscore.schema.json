@@ -5,49 +5,165 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "extends": { "type": "string", "minLength": 1 },
-    "topology": { "type": "string", "minLength": 1 },
+    "extends": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path to a base config (relative or absolute). Chains cap at MAX_EXTENDS_DEPTH (8); cycles and directories are rejected."
+    },
+    "topology": {
+      "type": "string",
+      "minLength": 1
+    },
     "findings": {
       "oneOf": [
-        { "type": "string", "minLength": 1 },
-        { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 }
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
       ]
     },
     "format": {
       "type": "string",
-      "enum": ["table", "json", "jsonl", "sarif", "csv", "tsv", "html", "markdown", "junit"]
+      "enum": [
+        "table",
+        "json",
+        "jsonl",
+        "sarif",
+        "csv",
+        "tsv",
+        "html",
+        "markdown",
+        "junit"
+      ]
     },
-    "output": { "type": "string", "minLength": 1 },
-    "min_priority": { "type": "number", "minimum": 0 },
-    "min_base": { "type": "number", "minimum": 0 },
-    "limit": { "type": "integer", "minimum": 0 },
-    "explain": { "type": "boolean" },
-    "strict": { "type": "boolean" },
-    "asset_report": { "type": "boolean" },
-    "summary": { "type": "boolean" },
-    "fail_under": { "type": "number", "minimum": 0 },
-    "show_title": { "type": "boolean" },
-    "only_kev": { "type": "boolean" },
-    "only_reachable": { "type": "boolean" },
-    "max_hops": { "type": "integer", "minimum": 0 },
-    "min_hops": { "type": "integer", "minimum": 0 },
-    "stats": { "type": "boolean" },
+    "output": {
+      "type": "string",
+      "minLength": 1
+    },
+    "min_priority": {
+      "type": "number",
+      "minimum": 0
+    },
+    "min_base": {
+      "type": "number",
+      "minimum": 0
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "explain": {
+      "type": "boolean"
+    },
+    "strict": {
+      "type": "boolean"
+    },
+    "asset_report": {
+      "type": "boolean"
+    },
+    "summary": {
+      "type": "boolean"
+    },
+    "fail_under": {
+      "type": "number",
+      "minimum": 0
+    },
+    "show_title": {
+      "type": "boolean"
+    },
+    "only_kev": {
+      "type": "boolean"
+    },
+    "only_reachable": {
+      "type": "boolean"
+    },
+    "max_hops": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "min_hops": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "stats": {
+      "type": "boolean"
+    },
     "band": {
       "type": "array",
-      "items": { "type": "string", "enum": ["critical", "high", "medium", "low"] }
+      "items": {
+        "type": "string",
+        "enum": [
+          "critical",
+          "high",
+          "medium",
+          "low"
+        ]
+      }
     },
-    "min_epss": { "type": "number", "minimum": 0, "maximum": 1 },
-    "asset": { "type": "array", "items": { "type": "string" } },
-    "exclude_asset": { "type": "array", "items": { "type": "string" } },
-    "cve": { "type": "array", "items": { "type": "string" } },
-    "exclude_cve": { "type": "array", "items": { "type": "string" } },
-    "tag": { "type": "array", "items": { "type": "string" } },
-    "exclude_tag": { "type": "array", "items": { "type": "string" } },
-    "quiet": { "type": "boolean" },
+    "min_epss": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "asset": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclude_asset": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cve": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclude_cve": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tag": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclude_tag": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quiet": {
+      "type": "boolean"
+    },
     "sort": {
       "type": "string",
-      "enum": ["priority", "base", "hops", "asset", "cve"]
+      "enum": [
+        "priority",
+        "base",
+        "hops",
+        "asset",
+        "cve"
+      ]
     },
-    "dedupe": { "type": "boolean" }
+    "dedupe": {
+      "type": "boolean"
+    }
   }
 }
