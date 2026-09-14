@@ -106,7 +106,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=("table", "json", "jsonl", "sarif", "csv", "html", "markdown", "junit"),
+        choices=("table", "json", "jsonl", "sarif", "csv", "tsv", "html", "markdown", "junit"),
         default="table",
         help="Output format (default: table)",
     )
@@ -334,6 +334,42 @@ def _render_csv(scored: list) -> str:
     return buf.getvalue()
 
 
+
+def _render_tsv(scored: list) -> str:
+    buf = StringIO()
+    writer = csv.writer(buf, dialect="excel-tab")
+    writer.writerow(
+        [
+            "priority_score",
+            "base_score",
+            "reachability_factor",
+            "exposure_factor",
+            "hop_distance",
+            "cve_id",
+            "asset_id",
+            "id",
+            "title",
+            "epss",
+        ]
+    )
+    for s in scored:
+        writer.writerow(
+            [
+                f"{s.priority_score:.2f}",
+                f"{s.finding.base_score:.1f}",
+                f"{s.reachability_factor:.2f}",
+                f"{s.exposure_factor:.2f}",
+                "" if s.hop_distance is None else s.hop_distance,
+                s.finding.cve_id,
+                s.finding.asset_id,
+                s.finding.id,
+                s.finding.title,
+                "" if s.finding.epss is None else f"{s.finding.epss:.3f}",
+            ]
+        )
+    return buf.getvalue()
+
+
 def _render(scored: list, fmt: str, explain: bool = False, path_by_asset: dict | None = None) -> str:
     if fmt == "json":
         payload = {
@@ -376,6 +412,8 @@ def _render(scored: list, fmt: str, explain: bool = False, path_by_asset: dict |
         return json.dumps(to_sarif(scored), indent=2) + "\n"
     if fmt == "csv":
         return _render_csv(scored)
+    if fmt == "tsv":
+        return _render_tsv(scored)
     if fmt == "html":
         return to_html(scored, explain=explain, path_by_asset=path_by_asset)
     if fmt == "markdown":
@@ -448,6 +486,40 @@ def _render_asset_csv(rows: list) -> str:
     return buf.getvalue()
 
 
+
+def _render_asset_tsv(rows: list) -> str:
+    buf = StringIO()
+    writer = csv.writer(buf, dialect="excel-tab")
+    writer.writerow(
+        [
+            "asset_id",
+            "name",
+            "kind",
+            "hop_distance",
+            "reachability_factor",
+            "exposure_factor",
+            "criticality",
+            "ingress",
+            "tags",
+        ]
+    )
+    for r in rows:
+        writer.writerow(
+            [
+                r.asset.id,
+                r.asset.name,
+                r.asset.kind,
+                "" if r.hop_distance is None else r.hop_distance,
+                f"{r.reachability_factor:.2f}",
+                f"{r.exposure_factor:.2f}",
+                f"{r.asset.criticality:.2f}",
+                "yes" if r.asset.ingress else "no",
+                "|".join(r.asset.tags),
+            ]
+        )
+    return buf.getvalue()
+
+
 def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
     rows = report_assets(assets, edges, tag_boosts=tag_boosts)
     try:
@@ -470,6 +542,12 @@ def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
                 sys.stdout.write(text)
         elif args.format == "csv":
             text = _render_asset_csv(rows)
+            if args.output is not None:
+                args.output.write_text(text, encoding="utf-8")
+            else:
+                sys.stdout.write(text)
+        elif args.format == "tsv":
+            text = _render_asset_tsv(rows)
             if args.output is not None:
                 args.output.write_text(text, encoding="utf-8")
             else:
