@@ -64,7 +64,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 - [CHANGELOG.md](CHANGELOG.md) — release notes
 - [docs/architecture/](docs/architecture/) — system shape and Mermaid diagram
 - [docs/schemas/](docs/schemas/) — topology and findings field reference
-- [docs/usage/](docs/usage/) — cookbook recipes
+- [docs/usage/](docs/usage/) — cookbook recipes (triage playbook, Actions gate, config)
 - [docs/references/](docs/references/) — background links
 - [docs/security/security.md](docs/security/security.md) — security posture
 - [docs/development/development.md](docs/development/development.md) — contributor workflow and CI

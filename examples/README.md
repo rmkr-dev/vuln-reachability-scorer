@@ -35,3 +35,5 @@ vrscore -t examples/topology.json -f examples/findings.json --format junit -o /t
 vrscore --config examples/vrscore.toml
 vrscore -c examples/vrscore.json
 ```
+
+See the [usage cookbook triage playbook](../docs/usage/README.md#triage-playbook-sample-estate) for a full recipe chain.

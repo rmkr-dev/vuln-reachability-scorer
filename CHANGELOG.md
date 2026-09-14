@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Usage cookbook: triage playbook and GitHub Actions gate recipe using `--config` + SARIF/`--fail-under`.
 - `--config` / `-c` JSON or TOML CLI defaults ([ADR-006](docs/decisions/ADR-006-config-file.md)); example `examples/vrscore.toml` / `examples/vrscore.json`.
 - `all_hop_distances` / `all_shortest_paths` precompute reachability in one multi-source BFS; scoring, `--asset-report`, and `--explain` use them (O(V+E) instead of per-finding BFS).
 
