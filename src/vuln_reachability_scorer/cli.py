@@ -97,6 +97,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Exit 1 if any result has priority_score >= SCORE (CI gate)",
     )
     parser.add_argument(
+        "--show-title",
+        action="store_true",
+        help="Include finding title column in table output",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -104,8 +109,8 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _print_table(scored: list, sink, explain: bool = False, path_by_asset: dict | None = None) -> None:
-    headers = (
+def _print_table(scored: list, sink, explain: bool = False, path_by_asset: dict | None = None, show_title: bool = False) -> None:
+    headers_list = [
         "PRIORITY",
         "BASE",
         "R",
@@ -114,9 +119,13 @@ def _print_table(scored: list, sink, explain: bool = False, path_by_asset: dict 
         "CVE",
         "ASSET",
         "ID",
-    )
-    rows = [
-        (
+    ]
+    if show_title:
+        headers_list.append("TITLE")
+    headers = tuple(headers_list)
+    rows = []
+    for s in scored:
+        row = [
             f"{s.priority_score:.2f}",
             f"{s.finding.base_score:.1f}",
             f"{s.reachability_factor:.2f}",
@@ -125,9 +134,13 @@ def _print_table(scored: list, sink, explain: bool = False, path_by_asset: dict 
             s.finding.cve_id or "-",
             s.finding.asset_id,
             s.finding.id,
-        )
-        for s in scored
-    ]
+        ]
+        if show_title:
+            title = s.finding.title or "-"
+            if len(title) > 40:
+                title = title[:37] + "..."
+            row.append(title)
+        rows.append(tuple(row))
     widths = [len(h) for h in headers]
     for row in rows:
         for i, cell in enumerate(row):
@@ -365,11 +378,19 @@ def main(argv: list[str] | None = None) -> int:
             if args.output is not None:
                 with args.output.open("w", encoding="utf-8") as fh:
                     _print_table(
-                        scored, fh, explain=args.explain, path_by_asset=path_by_asset
+                        scored,
+                        fh,
+                        explain=args.explain,
+                        path_by_asset=path_by_asset,
+                        show_title=args.show_title,
                     )
             else:
                 _print_table(
-                    scored, sys.stdout, explain=args.explain, path_by_asset=path_by_asset
+                    scored,
+                    sys.stdout,
+                    explain=args.explain,
+                    path_by_asset=path_by_asset,
+                    show_title=args.show_title,
                 )
         else:
             text = _render(
