@@ -269,7 +269,9 @@ For estates with tens of thousands of assets, prefer JSON/JSONL/CSV over the tab
 | `--band BAND` | Keep priority band(s); repeatable |
 | `--min-epss P` | Keep epss >= P (omitters dropped) |
 | `--asset ID` | Keep findings for asset id(s); repeatable |
+| `--exclude-asset ID` | Drop asset id(s); repeatable |
 | `--cve CVE` | Keep matching CVE id(s); repeatable |
+| `--exclude-cve CVE` | Drop CVE id(s); repeatable |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |
 | `--min-base` | Omit low base_score findings |

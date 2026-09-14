@@ -33,7 +33,9 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 | `band` | list of string | `critical` / `high` / `medium` / `low` |
 | `min_epss` | number in `[0,1]` | EPSS floor |
 | `asset` | list of string | Asset id filter |
+| `exclude_asset` | list of string | Drop asset id(s) |
 | `cve` | list of string | CVE id filter |
+| `exclude_cve` | list of string | Drop CVE id(s) |
 | `tag` | list of string | Tag filter (OR) |
 | `exclude_tag` | list of string | Drop assets with tag (OR) |
 | `quiet` | bool | Suppress warnings |
