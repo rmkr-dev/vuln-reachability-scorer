@@ -14,6 +14,7 @@ vrscore -t examples/topology.json -f examples/findings.json --explain
 ```bash
 vrscore -t examples/topology.json --asset-report
 vrscore -t examples/topology.json --asset-report --format json -o assets.json
+vrscore -t examples/topology.json --asset-report --format csv -o assets.csv
 ```
 
 ## Export for spreadsheets or code scanning
@@ -50,3 +51,7 @@ vrscore -t topology.json -f findings.json --strict
 ```
 
 Fails (exit 2) if any edge references an unknown asset id.
+
+## Mark Known Exploited findings
+
+Set `"kev": true` on a finding to apply the 1.15 KEV multiplier (see [ADR-003](../decisions/ADR-003-kev-multiplier.md)).

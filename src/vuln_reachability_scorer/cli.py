@@ -210,6 +210,40 @@ def _print_asset_table(rows: list, sink) -> None:
         print(fmt(row), file=sink)
 
 
+
+def _render_asset_csv(rows: list) -> str:
+    buf = StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(
+        [
+            "asset_id",
+            "name",
+            "kind",
+            "hop_distance",
+            "reachability_factor",
+            "exposure_factor",
+            "criticality",
+            "ingress",
+            "tags",
+        ]
+    )
+    for r in rows:
+        writer.writerow(
+            [
+                r.asset.id,
+                r.asset.name,
+                r.asset.kind,
+                "" if r.hop_distance is None else r.hop_distance,
+                f"{r.reachability_factor:.2f}",
+                f"{r.exposure_factor:.2f}",
+                f"{r.asset.criticality:.2f}",
+                "yes" if r.asset.ingress else "no",
+                "|".join(r.asset.tags),
+            ]
+        )
+    return buf.getvalue()
+
+
 def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
     rows = report_assets(assets, edges, tag_boosts=tag_boosts)
     try:
@@ -223,9 +257,15 @@ def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
                 args.output.write_text(text, encoding="utf-8")
             else:
                 sys.stdout.write(text)
-        elif args.format in ("sarif", "csv"):
+        elif args.format == "csv":
+            text = _render_asset_csv(rows)
+            if args.output is not None:
+                args.output.write_text(text, encoding="utf-8")
+            else:
+                sys.stdout.write(text)
+        elif args.format == "sarif":
             print(
-                f"error: --asset-report does not support --format {args.format}",
+                "error: --asset-report does not support --format sarif",
                 file=sys.stderr,
             )
             return 2
