@@ -12,6 +12,7 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 
 | Key | Type | Notes |
 | --- | --- | --- |
+| `extends` | string (path) | Base config to load first (relative; child keys overlay; lists replace) |
 | `topology` | string (path) | Topology JSON |
 | `findings` | string or list of paths | Findings JSON (list merges in order) |
 | `format` | string | `table` \| `json` \| `jsonl` \| `csv` \| `tsv` \| `sarif` \| `html` \| `markdown` \| `junit` |

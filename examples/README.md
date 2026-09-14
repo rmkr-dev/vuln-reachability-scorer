@@ -32,6 +32,7 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 
 | File | Intent |
 | --- | --- |
+| `vrscore-base.toml` | Shared `topology` / `findings` paths for `extends` |
 | `vrscore.toml` | Table defaults for the sample estate |
 | `vrscore.json` | JSON + band + reachable filters |
 | `vrscore-triage.toml` | Explain + hop window + high/critical bands + dedupe |
