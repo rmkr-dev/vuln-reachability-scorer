@@ -233,6 +233,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep highest-priority finding per (cve_id, asset_id); empty cve uses finding id",
     )
     parser.add_argument(
+        "--tag",
+        action="append",
+        default=None,
+        metavar="TAG",
+        help="Keep findings on assets that have this tag (repeatable; OR semantics)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -550,6 +557,7 @@ def main(argv: list[str] | None = None) -> int:
         return _emit_asset_report(assets, edges, args, tag_boosts)
 
     scored = score_findings(findings, assets, edges, tag_boosts=tag_boosts)
+    assets_by_id = {a.id: a for a in assets}
     if args.only_kev:
         scored = [s for s in scored if s.finding.kev]
     if args.only_reachable:
@@ -582,6 +590,15 @@ def main(argv: list[str] | None = None) -> int:
         scored = [s for s in scored if s.finding.base_score >= args.min_base]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
+    if args.tag:
+        wanted = {t.lower() for t in args.tag}
+        filtered = []
+        for s in scored:
+            asset = assets_by_id.get(s.finding.asset_id)
+            tags = {tg.lower() for tg in (asset.tags if asset is not None else ())}
+            if wanted.intersection(tags):
+                filtered.append(s)
+        scored = filtered
     if args.dedupe:
         scored = _dedupe_scored(scored)
     if args.sort != "priority":
