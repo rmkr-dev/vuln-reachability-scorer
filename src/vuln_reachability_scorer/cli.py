@@ -62,7 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=("table", "json", "sarif", "csv", "html", "markdown"),
+        choices=("table", "json", "jsonl", "sarif", "csv", "html", "markdown"),
         default="table",
         help="Output format (default: table)",
     )
@@ -285,6 +285,19 @@ def _render(scored: list, fmt: str, explain: bool = False, path_by_asset: dict |
             ],
         }
         return json.dumps(payload, indent=2) + "\n"
+    if fmt == "jsonl":
+        lines = []
+        for s in scored:
+            row = dict(s.as_dict())
+            if explain:
+                row["explain"] = explain_score(
+                    s,
+                    format_path(path_by_asset.get(s.finding.asset_id))
+                    if path_by_asset is not None
+                    else None,
+                )
+            lines.append(json.dumps(row, separators=(",", ":")))
+        return ("\n".join(lines) + ("\n" if lines else ""))
     if fmt == "sarif":
         return json.dumps(to_sarif(scored), indent=2) + "\n"
     if fmt == "csv":
@@ -368,6 +381,13 @@ def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
                 "assets": [r.as_dict() for r in rows],
             }
             text = json.dumps(payload, indent=2) + "\n"
+            if args.output is not None:
+                args.output.write_text(text, encoding="utf-8")
+            else:
+                sys.stdout.write(text)
+        elif args.format == "jsonl":
+            lines = [json.dumps(r.as_dict(), separators=(",", ":")) for r in rows]
+            text = ("\n".join(lines) + ("\n" if lines else ""))
             if args.output is not None:
                 args.output.write_text(text, encoding="utf-8")
             else:
