@@ -250,3 +250,11 @@ def test_extends_self_cycle(tmp_path: Path):
     a.write_text('extends = "a.toml"\nformat = "json"\n', encoding="utf-8")
     with pytest.raises(ConfigError, match="extends cycle"):
         load_config(a)
+
+
+def test_example_strict_ci_overlay():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "overlays" / "vrscore-strict-ci.toml")
+    assert cfg["strict"] is True
+    assert cfg["format"] == "sarif"
+    assert cfg.get("fail_under") == 7.0
