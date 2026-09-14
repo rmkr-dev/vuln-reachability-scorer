@@ -16,6 +16,7 @@ vrscore -t examples/topology.json -f examples/findings.json --explain
 vrscore -t examples/topology.json --asset-report
 vrscore -t examples/topology.json --asset-report --format json -o assets.json
 vrscore -t examples/topology.json --asset-report --format csv -o assets.csv
+vrscore -t examples/topology.json --asset-report --only-reachable --max-hops 2 --limit 20
 ```
 
 ## Export for spreadsheets or code scanning
