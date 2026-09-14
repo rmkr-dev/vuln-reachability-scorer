@@ -70,3 +70,13 @@ def test_all_hop_distances_empty_ingress():
 
     adj = build_adjacency([Edge(source="a", target="b")])
     assert all_hop_distances(adj, set()) == {}
+
+
+def test_duplicate_parallel_edges_collapsed():
+    edges = [
+        Edge(source="i", target="x"),
+        Edge(source="i", target="x"),
+        Edge(source="i", target="x"),
+    ]
+    adj = build_adjacency(edges)
+    assert adj["i"] == ["x"]
