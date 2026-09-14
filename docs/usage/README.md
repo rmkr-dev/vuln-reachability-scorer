@@ -160,6 +160,17 @@ Edges are **directed**. A path `db -> api` does not make `db` reachable from an 
 
 Exit code `2` is an input/usage error. Messages name the file kind (`topology` / `findings`), the path, and (for JSON) the line and column. Indexed items (`findings[0]`, `topology.assets[2]`) point at the bad record. `--strict` promotes unknown edge endpoints from `warning:` to `error:`.
 
+
+## Exit codes
+
+| Code | Meaning |
+| --- | --- |
+| `0` | Success (including empty result sets after filters) |
+| `1` | `--fail-under` gate tripped (one or more priorities at/above the threshold) |
+| `2` | Usage / input error (missing files, invalid JSON, `--strict` unknown edges, bad flag values) |
+
+`--quiet` only suppresses non-error warnings; it does not change exit codes.
+
 ## Flag cheatsheet
 
 | Flag | Purpose |
