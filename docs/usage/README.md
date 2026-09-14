@@ -174,6 +174,12 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 
 Filter composition order is fixed; see [ADR-005](../decisions/ADR-005-triage-filter-order.md).
 
+## Large topologies
+
+Scoring and `--asset-report` run **one** multi-source BFS from all ingress / internet-facing nodes, then look up hop distance per asset (`all_hop_distances`). `--explain` likewise builds every shortest path in one BFS (`all_shortest_paths`). Cost is O(V+E) in the topology size, not O(findings × (V+E)).
+
+For estates with tens of thousands of assets, prefer JSON/JSONL/CSV over the table format, drop `--explain` unless needed, and use filters (`--min-priority`, `--band`, `--only-reachable`, `--max-hops`, `--limit`) to shrink output.
+
 ## Flag cheatsheet
 
 | Flag | Purpose |

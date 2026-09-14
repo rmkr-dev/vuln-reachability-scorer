@@ -60,3 +60,5 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 - [../decisions/ADR-005-triage-filter-order.md](../decisions/ADR-005-triage-filter-order.md)
 - [../usage/README.md](../usage/README.md)
 - [../references/README.md](../references/README.md)
+
+Reachability uses a single multi-source BFS from ingress (`all_hop_distances` / `all_shortest_paths`) so large graphs stay O(V+E).
