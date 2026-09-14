@@ -6,7 +6,7 @@ Security scanners flood teams with CVSS numbers. Two findings with the same CVSS
 
 ## Status
 
-Early scaffolding. Foundation docs ship first; the scoring library and CLI land in follow-up PRs. See [AGENTS.md](AGENTS.md) for guardrails.
+Foundation docs and repo hygiene are in place. The scoring library, CLI, examples, and CI ship in follow-up PRs.
 
 ## Planned shape
 
@@ -17,15 +17,15 @@ Early scaffolding. Foundation docs ship first; the scoring library and CLI land 
 | Scoring | `priority = base_score × reachability_factor × exposure_factor` |
 | CLI | Load inputs, emit ranked scores |
 
-Exact formula and factors will be documented under `docs/` when the library lands.
+Exact formula and factors will be locked in an ADR when the library lands.
 
 ## Docs
 
 - [AGENTS.md](AGENTS.md) — human and agent guardrails
 - [CONTRIBUTING.md](CONTRIBUTING.md) — how to propose changes
-- [docs/architecture/](docs/architecture/) — system shape (when present)
-- [docs/security/](docs/security/) — security posture (when present)
-- [docs/development/](docs/development/) — local workflow (when present)
+- [docs/architecture/](docs/architecture/) — system shape and Mermaid diagram
+- [docs/security/security.md](docs/security/security.md) — security posture
+- [docs/development/development.md](docs/development/development.md) — contributor workflow
 
 ## License
 
