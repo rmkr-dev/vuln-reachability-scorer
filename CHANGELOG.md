@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.7] - 2026-09-14
 
+### Added
 
+- Example `overlays/vrscore-strict-ci.toml` layers `strict` on the CI overlay.
+- Development tip for `VRSCORE_CONFIG` overlays.
 
 ## [0.3.6] - 2026-09-14
 
