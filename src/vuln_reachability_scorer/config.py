@@ -27,7 +27,9 @@ CONFIG_KEYS: dict[str, type | tuple[type, ...]] = {
     "band": (list,),
     "min_epss": (int, float),
     "asset": (list,),
+    "exclude_asset": (list,),
     "cve": (list,),
+    "exclude_cve": (list,),
     "quiet": (bool,),
     "min_base": (int, float),
     "sort": (str,),
@@ -38,8 +40,8 @@ CONFIG_KEYS: dict[str, type | tuple[type, ...]] = {
     "exclude_tag": (list,),
 }
 
-_LIST_KEYS = {"band", "asset", "cve", "tag", "exclude_tag"}
-_MERGE_LIST_KEYS = {"band", "asset", "cve", "tag", "exclude_tag", "findings"}
+_LIST_KEYS = {"band", "asset", "exclude_asset", "cve", "exclude_cve", "tag", "exclude_tag"}
+_MERGE_LIST_KEYS = {"band", "asset", "exclude_asset", "cve", "exclude_cve", "tag", "exclude_tag", "findings"}
 _PATH_KEYS = {"topology", "output"}
 _FINDINGS_KEY = "findings"
 _BOOL_KEYS = {
