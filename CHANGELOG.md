@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.6] - 2026-09-14
+
 ### Added
 
-- Cookbook recipe for `VRSCORE_CONFIG` pointing at an `extends` overlay.
 - Test for self-referential `extends` cycle.
 - Config schema docs name `MAX_EXTENDS_DEPTH` and directory rejection.
 
@@ -258,7 +259,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/releases/tag/v0.1.0
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.5...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.6...HEAD
+[0.3.6]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.2...v0.3.3
