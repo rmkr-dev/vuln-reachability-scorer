@@ -31,6 +31,7 @@ vrscore --topology examples/topology.json --findings examples/findings.json
 vrscore -t examples/topology.json -f examples/findings.json --format json
 vrscore -t examples/topology.json -f examples/findings.json --format csv -o scores.csv
 vrscore -t examples/topology.json -f examples/findings.json --format sarif -o results.sarif
+vrscore -t examples/topology.json -f examples/findings.json --format html -o report.html
 vrscore -t examples/topology.json -f examples/findings.json --min-priority 4.0 --limit 20
 vrscore -t examples/topology.json -f examples/findings.json --explain
 vrscore -t examples/topology.json -f examples/findings.json --summary
@@ -40,7 +41,7 @@ vrscore -t examples/topology.json --asset-report
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--summary` for band counts on stderr. Use `--fail-under SCORE` as a CI gate. Use `--show-title` to include titles in the table. Use `--only-kev` to filter to KEV findings. Use `--strict` to fail on edges that reference unknown assets. Use `--asset-report` for a per-asset reachability inventory (no findings file).
+Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0), `html` (self-contained report). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--summary` for band counts on stderr. Use `--fail-under SCORE` as a CI gate. Use `--show-title` to include titles in the table. Use `--only-kev` to filter to KEV findings. Use `--strict` to fail on edges that reference unknown assets. Use `--asset-report` for a per-asset reachability inventory (no findings file).
 
 Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 
