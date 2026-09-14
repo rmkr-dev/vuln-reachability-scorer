@@ -9,11 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `--fail-under SCORE` CI gate (exit 1 when any priority >= SCORE).
-- `--summary` aggregate band counts on stderr after scoring.
-- ADR-003 documenting the KEV multiplier.
+- Nothing yet since the last release.
+
+## [0.1.3] - 2026-09-14
+
+### Added
+
+- Optional finding `kev: true` applies a 1.15 Known Exploited Vulnerability multiplier (clamped at 10.0) ([ADR-003](docs/decisions/ADR-003-kev-multiplier.md)).
 - CSV output for `--asset-report`.
-- Optional finding `kev: true` applies a 1.15 Known Exploited Vulnerability multiplier (clamped at 10.0).
+- `--summary` aggregate band counts on stderr after scoring.
+- `--fail-under SCORE` CI gate (exit 1 when any priority >= SCORE).
 
 ## [0.1.2] - 2026-09-14
 
@@ -50,7 +55,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions CI via `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.2.0`.
 - Dependabot, CODEOWNERS, SECURITY.md, PR template, and foundation docs.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/releases/tag/v0.1.0
