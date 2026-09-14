@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- ADR index table includes ADR-005 as a proper Accepted row.
+
 ### Added
 
 - [ADR-005](docs/decisions/ADR-005-triage-filter-order.md) documents CLI triage filter application order.
