@@ -20,6 +20,7 @@ from vuln_reachability_scorer.loaders import (
 )
 from vuln_reachability_scorer.sarif import to_sarif
 from vuln_reachability_scorer.scoring import score_findings
+from vuln_reachability_scorer.summary import format_summary_line, summarize
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -81,6 +82,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--asset-report",
         action="store_true",
         help="Emit per-asset reachability inventory (findings not required)",
+    )
+    parser.add_argument(
+        "--summary",
+        action="store_true",
+        help="Print aggregate band counts to stderr after scoring",
     )
     parser.add_argument(
         "--version",
@@ -335,6 +341,9 @@ def main(argv: list[str] | None = None) -> int:
     except OSError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+
+    if args.summary:
+        print(format_summary_line(summarize(scored)), file=sys.stderr)
 
     return 0
 

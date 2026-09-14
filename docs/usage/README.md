@@ -28,6 +28,7 @@ vrscore -t examples/topology.json -f examples/findings.json --format sarif -o sc
 
 ```bash
 vrscore -t examples/topology.json -f examples/findings.json --min-priority 4 --limit 10 --explain
+vrscore -t examples/topology.json -f examples/findings.json --summary
 ```
 
 ## Raise exposure for sensitive tags
