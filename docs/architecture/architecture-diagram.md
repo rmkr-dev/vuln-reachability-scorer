@@ -3,19 +3,21 @@
 ```mermaid
 flowchart LR
   subgraph inputs [Inputs]
-    T[examples or user topology.json]
-    F[findings.json]
+    T[topology.json + tag_boosts]
+    F[findings.json + kev]
   end
 
   subgraph core [src/vuln_reachability_scorer]
     L[loaders]
-    G[graph hop distance]
-    S["scoring base x R x E"]
+    G[graph / paths]
+    S[scoring + tag boosts + KEV]
+    A[asset_report]
+    E[explain / summary]
     C[cli]
   end
 
   subgraph out [Output]
-    R[table or JSON]
+    R[table / JSON / CSV / SARIF]
   end
 
   subgraph automation [GitHub]
@@ -26,7 +28,13 @@ flowchart LR
   F --> L
   L --> G
   G --> S
+  S --> E
+  L --> A
+  A --> C
+  E --> C
   S --> C
   C --> R
   CI -.->|pytest on PR| core
 ```
+
+CLI flags that shape scoring/output: `--asset-report`, `--explain`, `--summary`, `--strict`, `--fail-under`, `--only-kev`, `--show-title`, `--min-priority`, `--limit`, `--format`, `--output`.
