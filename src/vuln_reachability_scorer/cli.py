@@ -114,6 +114,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep only findings on assets reachable from an ingress node",
     )
     parser.add_argument(
+        "--max-hops",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Keep only findings with hop_distance <= N (excludes unreachable)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -372,6 +379,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.fail_under is not None and args.fail_under < 0:
         print("error: --fail-under must be >= 0", file=sys.stderr)
         return 2
+    if args.max_hops is not None and args.max_hops < 0:
+        print("error: --max-hops must be >= 0", file=sys.stderr)
+        return 2
 
     try:
         assets, edges = load_topology(args.topology)
@@ -396,6 +406,12 @@ def main(argv: list[str] | None = None) -> int:
         scored = [s for s in scored if s.finding.kev]
     if args.only_reachable:
         scored = [s for s in scored if s.hop_distance is not None]
+    if args.max_hops is not None:
+        scored = [
+            s
+            for s in scored
+            if s.hop_distance is not None and s.hop_distance <= args.max_hops
+        ]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:
