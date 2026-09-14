@@ -77,6 +77,21 @@ Exits `1` if any scored finding has `priority_score >= 7`, suitable as a require
 vrscore -t examples/topology.json -f examples/findings.json --only-kev --explain --summary
 ```
 
+
+## Topology pitfalls
+
+Edges are **directed**. A path `db -> api` does not make `db` reachable from an ingress `api`. Other cases the scorer already covers:
+
+- Self-loops never add hops; an ingress node stays hop 0.
+- Duplicate parallel edges do not inflate hop distance.
+- When two ingress nodes can reach an asset, the **closest** hop count wins.
+- Uneven diamonds take the short leg.
+- `internet_facing: true` marks the **target** as ingress even if the source id is outside `assets`.
+- Isolated components and reverse-only edges are unreachable (`R = 0.10`).
+- Five or more hops use the deep factor (`R = 0.20`).
+
+`--strict` still only cares about edge endpoints missing from `assets`, not about reachability.
+
 ## Read error messages
 
 Exit code `2` is an input/usage error. Messages name the file kind (`topology` / `findings`), the path, and (for JSON) the line and column. Indexed items (`findings[0]`, `topology.assets[2]`) point at the bad record. `--strict` promotes unknown edge endpoints from `warning:` to `error:`.
