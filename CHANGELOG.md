@@ -10,10 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Tests for config `extends` list-replace, JSON←TOML composition, and depth-at-max success.
-- Example `vrscore-kev.toml` + cookbook layered-overlay recipe (extends triage with `only_kev`).
 
 ### Fixed
 
+- Config path keys (`topology` / `findings` / `output`) resolve against the defining file's directory so cross-directory `extends` keeps estate paths.
 - Config `extends` re-validates `min_hops` ≤ `max_hops` on the merged result (split across base/overlay no longer slips through).
 - Clearer error when an `extends` target path does not exist.
 

@@ -6,7 +6,7 @@ Optional JSON or TOML defaults for the CLI ([ADR-006](../decisions/ADR-006-confi
 
 built-in defaults < config file < explicit CLI flags
 
-Relative `topology` / `findings` / `output` paths resolve against the config file's directory.
+Relative `topology` / `findings` / `output` paths resolve against the directory of the **file that defines them** (with `extends`, each file's paths stay rooted at that file).
 
 ## Keys
 
@@ -54,6 +54,6 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 
 ## Examples
 
-See `examples/vrscore.toml`, `examples/vrscore.json`, `examples/vrscore-triage.toml`, `examples/vrscore-ci.toml`, and `examples/vrscore-kev.toml`.
+See `examples/vrscore.toml`, `examples/vrscore.json`, `examples/vrscore-triage.toml`, and `examples/vrscore-ci.toml`.
 
 Cross-format `extends` is supported (e.g. a `.json` overlay may `extends` a `.toml` base). List keys in the child **replace** the base list.
