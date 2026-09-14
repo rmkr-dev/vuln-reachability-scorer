@@ -21,6 +21,7 @@ from vuln_reachability_scorer.loaders import (
 )
 from vuln_reachability_scorer.html_report import to_asset_html, to_html
 from vuln_reachability_scorer.markdown_report import to_asset_markdown, to_markdown
+from vuln_reachability_scorer.junit_report import to_junit
 from vuln_reachability_scorer.sarif import to_sarif
 from vuln_reachability_scorer.scoring import score_findings
 from vuln_reachability_scorer.summary import format_summary_line, summarize
@@ -84,7 +85,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=("table", "json", "jsonl", "sarif", "csv", "html", "markdown"),
+        choices=("table", "json", "jsonl", "sarif", "csv", "html", "markdown", "junit"),
         default="table",
         help="Output format (default: table)",
     )
@@ -346,6 +347,8 @@ def _render(scored: list, fmt: str, explain: bool = False, path_by_asset: dict |
         return to_html(scored, explain=explain, path_by_asset=path_by_asset)
     if fmt == "markdown":
         return to_markdown(scored, explain=explain, path_by_asset=path_by_asset)
+    if fmt == "junit":
+        return to_junit(scored)
     return ""
 
 
@@ -453,6 +456,12 @@ def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
         elif args.format == "sarif":
             print(
                 "error: --asset-report does not support --format sarif",
+                file=sys.stderr,
+            )
+            return 2
+        elif args.format == "junit":
+            print(
+                "error: --asset-report does not support --format junit",
                 file=sys.stderr,
             )
             return 2
