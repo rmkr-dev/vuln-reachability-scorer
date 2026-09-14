@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Topology graph edge-case tests (self-loops, diamonds, multi-ingress, reverse-only, duplicate edges, 5-hop chains).
 - Clearer loader and CLI errors (file kind, path, JSON line/column, indexed missing fields).
 - `--format html` self-contained report (findings and `--asset-report`).
 - Optional finding `epss` (FIRST EPSS probability in `[0, 1]`) applies a `1 + 0.20 × epss` multiplier after KEV, clamped at 10.0 ([ADR-004](docs/decisions/ADR-004-epss-factor.md)).
