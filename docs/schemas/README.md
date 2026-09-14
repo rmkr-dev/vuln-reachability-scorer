@@ -41,7 +41,8 @@ Either a bare array or an object with a `findings` array:
       "cve_id": "string (optional; alias cve)",
       "base_score": "number 0..10 (required)",
       "title": "string (optional)",
-      "kev": "boolean (optional; default false — Known Exploited Vulnerability multiplier)"
+      "kev": "boolean (optional; default false — Known Exploited Vulnerability multiplier)",
+      "epss": "number 0..1 (optional; omitted = no EPSS adjustment — FIRST EPSS probability)"
     }
   ]
 }
@@ -54,3 +55,8 @@ Edges whose `source` or `target` is not in `assets` produce a CLI **warning**. P
 ## Tag boosts
 
 Optional root object `tag_boosts` maps tag string → additive boost applied to `asset.criticality` before clamping to `[0, 1]`. Defaults live in `scoring.DEFAULT_TAG_BOOSTS` and are merged with any provided values.
+
+
+## EPSS
+
+Optional finding field `epss` is a FIRST Exploit Prediction Scoring System probability in `[0, 1]`. When present, priority is multiplied by `1 + 0.20 × epss` and clamped to 10.0 after any KEV multiplier ([ADR-004](../decisions/ADR-004-epss-factor.md)). The CLI never fetches EPSS; operators supply the value. Omitting the field is a no-op.

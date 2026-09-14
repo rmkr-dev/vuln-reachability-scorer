@@ -14,7 +14,7 @@ priority_score = round(base_score × reachability_factor × exposure_factor, 2)
 - **reachability_factor** — from shortest hop distance to an ingress / internet-facing asset (`1.0` at ingress → `0.1` if unreachable)
 - **exposure_factor** — `clamp(criticality + tag_boosts, 0, 1)` (defaults for `pii` / `identity` / `secrets`)
 
-See [ADR-001](docs/decisions/ADR-001-scoring-model.md) and `src/vuln_reachability_scorer/scoring.py`. Findings may set `kev: true` for a 1.15 Known Exploited Vulnerability multiplier (clamped at 10).
+See [ADR-001](docs/decisions/ADR-001-scoring-model.md) and `src/vuln_reachability_scorer/scoring.py`. Findings may set `kev: true` for a 1.15 Known Exploited Vulnerability multiplier (clamped at 10). Optional `epss` in `[0, 1]` applies a further `1 + 0.20 × epss` multiplier ([ADR-004](docs/decisions/ADR-004-epss-factor.md)).
 
 ## Install
 

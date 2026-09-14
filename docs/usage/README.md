@@ -58,6 +58,10 @@ Fails (exit 2) if any edge references an unknown asset id.
 
 Set `"kev": true` on a finding to apply the 1.15 KEV multiplier (see [ADR-003](../decisions/ADR-003-kev-multiplier.md)).
 
+## Supply EPSS when you already have it
+
+Set `"epss": 0.73` (or any value in `[0, 1]`) on a finding to apply the optional EPSS nudge (see [ADR-004](../decisions/ADR-004-epss-factor.md)). The CLI does not fetch EPSS; omit the field when you do not have a score.
+
 ## CI gate
 
 ```bash

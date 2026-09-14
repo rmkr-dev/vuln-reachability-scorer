@@ -38,6 +38,13 @@ KEV multiplier
 --------------
 When a finding sets ``kev: true`` (Known Exploited Vulnerability), the priority is
 multiplied by ``KEV_FACTOR`` (1.15) and clamped to 10.0.
+
+EPSS multiplier
+---------------
+When a finding supplies optional ``epss`` in ``[0, 1]`` (FIRST Exploit Prediction
+Scoring System probability), the priority is then multiplied by
+``1 + EPSS_WEIGHT * epss`` (``EPSS_WEIGHT`` = 0.20) and clamped to 10.0.
+Omitted ``epss`` is a no-op. See ADR-004.
 """
 
 from __future__ import annotations
@@ -56,6 +63,7 @@ _UNREACHABLE_FACTOR = 0.10
 _DEEP_FACTOR = 0.20  # 4+ hops
 
 KEV_FACTOR = 1.15
+EPSS_WEIGHT = 0.20
 
 DEFAULT_TAG_BOOSTS: dict[str, float] = {
     "pii": 0.15,
@@ -85,6 +93,13 @@ def exposure_factor(
     for tag in asset.tags:
         bonus += float(boosts.get(tag, 0.0))
     return max(0.0, min(1.0, asset.criticality + bonus))
+
+
+def epss_factor(epss: float) -> float:
+    """Return the multiplicative EPSS nudge for a probability in ``[0, 1]``."""
+    if not 0.0 <= epss <= 1.0:
+        raise ValueError(f"epss must be in [0, 1], got {epss}")
+    return 1.0 + EPSS_WEIGHT * epss
 
 
 def compute_priority(base_score: float, r_factor: float, e_factor: float) -> float:
@@ -128,6 +143,12 @@ def score_findings(
         if finding.kev:
             priority = min(10.0, round(priority * KEV_FACTOR, 2))
             notes.append(f"KEV multiplier applied (x{KEV_FACTOR})")
+        if finding.epss is not None:
+            factor = epss_factor(finding.epss)
+            priority = min(10.0, round(priority * factor, 2))
+            notes.append(
+                f"EPSS {finding.epss:.2f} multiplier applied (x{factor:.2f})"
+            )
         scored.append(
             ScoredFinding(
                 finding=finding,
