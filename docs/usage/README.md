@@ -7,6 +7,7 @@ Practical recipes for `vrscore`. All commands assume an editable install (`pip i
 ```bash
 vrscore -t examples/topology.json -f examples/findings.json
 vrscore -t examples/topology.json -f examples/findings.json --explain
+# explain lines include ingress -> asset path when reachable
 ```
 
 ## Validate topology before findings arrive
