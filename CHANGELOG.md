@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Pin CI reusable workflow to `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.4.0` (compatible inputs; setup composite moves to `@v0.3.0`).
+
 ## [0.1.10] - 2026-09-14
 
 ### Fixed
