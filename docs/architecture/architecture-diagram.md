@@ -1,7 +1,5 @@
 # Architecture diagram
 
-Current foundation is docs-only. The Mermaid diagram below is the **intended** CLI shape; boxes marked *(planned)* are not yet in the tree.
-
 ```mermaid
 flowchart LR
   subgraph inputs [Inputs]
@@ -9,21 +7,21 @@ flowchart LR
     F[findings.json]
   end
 
-  subgraph core [CLI / library - planned]
-    L[Load and validate]
-    G[Build asset graph]
-    S[Score: base x R x E]
+  subgraph core [src/vuln_reachability_scorer]
+    L[loaders]
+    G[graph]
+    S[scoring]
+    C[cli]
   end
 
-  subgraph out [Output - planned]
-    R[Ranked table / JSON]
+  subgraph out [Output]
+    R[table or JSON]
   end
 
   T --> L
   F --> L
   L --> G
   G --> S
-  S --> R
+  S --> C
+  C --> R
 ```
-
-When the package ships, update this diagram so every box maps to a real module path.
