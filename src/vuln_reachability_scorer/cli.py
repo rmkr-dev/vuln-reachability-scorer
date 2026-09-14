@@ -702,6 +702,23 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     t_load = time.perf_counter() - t0
 
+    if findings:
+        seen: dict[str, int] = {}
+        dupes: list[str] = []
+        for f in findings:
+            if f.id in seen:
+                if f.id not in dupes:
+                    dupes.append(f.id)
+            else:
+                seen[f.id] = 1
+        if dupes:
+            msg = f"duplicate finding id(s) across inputs: {', '.join(dupes)}"
+            if args.strict:
+                print(f"error: {msg}", file=sys.stderr)
+                return 2
+            if not args.quiet:
+                print(f"warning: {msg}", file=sys.stderr)
+
     edge_warnings = unknown_edge_endpoints(assets, edges)
     if edge_warnings:
         for msg in edge_warnings:
