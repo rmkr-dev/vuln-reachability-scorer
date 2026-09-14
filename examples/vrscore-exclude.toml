@@ -1,6 +1,5 @@
 # Drop noise via config excludes (ADR-005 order) instead of flag spam.
-topology = "topology.json"
-findings = "findings.json"
+extends = "vrscore-base.toml"
 format = "table"
 summary = true
 only_reachable = true

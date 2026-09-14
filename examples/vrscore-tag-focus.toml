@@ -1,0 +1,5 @@
+# Tag-focus overlay — extends triage; replaces tag list (ADR-007 / ADR-008).
+extends = "vrscore-triage.toml"
+tag = ["pii", "identity"]
+format = "table"
+summary = true
