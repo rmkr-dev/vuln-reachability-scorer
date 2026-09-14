@@ -49,7 +49,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.1.5** — core library, CLI (table / JSON / CSV / SARIF), filters, file output, examples, tests, CI, and ADR-001. See [CHANGELOG.md](CHANGELOG.md).
+**v0.1.6** — core library, CLI (table / JSON / CSV / SARIF / HTML), optional EPSS, KEV, filters, examples, tests, CI `@v0.3.0`, ADR-001–004. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 

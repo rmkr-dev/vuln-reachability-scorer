@@ -9,11 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Pin CI to `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.3.0`.
-- Topology graph edge-case tests (self-loops, diamonds, multi-ingress, reverse-only, duplicate edges, 5-hop chains).
-- Clearer loader and CLI errors (file kind, path, JSON line/column, indexed missing fields).
-- `--format html` self-contained report (findings and `--asset-report`).
+- Nothing yet since the last release.
+
+## [0.1.6] - 2026-09-14
+
+### Added
+
 - Optional finding `epss` (FIRST EPSS probability in `[0, 1]`) applies a `1 + 0.20 × epss` multiplier after KEV, clamped at 10.0 ([ADR-004](docs/decisions/ADR-004-epss-factor.md)).
+- `--format html` self-contained report (findings and `--asset-report`).
+- Clearer loader and CLI errors (file kind, path, JSON line/column, indexed missing fields).
+- Topology graph edge-case tests (self-loops, diamonds, multi-ingress, reverse-only, duplicate edges, 5-hop chains).
+- Pin CI to `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.3.0`.
 - Architecture diagram refresh and usage flag cheatsheet.
 
 ## [0.1.5] - 2026-09-14
@@ -60,7 +66,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial package, scoring formula ([ADR-001](docs/decisions/ADR-001-scoring-model.md)), CLI, examples, CI.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.5...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.6...HEAD
+[0.1.6]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.2...v0.1.3
