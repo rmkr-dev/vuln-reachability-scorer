@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--sort priority|base|hops|asset|cve` to reorder results (default remains priority).
 - `--min-base` to omit findings whose `base_score` is below a threshold.
 - `--quiet` / `-q` to suppress non-error stderr warnings (edge endpoint warnings).
 
