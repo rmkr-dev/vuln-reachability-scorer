@@ -118,6 +118,14 @@ vrscore -t examples/topology.json -f examples/findings.json --asset web-app --as
 
 Repeat `--asset` to union asset ids. Unknown ids simply yield an empty match set for that id.
 
+## Filter by CVE id
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --cve CVE-2021-44228 --explain
+```
+
+Matching is case-insensitive. Repeat `--cve` to union ids. Findings without a CVE id never match.
+
 ## Topology pitfalls
 
 Edges are **directed**. A path `db -> api` does not make `db` reachable from an ingress `api`. Other cases the scorer already covers:
@@ -155,5 +163,6 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--band BAND` | Keep priority band(s); repeatable |
 | `--min-epss P` | Keep epss >= P (omitters dropped) |
 | `--asset ID` | Keep findings for asset id(s); repeatable |
+| `--cve CVE` | Keep matching CVE id(s); repeatable |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |
