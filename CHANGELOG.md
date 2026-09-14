@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--show-title` adds a TITLE column to table output.
 - Additional edge-case tests for path cycles, KEV clamp, and empty summary.
 - Nothing yet since the last release.
 
