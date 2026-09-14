@@ -1,0 +1,3 @@
+# Shared estate paths — extend this from triage/CI configs.
+topology = "topology.json"
+findings = "findings.json"

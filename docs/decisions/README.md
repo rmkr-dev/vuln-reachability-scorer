@@ -9,3 +9,4 @@
 | [ADR-005](ADR-005-triage-filter-order.md) | Triage filter application order | Accepted |
 | [ADR-006](ADR-006-config-file.md) | Optional CLI config file | Accepted |
 | [ADR-007](ADR-007-config-first-cli.md) | Prefer config files over new CLI flags | Accepted |
+| [ADR-008](ADR-008-config-extends.md) | Config file extends / composition | Accepted |

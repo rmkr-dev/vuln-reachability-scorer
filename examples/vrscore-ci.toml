@@ -1,6 +1,5 @@
-# CI gate defaults — pair with --fail-under on the job or set here.
-topology = "topology.json"
-findings = "findings.json"
+# CI gate defaults — extends shared paths.
+extends = "vrscore-base.toml"
 format = "sarif"
 output = "reachability.sarif"
 summary = true
