@@ -145,6 +145,13 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument(
+        "--min-epss",
+        type=float,
+        default=None,
+        metavar="P",
+        help="Keep findings with epss >= P (findings without epss are dropped)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -406,6 +413,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.max_hops is not None and args.max_hops < 0:
         print("error: --max-hops must be >= 0", file=sys.stderr)
         return 2
+    if args.min_epss is not None and not (0.0 <= args.min_epss <= 1.0):
+        print("error: --min-epss must be between 0 and 1", file=sys.stderr)
+        return 2
 
     try:
         assets, edges = load_topology(args.topology)
@@ -438,6 +448,12 @@ def main(argv: list[str] | None = None) -> int:
         ]
     if args.band:
         scored = [s for s in scored if _in_selected_bands(s.priority_score, args.band)]
+    if args.min_epss is not None:
+        scored = [
+            s
+            for s in scored
+            if s.finding.epss is not None and s.finding.epss >= args.min_epss
+        ]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:

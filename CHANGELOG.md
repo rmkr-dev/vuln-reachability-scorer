@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--min-epss P` to keep findings with `epss >= P` (omitters dropped).
 - `--band BAND` (repeatable) to keep findings in priority bands matching `--summary` thresholds.
 - `--max-hops N` to keep findings with hop_distance <= N (excludes unreachable).
 - `--only-reachable` to keep findings on assets reachable from an ingress node.
