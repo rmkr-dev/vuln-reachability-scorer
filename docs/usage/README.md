@@ -65,3 +65,9 @@ vrscore -t topology.json -f findings.json --fail-under 7 --summary
 ```
 
 Exits `1` if any scored finding has `priority_score >= 7`, suitable as a required check.
+
+## KEV-only triage
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --only-kev --explain --summary
+```
