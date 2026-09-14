@@ -33,6 +33,7 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 | `asset` | list of string | Asset id filter |
 | `cve` | list of string | CVE id filter |
 | `tag` | list of string | Tag filter (OR) |
+| `exclude_tag` | list of string | Drop assets with tag (OR) |
 | `quiet` | bool | Suppress warnings |
 | `sort` | string | `priority` \| `base` \| `hops` \| `asset` \| `cve` |
 | `dedupe` | bool | Best per CVE+asset |

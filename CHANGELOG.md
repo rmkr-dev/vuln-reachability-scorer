@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--exclude-tag TAG` (repeatable, OR, case-insensitive) drops findings on tagged assets; ordered after `--tag` ([ADR-005](docs/decisions/ADR-005-triage-filter-order.md)).
 - Repeatable `--findings` / `-f` merges multiple findings files; config `findings` may be a list of paths.
 - Config file field reference in [docs/schemas/config.md](docs/schemas/config.md).
 

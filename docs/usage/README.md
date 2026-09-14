@@ -48,6 +48,7 @@ vrscore -t examples/topology.json -f examples/findings.json --min-base 7 --expla
 vrscore -t examples/topology.json -f examples/findings.json --sort hops --explain
 vrscore -t examples/topology.json -f examples/findings.json --dedupe --summary
 vrscore -t examples/topology.json -f examples/findings.json --tag pii --tag identity --explain
+vrscore -t examples/topology.json -f examples/findings.json --exclude-tag experimental --summary
 vrscore -t examples/topology.json -f examples/findings.json --summary
 # stderr includes kev= and epss= counts alongside bands
 ```
@@ -257,3 +258,4 @@ For estates with tens of thousands of assets, prefer JSON/JSONL/CSV over the tab
 | `--sort` | `priority` \| `base` \| `hops` \| `asset` \| `cve` |
 | `--dedupe` | Highest priority per CVE+asset |
 | `--tag TAG` | Keep assets with tag(s); OR; repeatable |
+| `--exclude-tag TAG` | Drop assets with tag(s); OR; repeatable |

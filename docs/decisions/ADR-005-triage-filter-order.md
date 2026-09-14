@@ -5,7 +5,7 @@
 
 ## Context
 
-`vrscore` gained many post-scoring CLI filters (`--only-kev`, `--only-reachable`, `--max-hops`, `--band`, `--min-epss`, `--asset`, `--cve`, `--tag`, `--min-base`, `--min-priority`, `--dedupe`, `--sort`, `--limit`). Reviewers need a stable, documented order so combining flags is predictable.
+`vrscore` gained many post-scoring CLI filters (`--only-kev`, `--only-reachable`, `--max-hops`, `--band`, `--min-epss`, `--asset`, `--cve`, `--tag`, `--exclude-tag`, `--min-base`, `--min-priority`, `--dedupe`, `--sort`, `--limit`). Reviewers need a stable, documented order so combining flags is predictable.
 
 ## Decision
 
@@ -19,11 +19,12 @@ After `score_findings` (already sorted by priority desc), apply filters in this 
 6. `--asset`
 7. `--cve`
 8. `--tag`
-9. `--min-base`
-10. `--min-priority`
-11. `--dedupe`
-12. `--sort` (skipped when `priority`, which is the default from scoring)
-13. `--limit`
+9. `--exclude-tag`
+10. `--min-base`
+11. `--min-priority`
+12. `--dedupe`
+13. `--sort` (skipped when `priority`, which is the default from scoring)
+14. `--limit`
 
 `--asset-report` applies the subset that makes sense without findings: `--max-hops`, `--only-reachable`, then `--limit`.
 
