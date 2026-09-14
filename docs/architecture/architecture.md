@@ -66,4 +66,4 @@ Reachability uses a single multi-source BFS from ingress (`all_hop_distances` / 
 
 Optional CLI defaults load from JSON/TOML via `config.py` (`--config` / `VRSCORE_CONFIG`; ADR-006).
 
-Config files may `extends` a base file (ADR-008); child keys overlay, lists replace.
+Config files may `extends` a base file (ADR-008); child keys overlay, lists replace. Relative `topology` / `findings` / `output` resolve against the **defining file**'s directory (so cross-directory overlays keep estate paths). Hop windows and missing/directory targets are validated on the composed result.
