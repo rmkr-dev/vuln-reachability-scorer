@@ -3,18 +3,21 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import sys
+from io import StringIO
 from pathlib import Path
 
 from vuln_reachability_scorer import __version__
+from vuln_reachability_scorer.asset_report import report_assets
+from vuln_reachability_scorer.explain import explain_score
 from vuln_reachability_scorer.loaders import (
     load_findings,
     load_topology,
     unknown_edge_endpoints,
 )
 from vuln_reachability_scorer.sarif import to_sarif
-from vuln_reachability_scorer.explain import explain_score
 from vuln_reachability_scorer.scoring import score_findings
 
 
@@ -37,8 +40,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--findings",
         "-f",
         type=Path,
-        required=True,
-        help="Path to findings JSON",
+        help="Path to findings JSON (required unless --asset-report)",
     )
     parser.add_argument(
         "--format",
@@ -73,6 +75,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--strict",
         action="store_true",
         help="Treat unknown edge endpoints as errors instead of warnings",
+    )
+    parser.add_argument(
+        "--asset-report",
+        action="store_true",
+        help="Emit per-asset reachability inventory (findings not required)",
     )
     parser.add_argument(
         "--version",
@@ -123,9 +130,6 @@ def _print_table(scored: list, sink, explain: bool = False) -> None:
 
 
 def _render_csv(scored: list) -> str:
-    import csv
-    from io import StringIO
-
     buf = StringIO()
     writer = csv.writer(buf)
     writer.writerow(
@@ -176,9 +180,72 @@ def _render(scored: list, fmt: str, explain: bool = False) -> str:
     return ""
 
 
+def _print_asset_table(rows: list, sink) -> None:
+    headers = ("ASSET", "KIND", "HOPS", "R", "E", "CRIT", "INGRESS", "NAME")
+    table = [
+        (
+            r.asset.id,
+            r.asset.kind,
+            "-" if r.hop_distance is None else str(r.hop_distance),
+            f"{r.reachability_factor:.2f}",
+            f"{r.exposure_factor:.2f}",
+            f"{r.asset.criticality:.2f}",
+            "yes" if r.asset.ingress else "no",
+            r.asset.name,
+        )
+        for r in rows
+    ]
+    widths = [len(h) for h in headers]
+    for row in table:
+        for i, cell in enumerate(row):
+            widths[i] = max(widths[i], len(cell))
+
+    def fmt(row: tuple[str, ...]) -> str:
+        return "  ".join(cell.ljust(widths[i]) for i, cell in enumerate(row))
+
+    print(fmt(headers), file=sink)
+    print(fmt(tuple("-" * w for w in widths)), file=sink)
+    for row in table:
+        print(fmt(row), file=sink)
+
+
+def _emit_asset_report(assets, edges, args) -> int:
+    rows = report_assets(assets, edges)
+    try:
+        if args.format == "json":
+            payload = {
+                "version": __version__,
+                "assets": [r.as_dict() for r in rows],
+            }
+            text = json.dumps(payload, indent=2) + "\n"
+            if args.output is not None:
+                args.output.write_text(text, encoding="utf-8")
+            else:
+                sys.stdout.write(text)
+        elif args.format in ("sarif", "csv"):
+            print(
+                f"error: --asset-report does not support --format {args.format}",
+                file=sys.stderr,
+            )
+            return 2
+        else:
+            if args.output is not None:
+                with args.output.open("w", encoding="utf-8") as fh:
+                    _print_asset_table(rows, fh)
+            else:
+                _print_asset_table(rows, sys.stdout)
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if not args.asset_report and args.findings is None:
+        parser.error("--findings is required unless --asset-report is set")
 
     if args.min_priority < 0:
         print("error: --min-priority must be >= 0", file=sys.stderr)
@@ -189,7 +256,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         assets, edges = load_topology(args.topology)
-        findings = load_findings(args.findings)
+        findings = load_findings(args.findings) if args.findings is not None else []
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
@@ -200,6 +267,9 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{'error' if args.strict else 'warning'}: {msg}", file=sys.stderr)
         if args.strict:
             return 2
+
+    if args.asset_report:
+        return _emit_asset_report(assets, edges, args)
 
     scored = score_findings(findings, assets, edges)
     if args.min_priority > 0:
