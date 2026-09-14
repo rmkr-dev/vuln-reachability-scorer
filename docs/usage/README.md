@@ -71,3 +71,20 @@ Exits `1` if any scored finding has `priority_score >= 7`, suitable as a require
 ```bash
 vrscore -t examples/topology.json -f examples/findings.json --only-kev --explain --summary
 ```
+
+## Flag cheatsheet
+
+| Flag | Purpose |
+| --- | --- |
+| `-t` / `--topology` | Topology JSON (required) |
+| `-f` / `--findings` | Findings JSON (required unless `--asset-report`) |
+| `--format` | `table` \| `json` \| `csv` \| `sarif` |
+| `-o` / `--output` | Write to file |
+| `--asset-report` | Per-asset reachability inventory |
+| `--explain` | Human rationale + shortest path |
+| `--summary` | Band counts on stderr |
+| `--strict` | Unknown edge endpoints are errors |
+| `--fail-under SCORE` | Exit 1 if any priority >= SCORE |
+| `--only-kev` | Keep `kev: true` findings only |
+| `--show-title` | TITLE column in table |
+| `--min-priority` / `--limit` | Filter / cap results |
