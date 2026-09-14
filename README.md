@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.3.6** — self-extends cycle test, VRSCORE_CONFIG+extends cookbook, MAX_EXTENDS_DEPTH schema note. See [CHANGELOG.md](CHANGELOG.md).
+**v0.3.7** — strict-ci layered overlay; changelog/dev tips for VRSCORE_CONFIG. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 

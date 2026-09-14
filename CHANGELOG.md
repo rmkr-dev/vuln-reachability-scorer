@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+## [0.3.7] - 2026-09-14
 
-- Example `overlays/vrscore-strict-ci.toml` layers `strict` on the CI overlay.
+
 
 ## [0.3.6] - 2026-09-14
 
@@ -264,7 +264,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/releases/tag/v0.1.0
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.6...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.7...HEAD
+[0.3.7]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.3...v0.3.4
