@@ -295,6 +295,7 @@ List keys **replace** on overlay — they do not concatenate. To switch triage f
 ```bash
 vrscore -c examples/vrscore-medium.toml
 vrscore -c examples/vrscore-tag-focus.toml   # tag = ["pii", "identity"] replaces
+vrscore -c examples/vrscore-epss.toml        # min_epss = 0.5 on triage filters
 ```
 
 `examples/vrscore-exclude.toml` and `vrscore-multi.toml` also `extends` the shared base so estate paths stay in one place.

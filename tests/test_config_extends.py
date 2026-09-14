@@ -319,3 +319,13 @@ def test_extends_integer_rejected(tmp_path: Path):
     p.write_text(json.dumps({"extends": 1, "format": "json"}), encoding="utf-8")
     with pytest.raises(ConfigError, match="extends must be a non-empty string"):
         load_config(p)
+
+
+def test_example_epss_overlay():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "vrscore-epss.toml")
+    assert cfg["min_epss"] == 0.5
+    assert cfg["band"] == ["critical", "high"]
+    assert cfg.get("explain") is True
+    rc = main(["--config", str(root / "examples" / "vrscore-epss.toml"), "--limit", "5"])
+    assert rc == 0
