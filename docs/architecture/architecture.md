@@ -23,6 +23,8 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 | `scoring.py` | Factor tables and `score_findings` |
 | `loaders.py` | JSON → models |
 | `sarif.py` | SARIF 2.1.0 document builder |
+| `asset_report.py` | Per-asset reachability inventory |
+| `explain.py` | Human-readable score rationales |
 | `cli.py` | argparse entrypoint |
 
 ## CI and hygiene
@@ -48,4 +50,6 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 - [../security/security.md](../security/security.md)
 - [../development/development.md](../development/development.md)
 - [../decisions/ADR-001-scoring-model.md](../decisions/ADR-001-scoring-model.md)
+- [../decisions/ADR-002-tag-exposure-boosts.md](../decisions/ADR-002-tag-exposure-boosts.md)
+- [../usage/README.md](../usage/README.md)
 - [../references/README.md](../references/README.md)
