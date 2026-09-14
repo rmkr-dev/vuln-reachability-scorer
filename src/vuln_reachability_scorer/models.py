@@ -68,6 +68,7 @@ class Finding:
     cve_id: str
     base_score: float
     title: str = ""
+    kev: bool = False
 
     def __post_init__(self) -> None:
         if not self.id:
@@ -85,6 +86,7 @@ class Finding:
             cve_id=str(data.get("cve_id") or data.get("cve") or ""),
             base_score=float(data["base_score"]),
             title=str(data.get("title") or ""),
+            kev=bool(data.get("kev", False)),
         )
 
 
@@ -110,5 +112,6 @@ class ScoredFinding:
             "exposure_factor": self.exposure_factor,
             "priority_score": self.priority_score,
             "hop_distance": self.hop_distance,
+            "kev": self.finding.kev,
             "notes": list(self.notes),
         }
