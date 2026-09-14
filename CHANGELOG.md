@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Guard test that config `ALLOWED_FORMATS` / `ALLOWED_SORTS` / `ALLOWED_BANDS` stay synced with CLI choices.
+- Example `vrscore-multi.toml` + `findings-extra.json` for config-first multi-findings merge.
+
 ## [0.2.6] - 2026-09-14
 
 ### Added

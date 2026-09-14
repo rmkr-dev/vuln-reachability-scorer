@@ -15,6 +15,7 @@ def test_example_configs_load():
         "vrscore.json",
         "vrscore-triage.toml",
         "vrscore-ci.toml",
+        "vrscore-multi.toml",
     ):
         cfg = load_config(EXAMPLES / name)
         assert "topology" in cfg
@@ -23,4 +24,9 @@ def test_example_configs_load():
 
 def test_triage_config_runs():
     rc = main(["--config", str(EXAMPLES / "vrscore-triage.toml"), "--format", "json", "--limit", "1"])
+    assert rc == 0
+
+
+def test_multi_config_runs():
+    rc = main(["--config", str(EXAMPLES / "vrscore-multi.toml"), "--format", "json", "--limit", "3"])
     assert rc == 0

@@ -1,0 +1,8 @@
+# Merge multiple scanner exports via findings list (no flag spam).
+topology = "topology.json"
+findings = ["findings.json", "findings-extra.json"]
+format = "table"
+summary = true
+dedupe = true
+only_reachable = true
+sort = "priority"
