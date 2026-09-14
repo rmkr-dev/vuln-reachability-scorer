@@ -49,6 +49,44 @@ def shortest_path(
     return path
 
 
+
+def all_shortest_paths(
+    assets: list[Asset],
+    edges: list[Edge],
+) -> dict[str, list[str]]:
+    """Map each reachable asset id to one shortest ingress→asset path.
+
+    One multi-source BFS; unreachable assets are omitted. Ingress nodes map
+    to a single-element path ``[asset_id]``.
+    """
+    ingress = ingress_asset_ids(assets, edges)
+    if not ingress:
+        return {}
+    adj = build_adjacency(edges)
+    parent: dict[str, str | None] = {i: None for i in ingress}
+    queue: deque[str] = deque(ingress)
+    seen = set(ingress)
+    while queue:
+        node = queue.popleft()
+        for nxt in adj.get(node, []):
+            if nxt in seen:
+                continue
+            parent[nxt] = node
+            seen.add(nxt)
+            queue.append(nxt)
+
+    paths: dict[str, list[str]] = {}
+    for asset_id in parent:
+        path = [asset_id]
+        cur = asset_id
+        while parent.get(cur) is not None:
+            cur = parent[cur]  # type: ignore[assignment]
+            path.append(cur)
+        path.reverse()
+        paths[asset_id] = path
+    return paths
+
+
 def format_path(path: list[str] | None) -> str:
     if path is None:
         return "(unreachable)"
