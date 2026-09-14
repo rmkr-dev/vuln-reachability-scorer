@@ -60,3 +60,11 @@ Optional root object `tag_boosts` maps tag string → additive boost applied to 
 ## EPSS
 
 Optional finding field `epss` is a FIRST Exploit Prediction Scoring System probability in `[0, 1]`. When present, priority is multiplied by `1 + 0.20 × epss` and clamped to 10.0 after any KEV multiplier ([ADR-004](../decisions/ADR-004-epss-factor.md)). The CLI never fetches EPSS; operators supply the value. Omitting the field is a no-op.
+
+## Loader errors
+
+`loaders.py` wraps parse failures with the input kind and path:
+
+- missing file → `topology file not found: <path>` (or `findings file not found`)
+- empty / non-UTF-8 / invalid JSON → message includes the path and, for JSON, line/column
+- missing required fields → `topology.assets[i]:` / `findings[i]:` plus the field names

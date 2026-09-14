@@ -77,6 +77,10 @@ Exits `1` if any scored finding has `priority_score >= 7`, suitable as a require
 vrscore -t examples/topology.json -f examples/findings.json --only-kev --explain --summary
 ```
 
+## Read error messages
+
+Exit code `2` is an input/usage error. Messages name the file kind (`topology` / `findings`), the path, and (for JSON) the line and column. Indexed items (`findings[0]`, `topology.assets[2]`) point at the bad record. `--strict` promotes unknown edge endpoints from `warning:` to `error:`.
+
 ## Flag cheatsheet
 
 | Flag | Purpose |
