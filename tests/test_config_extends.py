@@ -195,3 +195,11 @@ def test_extends_findings_list_replace_cross_dir(tmp_path: Path):
         str((overlays / "a.json").resolve()),
         str((overlays / "b.json").resolve()),
     ]
+
+
+def test_extends_target_is_directory(tmp_path: Path):
+    (tmp_path / "subdir").mkdir()
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "subdir"\nformat = "json"\n', encoding="utf-8")
+    with pytest.raises(ConfigError, match="extends target is a directory"):
+        load_config(child)
