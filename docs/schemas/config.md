@@ -42,8 +42,12 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 | `sort` | string | `priority` \| `base` \| `hops` \| `asset` \| `cve` |
 | `dedupe` | bool | Best per CVE+asset |
 
-Unknown keys are errors (exit 2). List keys apply only when the matching CLI flag is absent.
+## Validation
+
+- Unknown keys are errors (exit 2).
+- `format` / `sort` must match CLI choices; `band` entries must be `critical` / `high` / `medium` / `low`.
+- List keys apply only when the matching CLI flag is absent.
 
 ## Examples
 
-See `examples/vrscore.toml` and `examples/vrscore.json`.
+See `examples/vrscore.toml`, `examples/vrscore.json`, `examples/vrscore-triage.toml`, and `examples/vrscore-ci.toml`.
