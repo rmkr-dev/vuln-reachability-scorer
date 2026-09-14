@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vuln-reachability-scorer"
+version = "0.3.1"
+description = "Score CVEs by reachability and exposure (topology), not raw CVSS alone."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+authors = [
+  { name = "Ramkumar Ethiraj" },
+]
+keywords = ["cve", "cvss", "reachability", "vulnerability", "prioritization", "security"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+]
+
+[project.scripts]
+vrscore = "vuln_reachability_scorer.cli:main"
+vuln-reachability = "vuln_reachability_scorer.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.setuptools.package-data]
+vuln_reachability_scorer = ["py.typed"]
+

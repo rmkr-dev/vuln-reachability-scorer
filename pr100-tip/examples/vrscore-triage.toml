@@ -1,0 +1,11 @@
+# Config-first triage — extends shared paths (ADR-006 / extends).
+extends = "vrscore-base.toml"
+format = "table"
+summary = true
+explain = true
+only_reachable = true
+max_hops = 2
+min_hops = 0
+band = ["critical", "high"]
+sort = "hops"
+dedupe = true

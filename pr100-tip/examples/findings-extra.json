@@ -1,0 +1,13 @@
+{
+  "findings": [
+    {
+      "id": "finding-extra-001",
+      "asset_id": "edge-lb",
+      "cve_id": "CVE-2023-44487",
+      "title": "HTTP/2 Rapid Reset (supplemental scanner export)",
+      "base_score": 7.5,
+      "kev": false,
+      "epss": 0.55
+    }
+  ]
+}
