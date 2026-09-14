@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Example findings include duplicate-CVE and low-base rows for filter demos; examples README lists triage recipes.
 - `--format tsv` tab-separated values for findings and `--asset-report`.
 - `--tag TAG` (repeatable, OR, case-insensitive) to keep findings on assets with matching tags.
 
