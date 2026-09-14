@@ -32,6 +32,8 @@ CONFIG_KEYS: dict[str, type | tuple[type, ...]] = {
     "min_base": (int, float),
     "sort": (str,),
     "dedupe": (bool,),
+    "stats": (bool,),
+    "min_hops": (int,),
     "tag": (list,),
     "exclude_tag": (list,),
 }
@@ -50,6 +52,7 @@ _BOOL_KEYS = {
     "only_reachable",
     "quiet",
     "dedupe",
+    "stats",
 }
 
 
@@ -134,7 +137,7 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
             if not isinstance(value, (int, float)) or isinstance(value, bool):
                 raise ConfigError(f"config: {key} must be a number in {path}")
             out[key] = float(value)
-        elif key in ("limit", "max_hops"):
+        elif key in ("limit", "max_hops", "min_hops"):
             if not isinstance(value, int) or isinstance(value, bool):
                 raise ConfigError(f"config: {key} must be an integer in {path}")
             out[key] = value

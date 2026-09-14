@@ -28,6 +28,8 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 | `only_kev` | bool | KEV-only |
 | `only_reachable` | bool | Drop unreachable |
 | `max_hops` | integer | Hop ceiling |
+| `min_hops` | integer | Hop floor (excludes unreachable) |
+| `stats` | bool | Timing line on stderr |
 | `band` | list of string | `critical` / `high` / `medium` / `low` |
 | `min_epss` | number in `[0,1]` | EPSS floor |
 | `asset` | list of string | Asset id filter |

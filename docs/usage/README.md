@@ -121,6 +121,12 @@ vrscore -t examples/topology.json -f examples/findings.json --max-hops 1 --expla
 
 Keeps findings with `hop_distance <= N` and drops unreachable assets. `--max-hops 0` is ingress-only.
 
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --min-hops 1 --max-hops 3 --explain
+```
+
+`--min-hops N` keeps `hop_distance >= N` (also drops unreachable). Combine with `--max-hops` for a hop window.
+
 ## Filter by priority band
 
 ```bash
@@ -224,6 +230,14 @@ vrscore -c examples/vrscore.toml --fail-under 7 --summary
 
 There is no automatic cwd discovery; omit `--config` to keep today's flag-only behavior.
 
+## Timing stats
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --stats --format json >/dev/null
+```
+
+Prints a single stderr line: load / score / render seconds plus finding/result/asset/edge counts. Useful when tuning large topologies (see Large topologies).
+
 ## Large topologies
 
 Scoring and `--asset-report` run **one** multi-source BFS from all ingress / internet-facing nodes, then look up hop distance per asset (`all_hop_distances`). `--explain` likewise builds every shortest path in one BFS (`all_shortest_paths`). Cost is O(V+E) in the topology size, not O(findings × (V+E)). Duplicate parallel edges are collapsed when building adjacency.
@@ -248,6 +262,8 @@ For estates with tens of thousands of assets, prefer JSON/JSONL/CSV over the tab
 | `--only-kev` | Keep `kev: true` findings only |
 | `--only-reachable` | Drop unreachable assets |
 | `--max-hops N` | Keep hop_distance <= N |
+| `--min-hops N` | Keep hop_distance >= N |
+| `--stats` | Load/score/render timing on stderr |
 | `--band BAND` | Keep priority band(s); repeatable |
 | `--min-epss P` | Keep epss >= P (omitters dropped) |
 | `--asset ID` | Keep findings for asset id(s); repeatable |

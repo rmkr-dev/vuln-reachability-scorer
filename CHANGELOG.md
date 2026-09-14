@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `--min-hops N` keeps findings with hop_distance >= N (after `--max-hops`; see ADR-005).
+- `--stats` prints load/score/render timings and counts on stderr.
 ## [0.2.1] - 2026-09-14
 
 ### Added

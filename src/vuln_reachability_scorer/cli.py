@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import time
 import csv
 import json
 import sys
@@ -245,6 +246,18 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         metavar="TAG",
         help="Keep findings on assets that have this tag (repeatable; OR semantics)",
+    )
+    parser.add_argument(
+        "--min-hops",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Keep only findings with hop_distance >= N (excludes unreachable)",
+    )
+    parser.add_argument(
+        "--stats",
+        action="store_true",
+        help="Print timing stats for load/score/render to stderr",
     )
     parser.add_argument(
         "--exclude-tag",
@@ -662,10 +675,21 @@ def main(argv: list[str] | None = None) -> int:
     if args.max_hops is not None and args.max_hops < 0:
         print("error: --max-hops must be >= 0", file=sys.stderr)
         return 2
+    if args.min_hops is not None and args.min_hops < 0:
+        print("error: --min-hops must be >= 0", file=sys.stderr)
+        return 2
+    if (
+        args.min_hops is not None
+        and args.max_hops is not None
+        and args.min_hops > args.max_hops
+    ):
+        print("error: --min-hops cannot exceed --max-hops", file=sys.stderr)
+        return 2
     if args.min_epss is not None and not (0.0 <= args.min_epss <= 1.0):
         print("error: --min-epss must be between 0 and 1", file=sys.stderr)
         return 2
 
+    t0 = time.perf_counter()
     try:
         assets, edges = load_topology(args.topology)
         tag_boosts = load_tag_boosts(args.topology)
@@ -676,6 +700,7 @@ def main(argv: list[str] | None = None) -> int:
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+    t_load = time.perf_counter() - t0
 
     edge_warnings = unknown_edge_endpoints(assets, edges)
     if edge_warnings:
@@ -687,9 +712,18 @@ def main(argv: list[str] | None = None) -> int:
             return 2
 
     if args.asset_report:
-        return _emit_asset_report(assets, edges, args, tag_boosts)
+        t1 = time.perf_counter()
+        rc = _emit_asset_report(assets, edges, args, tag_boosts)
+        if args.stats:
+            print(
+                f"stats: load={t_load:.3f}s asset_report={time.perf_counter()-t1:.3f}s",
+                file=sys.stderr,
+            )
+        return rc
 
+    t1 = time.perf_counter()
     scored = score_findings(findings, assets, edges, tag_boosts=tag_boosts)
+    t_score = time.perf_counter() - t1
     assets_by_id = {a.id: a for a in assets}
     if args.only_kev:
         scored = [s for s in scored if s.finding.kev]
@@ -700,6 +734,12 @@ def main(argv: list[str] | None = None) -> int:
             s
             for s in scored
             if s.hop_distance is not None and s.hop_distance <= args.max_hops
+        ]
+    if args.min_hops is not None:
+        scored = [
+            s
+            for s in scored
+            if s.hop_distance is not None and s.hop_distance >= args.min_hops
         ]
     if args.band:
         scored = [s for s in scored if _in_selected_bands(s.priority_score, args.band)]
@@ -752,6 +792,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.explain:
         path_by_asset = all_shortest_paths(assets, edges)
 
+    t2 = time.perf_counter()
     try:
         if args.format == "table":
             if args.output is not None:
@@ -782,6 +823,14 @@ def main(argv: list[str] | None = None) -> int:
     except OSError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+
+    t_render = time.perf_counter() - t2
+    if args.stats:
+        print(
+            f"stats: load={t_load:.3f}s score={t_score:.3f}s render={t_render:.3f}s "
+            f"findings={len(findings)} results={len(scored)} assets={len(assets)} edges={len(edges)}",
+            file=sys.stderr,
+        )
 
     if args.summary:
         print(format_summary_line(summarize(scored)), file=sys.stderr)
