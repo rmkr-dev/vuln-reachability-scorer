@@ -1,0 +1,54 @@
+{
+  "assets": [
+    {
+      "id": "edge-lb",
+      "name": "Public load balancer",
+      "kind": "load_balancer",
+      "criticality": 0.6,
+      "ingress": true,
+      "tags": ["dmz", "https"]
+    },
+    {
+      "id": "web-app",
+      "name": "Customer web application",
+      "kind": "service",
+      "criticality": 0.75,
+      "tags": ["production"]
+    },
+    {
+      "id": "api",
+      "name": "Internal API",
+      "kind": "service",
+      "criticality": 0.85,
+      "tags": ["production"]
+    },
+    {
+      "id": "auth",
+      "name": "Identity provider",
+      "kind": "service",
+      "criticality": 1.0,
+      "tags": ["production", "identity"]
+    },
+    {
+      "id": "db-primary",
+      "name": "Primary customer database",
+      "kind": "datastore",
+      "criticality": 1.0,
+      "tags": ["production", "pii"]
+    },
+    {
+      "id": "batch-worker",
+      "name": "Nightly batch worker",
+      "kind": "service",
+      "criticality": 0.35,
+      "tags": ["internal"]
+    }
+  ],
+  "edges": [
+    {"source": "edge-lb", "target": "web-app", "protocol": "https"},
+    {"source": "web-app", "target": "api", "protocol": "https"},
+    {"source": "api", "target": "auth", "protocol": "https"},
+    {"source": "api", "target": "db-primary", "protocol": "postgres"},
+    {"source": "batch-worker", "target": "db-primary", "protocol": "postgres"}
+  ]
+}
