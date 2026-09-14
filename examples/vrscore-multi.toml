@@ -1,5 +1,5 @@
 # Merge multiple scanner exports via findings list (no flag spam).
-topology = "topology.json"
+extends = "vrscore-base.toml"
 findings = ["findings.json", "findings-extra.json"]
 format = "table"
 summary = true

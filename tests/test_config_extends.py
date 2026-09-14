@@ -258,3 +258,32 @@ def test_example_strict_ci_overlay():
     assert cfg["strict"] is True
     assert cfg["format"] == "sarif"
     assert cfg.get("fail_under") == 7.0
+
+
+def test_example_exclude_extends_base():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "vrscore-exclude.toml")
+    assert Path(cfg["topology"]) == (root / "examples" / "topology.json").resolve()
+    assert cfg["exclude_asset"] == ["batch-worker"]
+    assert cfg["exclude_tag"] == ["dmz"]
+    rc = main(["--config", str(root / "examples" / "vrscore-exclude.toml"), "--limit", "5"])
+    assert rc == 0
+
+
+def test_example_multi_extends_base():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "vrscore-multi.toml")
+    assert Path(cfg["topology"]) == (root / "examples" / "topology.json").resolve()
+    assert len(cfg["findings"]) == 2
+    rc = main(["--config", str(root / "examples" / "vrscore-multi.toml"), "--limit", "5"])
+    assert rc == 0
+
+
+def test_example_tag_focus_overlay():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "vrscore-tag-focus.toml")
+    assert cfg["tag"] == ["pii", "identity"]
+    assert cfg.get("explain") is True  # from triage
+    assert cfg["band"] == ["critical", "high"]
+    rc = main(["--config", str(root / "examples" / "vrscore-tag-focus.toml"), "--limit", "5"])
+    assert rc == 0

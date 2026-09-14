@@ -37,10 +37,11 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 | `vrscore.json` | JSON + band + reachable filters |
 | `vrscore-triage.toml` | Explain + hop window + high/critical bands + dedupe |
 | `vrscore-ci.toml` | Quiet SARIF export + `fail_under` for Actions |
-| `vrscore-multi.toml` | Merge `findings.json` + `findings-extra.json` with dedupe |
-| `vrscore-exclude.toml` | Drop `batch-worker` + `dmz`-tagged assets via config excludes |
+| `vrscore-multi.toml` | Extends base; merge `findings.json` + `findings-extra.json` with dedupe |
+| `vrscore-exclude.toml` | Extends base; drop `batch-worker` + `dmz`-tagged assets via excludes |
 | `vrscore-kev.toml` | Extends triage with `only_kev` (layered overlay demo) |
 | `vrscore-medium.toml` | Extends triage; **replaces** `band` with medium only |
+| `vrscore-tag-focus.toml` | Extends triage; **replaces** `tag` with pii/identity focus |
 | `overlays/vrscore-ci.toml` | Extends `../vrscore-base.toml` from a subdirectory |
 | `overlays/README.md` | How defining-file path resolve works for overlays |
 | `overlays/vrscore-strict-ci.toml` | Extends overlay CI with `strict = true` |
@@ -54,6 +55,7 @@ vrscore -c examples/vrscore-multi.toml
 vrscore -c examples/vrscore-exclude.toml
 vrscore -c examples/vrscore-kev.toml
 vrscore -c examples/vrscore-medium.toml
+vrscore -c examples/vrscore-tag-focus.toml
 vrscore -c examples/overlays/vrscore-ci.toml -o /tmp/reachability.sarif
 vrscore -c examples/overlays/vrscore-strict-ci.toml -o /tmp/reachability.sarif
 # Override one knob without re-listing filters:
