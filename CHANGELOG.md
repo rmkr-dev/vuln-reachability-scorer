@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Config validation tests for type/parse errors, path resolve, and list-merge precedence.
+
 ## [0.2.5] - 2026-09-14
 
 ### Changed
