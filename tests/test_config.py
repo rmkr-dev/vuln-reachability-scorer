@@ -15,7 +15,7 @@ def test_load_toml_and_json(tmp_path: Path):
         encoding="utf-8",
     )
     cfg = load_config(toml)
-    assert cfg["topology"] == "topo.json"
+    assert Path(cfg["topology"]) == (tmp_path / "topo.json").resolve()
     assert cfg["format"] == "json"
     assert cfg["summary"] is True
     assert cfg["band"] == ["high", "critical"]
@@ -94,6 +94,9 @@ def test_config_findings_list(tmp_path: Path):
         encoding="utf-8",
     )
     loaded = load_config(cfg)
-    assert loaded["findings"] == ["f1.json", "f2.json"]
+    assert loaded["findings"] == [
+        str((tmp_path / "f1.json").resolve()),
+        str((tmp_path / "f2.json").resolve()),
+    ]
     rc = main(["--config", str(cfg)])
     assert rc == 0

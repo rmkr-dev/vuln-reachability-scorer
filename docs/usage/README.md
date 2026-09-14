@@ -246,7 +246,7 @@ Duplicate finding `id` values across files warn on stderr; `--strict` makes them
 
 ## Config file defaults
 
-Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the config file's directory. Optional `extends` loads a base config first (child keys overlay; [ADR-008](../decisions/ADR-008-config-extends.md)). See [ADR-006](../decisions/ADR-006-config-file.md) and the [config schema](../schemas/config.md).
+Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the directory of the file that defines them (important when `extends` crosses directories). Optional `extends` loads a base config first (child keys overlay; [ADR-008](../decisions/ADR-008-config-extends.md)). See [ADR-006](../decisions/ADR-006-config-file.md) and the [config schema](../schemas/config.md).
 
 ```bash
 vrscore --config examples/vrscore.toml
@@ -267,20 +267,6 @@ vrscore -c examples/vrscore-ci.toml -o /tmp/reachability.sarif
 ```
 
 Child keys overlay the base; list values replace (they do not concatenate). Cycles, missing `extends` targets, hop windows that disagree across base/overlay (`min_hops` > `max_hops`), and chains deeper than 8 are errors (exit 2).
-
-### Layered overlays
-
-Stack specialization without flag spam: shared paths → triage → KEV-only.
-
-```bash
-# base paths only
-# triage: explain + hop window + high/critical (extends base)
-vrscore -c examples/vrscore-triage.toml
-# kev: same triage filters, keep Known Exploited only (extends triage)
-vrscore -c examples/vrscore-kev.toml
-```
-
-`examples/vrscore-kev.toml` sets `extends = "vrscore-triage.toml"` plus `only_kev = true`. Override format/output on the CLI when needed.
 
 
 ## Timing stats

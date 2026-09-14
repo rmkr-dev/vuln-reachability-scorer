@@ -17,7 +17,7 @@ def test_extends_overlay(tmp_path: Path):
     child = tmp_path / "child.toml"
     child.write_text('extends = "base.toml"\nformat = "json"\nlimit = 3\n', encoding="utf-8")
     cfg = load_config(child)
-    assert cfg["topology"] == "t.json"
+    assert Path(cfg["topology"]) == (tmp_path / "t.json").resolve()
     assert cfg["format"] == "json"  # overlay wins
     assert cfg["summary"] is True
     assert cfg["limit"] == 3
@@ -107,7 +107,7 @@ def test_extends_json_from_toml(tmp_path: Path):
         encoding="utf-8",
     )
     cfg = load_config(child)
-    assert cfg["topology"] == "t.json"
+    assert Path(cfg["topology"]) == (tmp_path / "t.json").resolve()
     assert cfg["summary"] is True
     assert cfg["format"] == "json"
     assert cfg["limit"] == 2
@@ -131,12 +131,23 @@ def test_extends_depth_at_max_succeeds(tmp_path: Path):
     assert cfg["limit"] == MAX_EXTENDS_DEPTH - 1
 
 
-def test_example_kev_extends_triage():
-    root = Path(__file__).resolve().parents[1]
-    cfg = load_config(root / "examples" / "vrscore-kev.toml")
-    assert cfg["only_kev"] is True
-    assert cfg["topology"].endswith("topology.json") or cfg["topology"] == "topology.json"
-    assert cfg.get("explain") is True
-    assert cfg.get("band") == ["critical", "high"]
-    rc = main(["--config", str(root / "examples" / "vrscore-kev.toml"), "--limit", "5"])
-    assert rc == 0
+def test_extends_paths_resolve_against_defining_file(tmp_path: Path):
+    """Paths from a base in another directory must not resolve against the leaf."""
+    estate = tmp_path / "estate"
+    overlays = tmp_path / "overlays"
+    estate.mkdir()
+    overlays.mkdir()
+    (estate / "topology.json").write_text("{}", encoding="utf-8")
+    (estate / "findings.json").write_text("{}", encoding="utf-8")
+    (estate / "base.toml").write_text(
+        'topology = "topology.json"\nfindings = "findings.json"\n',
+        encoding="utf-8",
+    )
+    (overlays / "ci.toml").write_text(
+        'extends = "../estate/base.toml"\nformat = "sarif"\n',
+        encoding="utf-8",
+    )
+    cfg = load_config(overlays / "ci.toml")
+    assert Path(cfg["topology"]) == (estate / "topology.json").resolve()
+    assert Path(cfg["findings"]) == (estate / "findings.json").resolve()
+    assert cfg["format"] == "sarif"

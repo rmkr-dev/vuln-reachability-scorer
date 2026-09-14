@@ -107,7 +107,7 @@ def test_null_values_skipped(tmp_path: Path):
         json.dumps({"topology": "t.json", "explain": None, "limit": None}),
     )
     cfg = load_config(p)
-    assert cfg == {"topology": "t.json"}
+    assert cfg == {"topology": str((tmp_path / "t.json").resolve())}
 
 
 def test_resolve_and_merge_list_defaults(tmp_path: Path):

@@ -11,6 +11,7 @@ Operators want shared estate paths (`topology` / `findings`) with specialized tr
 
 - Support optional `extends` (string path) in JSON/TOML configs, resolved relative to the extending file.
 - Load the base first (recursively), then overlay keys from the child; list values **replace** (do not concatenate).
+- Relative `topology` / `findings` / `output` paths resolve against the **directory of the file that defines them** (so a base in another folder keeps its estate paths when extended).
 - Detect cycles, reject missing targets, and reject non-string / empty `extends`.
 - After merge, re-validate cross-key constraints (e.g. `min_hops` ≤ `max_hops`) on the composed result.
 - `extends` is reserved and not a CLI flag destination.
