@@ -20,6 +20,10 @@ dev = [
   "pytest>=7.4",
 ]
 
+[project.scripts]
+vrscore = "vuln_reachability_scorer.cli:main"
+vuln-reachability = "vuln_reachability_scorer.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
