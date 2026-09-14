@@ -9,8 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `--only-kev` to keep known-exploited findings only.
 - Nothing yet since the last release.
+
+## [0.1.5] - 2026-09-14
+
+### Added
+
+- `--only-kev` to keep known-exploited findings only.
 
 ## [0.1.4] - 2026-09-14
 
@@ -35,27 +40,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `--asset-report` per-asset reachability inventory (topology only).
-- Tag-based exposure boosts (`pii` / `identity` / `secrets` defaults; override via topology `tag_boosts`) ([ADR-002](docs/decisions/ADR-002-tag-exposure-boosts.md)).
-- `--explain` human-readable score rationales.
-- Warnings (and `--strict` errors) when topology edges reference unknown asset ids.
-- Usage cookbook under `docs/usage/`.
+- Tag-based exposure boosts ([ADR-002](docs/decisions/ADR-002-tag-exposure-boosts.md)).
+- `--explain`, `--strict`, usage cookbook.
 
 ## [0.1.1] - 2026-09-14
 
 ### Added
 
-- SARIF 2.1.0 output via `--format sarif`.
-- CSV output via `--format csv`.
-- `--output` / `-o`, `--min-priority`, `--limit`.
-- Input schemas, duplicate id validation, expanded tests.
+- SARIF/CSV formats, `--output`, `--min-priority`, `--limit`, schemas, validation, tests.
 
 ## [0.1.0] - 2026-09-14
 
 ### Added
 
-- Initial Python 3.12 package, scoring formula ([ADR-001](docs/decisions/ADR-001-scoring-model.md)), CLI, examples, CI.
+- Initial package, scoring formula ([ADR-001](docs/decisions/ADR-001-scoring-model.md)), CLI, examples, CI.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.1...v0.1.2
