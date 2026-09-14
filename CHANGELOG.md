@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `--show-title` adds a TITLE column to table output.
-- Additional edge-case tests for path cycles, KEV clamp, and empty summary.
 - Nothing yet since the last release.
+
+## [0.1.4] - 2026-09-14
+
+### Added
+
+- `--explain` includes reconstructed ingress→asset shortest path.
+- Additional edge-case tests for path cycles, KEV clamp, and empty summary.
+- `--show-title` adds a TITLE column to table output.
+- CISA KEV link in docs/references.
 
 ## [0.1.3] - 2026-09-14
 
@@ -36,28 +43,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- SARIF 2.1.0 output via `--format sarif` (`vuln_reachability_scorer.sarif`).
+- SARIF 2.1.0 output via `--format sarif`.
 - CSV output via `--format csv`.
-- `--output` / `-o` to write results to a file.
-- `--min-priority` to filter results below a priority threshold.
-- `--limit` to cap the number of emitted results after sorting/filtering.
-- Informal input field reference under `docs/schemas/`.
-- Duplicate asset/finding id validation in loaders.
-- Additional unit tests (graph, loaders, SARIF, file output, filters, examples smoke tests).
+- `--output` / `-o`, `--min-priority`, `--limit`.
+- Input schemas, duplicate id validation, expanded tests.
 
 ## [0.1.0] - 2026-09-14
 
 ### Added
 
-- Python 3.12 package `vuln-reachability-scorer` with CLI entry points `vrscore` and `vuln-reachability`.
-- Domain models for `Asset`, `Edge`, `Finding`, and `ScoredFinding`.
-- Reachability-aware scoring: `priority = base_score × reachability_factor × exposure_factor` ([ADR-001](docs/decisions/ADR-001-scoring-model.md)).
-- Example topology and findings under `examples/`.
-- Unit tests for models, scoring, and CLI.
-- GitHub Actions CI via `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.2.0`.
-- Dependabot, CODEOWNERS, SECURITY.md, PR template, and foundation docs.
+- Initial Python 3.12 package, scoring formula ([ADR-001](docs/decisions/ADR-001-scoring-model.md)), CLI, examples, CI.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
