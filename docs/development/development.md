@@ -19,6 +19,12 @@ python -m compileall -q src
 vrscore --topology examples/topology.json --findings examples/findings.json
 ```
 
+## CI
+
+Pull requests and pushes to `main` run [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml), which calls the reusable workflow `rmkr-dev/gha-reusable-workflows/.github/workflows/python-ci.yml@v0.2.0` (Python 3.12, compile/lint, pytest).
+
+Dependabot watches GitHub Actions and pip dependencies weekly (`.github/dependabot.yml`).
+
 ## Workflow
 
 1. Branch from `main`.
@@ -31,3 +37,4 @@ vrscore --topology examples/topology.json --findings examples/findings.json
 - Respect `.editorconfig` / `.gitattributes`
 - No Node/npm
 - No secrets in fixtures
+- Default code owner: `@rmkr-dev` (`.github/CODEOWNERS`)
