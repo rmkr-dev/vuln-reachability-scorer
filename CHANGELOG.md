@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Nothing yet since the last release.
+
+## [0.1.1] - 2026-09-14
+
+### Added
+
 - SARIF 2.1.0 output via `--format sarif` (`vuln_reachability_scorer.sarif`).
 - CSV output via `--format csv`.
 - `--output` / `-o` to write results to a file.
@@ -30,5 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions CI via `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.2.0`.
 - Dependabot, CODEOWNERS, SECURITY.md, PR template, and foundation docs.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/releases/tag/v0.1.0
