@@ -152,6 +152,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep findings with epss >= P (findings without epss are dropped)",
     )
     parser.add_argument(
+        "--asset",
+        action="append",
+        default=None,
+        metavar="ID",
+        help="Keep findings for this asset id only (repeatable)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -454,6 +461,9 @@ def main(argv: list[str] | None = None) -> int:
             for s in scored
             if s.finding.epss is not None and s.finding.epss >= args.min_epss
         ]
+    if args.asset:
+        wanted = set(args.asset)
+        scored = [s for s in scored if s.finding.asset_id in wanted]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:

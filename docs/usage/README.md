@@ -110,6 +110,14 @@ vrscore -t examples/topology.json -f examples/findings.json --min-epss 0.5 --exp
 
 Keeps findings with `epss >= P`. Findings that omit `epss` are dropped when this flag is set. `P` must be in `[0, 1]`.
 
+## Scope to specific assets
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --asset web-app --asset auth --explain
+```
+
+Repeat `--asset` to union asset ids. Unknown ids simply yield an empty match set for that id.
+
 ## Topology pitfalls
 
 Edges are **directed**. A path `db -> api` does not make `db` reachable from an ingress `api`. Other cases the scorer already covers:
@@ -146,5 +154,6 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--max-hops N` | Keep hop_distance <= N |
 | `--band BAND` | Keep priority band(s); repeatable |
 | `--min-epss P` | Keep epss >= P (omitters dropped) |
+| `--asset ID` | Keep findings for asset id(s); repeatable |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |
