@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Optional finding `epss` (FIRST EPSS probability in `[0, 1]`) applies a `1 + 0.20 × epss` multiplier after KEV, clamped at 10.0 ([ADR-004](docs/decisions/ADR-004-epss-factor.md)).
 - Architecture diagram refresh and usage flag cheatsheet.
-- Nothing yet since the last release.
 
 ## [0.1.5] - 2026-09-14
 

@@ -4,13 +4,13 @@
 flowchart LR
   subgraph inputs [Inputs]
     T[topology.json + tag_boosts]
-    F[findings.json + kev]
+    F[findings.json + kev + epss]
   end
 
   subgraph core [src/vuln_reachability_scorer]
     L[loaders]
     G[graph / paths]
-    S[scoring + tag boosts + KEV]
+    S[scoring + tag boosts + KEV + EPSS]
     A[asset_report]
     E[explain / summary]
     C[cli]
