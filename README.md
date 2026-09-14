@@ -54,7 +54,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.2.2** — `--min-hops`, `--stats`, cross-file duplicate finding id checks; builds on v0.2.1 config/multi-findings. See [CHANGELOG.md](CHANGELOG.md).
+**v0.2.3** — exclude filters (`--exclude-asset`/`--exclude-cve`/`--exclude-tag`), `py.typed`, plus prior 0.2.x config/perf. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 

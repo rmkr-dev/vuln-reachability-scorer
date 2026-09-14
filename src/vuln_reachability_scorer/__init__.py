@@ -1,6 +1,6 @@
 """Topology-aware vulnerability reachability scorer."""
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 
 from vuln_reachability_scorer.models import Asset, Edge, Finding, ScoredFinding
 from vuln_reachability_scorer.scoring import score_findings
