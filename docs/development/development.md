@@ -68,6 +68,7 @@ Config loading is covered without adding CLI flags ([ADR-007](../decisions/ADR-0
 | `tests/test_config_extends.py` | `extends` overlay, cycles, max depth, hop-window merge, defining-file paths, examples |
 | `tests/test_config_cli_enum_sync.py` | ALLOWED_* stays synced with argparse |
 | `tests/test_config_schema_sync.py` | `vrscore.schema.json` properties ↔ `CONFIG_KEYS` + `extends` |
+| `tests/test_example_config_extends_load.py` | Every `examples/**/vrscore*` config loads via `load_config` |
 | `tests/test_example_configs.py` | Shipped `examples/vrscore-*.toml` load/run |
 
 Prefer growing these tests when changing `config.py`.
