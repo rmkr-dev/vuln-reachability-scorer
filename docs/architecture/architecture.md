@@ -30,6 +30,7 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 | `explain.py` | Human-readable score rationales |
 | `paths.py` | Shortest ingress→asset path reconstruction |
 | `summary.py` | Priority band aggregates (incl. kev/epss counts) |
+| `config.py` | JSON/TOML CLI defaults (`--config` / `VRSCORE_CONFIG`) |
 | `cli.py` | argparse entrypoint |
 
 ## CI and hygiene
