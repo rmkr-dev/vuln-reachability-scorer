@@ -76,3 +76,24 @@ def test_unsupported_extension(tmp_path: Path):
     p.write_text("topology: t\n", encoding="utf-8")
     with pytest.raises(ConfigError, match="unsupported"):
         load_config(p)
+
+
+def test_config_findings_list(tmp_path: Path):
+    topo = {
+        "assets": [{"id": "i", "name": "I", "ingress": True, "criticality": 1.0}],
+        "edges": [],
+    }
+    f1 = {"findings": [{"id": "a", "asset_id": "i", "base_score": 5.0, "cve_id": "CVE-1"}]}
+    f2 = {"findings": [{"id": "b", "asset_id": "i", "base_score": 6.0, "cve_id": "CVE-2"}]}
+    (tmp_path / "t.json").write_text(json.dumps(topo), encoding="utf-8")
+    (tmp_path / "f1.json").write_text(json.dumps(f1), encoding="utf-8")
+    (tmp_path / "f2.json").write_text(json.dumps(f2), encoding="utf-8")
+    cfg = tmp_path / "c.toml"
+    cfg.write_text(
+        'topology = "t.json"\nfindings = ["f1.json", "f2.json"]\nformat = "json"\n',
+        encoding="utf-8",
+    )
+    loaded = load_config(cfg)
+    assert loaded["findings"] == ["f1.json", "f2.json"]
+    rc = main(["--config", str(cfg)])
+    assert rc == 0

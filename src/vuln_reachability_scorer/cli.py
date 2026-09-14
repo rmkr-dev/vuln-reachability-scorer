@@ -107,7 +107,9 @@ def build_parser() -> argparse.ArgumentParser:
         "--findings",
         "-f",
         type=Path,
-        help="Path to findings JSON (required unless --asset-report)",
+        action="append",
+        default=None,
+        help="Path to findings JSON (repeatable; merged in order; required unless --asset-report)",
     )
     parser.add_argument(
         "--format",
@@ -617,22 +619,25 @@ def main(argv: list[str] | None = None) -> int:
 
     parser = build_parser()
     config_defaults: dict = {}
+    resolved_defaults: dict = {}
     if pre_args.config is not None:
         try:
             config_defaults = load_config(pre_args.config)
         except ConfigError as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 2
-        apply_config_defaults(parser, config_defaults, config_dir=pre_args.config.parent)
+        resolved_defaults = apply_config_defaults(
+            parser, config_defaults, config_dir=pre_args.config.parent
+        )
     args = parser.parse_args(argv)
-    if config_defaults:
-        merge_list_defaults(args, config_defaults)
+    if resolved_defaults:
+        merge_list_defaults(args, resolved_defaults)
 
     if args.topology is None:
         print("error: --topology is required (pass -t or set topology in --config)", file=sys.stderr)
         return 2
 
-    if not args.asset_report and args.findings is None:
+    if not args.asset_report and not args.findings:
         parser.error("--findings is required unless --asset-report is set")
 
     if args.min_priority < 0:
@@ -657,7 +662,10 @@ def main(argv: list[str] | None = None) -> int:
     try:
         assets, edges = load_topology(args.topology)
         tag_boosts = load_tag_boosts(args.topology)
-        findings = load_findings(args.findings) if args.findings is not None else []
+        findings = []
+        if args.findings:
+            for fpath in args.findings:
+                findings.extend(load_findings(fpath))
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

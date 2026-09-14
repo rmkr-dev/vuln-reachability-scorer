@@ -201,6 +201,16 @@ Commit a project config (for example `vrscore.toml` next to your topology) and c
 
 Use `--quiet` in CI logs when edge warnings are expected noise; keep `--strict` when topology hygiene is a hard requirement. Pin this repo's reusable Python CI at `@v0.4.0` (see [development](../development/development.md)).
 
+## Multiple findings files
+
+Repeat `-f` / `--findings` to merge scanner exports (order preserved; later files append):
+
+```bash
+vrscore -t examples/topology.json -f scan-a.json -f scan-b.json --dedupe --summary
+```
+
+In a config file, `findings` may be a string or a list of paths.
+
 ## Config file defaults
 
 Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the config file's directory. See [ADR-006](../decisions/ADR-006-config-file.md) and the [config schema](../schemas/config.md).
@@ -225,7 +235,7 @@ For estates with tens of thousands of assets, prefer JSON/JSONL/CSV over the tab
 | --- | --- |
 | `-c` / `--config` | JSON/TOML defaults (flags override) |
 | `-t` / `--topology` | Topology JSON (required; or via config) |
-| `-f` / `--findings` | Findings JSON (required unless `--asset-report`) |
+| `-f` / `--findings` | Findings JSON (repeatable merge; required unless `--asset-report`) |
 | `--format` | `table` \| `json` \| `jsonl` \| `csv` \| `tsv` \| `sarif` \| `html` \| `markdown` \| `junit` |
 | `-o` / `--output` | Write to file |
 | `--asset-report` | Per-asset reachability inventory |

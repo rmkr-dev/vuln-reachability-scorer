@@ -13,7 +13,7 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 | Key | Type | Notes |
 | --- | --- | --- |
 | `topology` | string (path) | Topology JSON |
-| `findings` | string (path) | Findings JSON |
+| `findings` | string or list of paths | Findings JSON (list merges in order) |
 | `format` | string | `table` \| `json` \| `jsonl` \| `csv` \| `tsv` \| `sarif` \| `html` \| `markdown` \| `junit` |
 | `output` | string (path) | Write results to file |
 | `min_priority` | number | Omit below threshold |

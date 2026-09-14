@@ -15,6 +15,7 @@ Operators repeat long `vrscore` flag sets across local triage and CI. We want a 
 - Relative `topology` / `findings` / `output` paths resolve against the config file's directory.
 - List flags (`band`, `asset`, `cve`, `tag`) use config values only when the corresponding CLI flag is absent (argparse `append` would otherwise concatenate).
 - No cwd auto-discovery in this release — config is opt-in via `--config`.
+- `findings` may be a string or a list of paths (merged in order), matching repeatable `-f`.
 
 ## Consequences
 
