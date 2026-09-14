@@ -242,6 +242,10 @@ def load_config(
         if not isinstance(extends, str) or not extends.strip():
             raise ConfigError(f"config: extends must be a non-empty string in {path}")
         base_path = (path.parent / extends).resolve()
+        if base_path.is_dir():
+            raise ConfigError(
+                f"config: extends target is a directory, not a file: {base_path} (from {path})"
+            )
         if not base_path.is_file():
             raise ConfigError(
                 f"config: extends target not found: {base_path} (from {path})"

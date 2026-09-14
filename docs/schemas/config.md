@@ -57,3 +57,7 @@ Relative `topology` / `findings` / `output` paths resolve against the directory 
 See `examples/vrscore.toml`, `examples/vrscore.json`, `examples/vrscore-triage.toml`, and `examples/vrscore-ci.toml`.
 
 Cross-format `extends` is supported (e.g. a `.json` overlay may `extends` a `.toml` base). List keys in the child **replace** the base list.
+
+## JSON Schema
+
+A draft schema lives at [`vrscore.schema.json`](vrscore.schema.json) for editor tooling. Runtime validation remains in `config.py`.

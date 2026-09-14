@@ -72,3 +72,5 @@ Optional finding field `epss` is a FIRST Exploit Prediction Scoring System proba
 ## Config file
 
 See [config.md](config.md) for `--config` / `-c` JSON and TOML keys ([ADR-006](../decisions/ADR-006-config-file.md)).
+
+Optional machine-readable draft: [vrscore.schema.json](vrscore.schema.json) (`additionalProperties: false`, mirrors `CONFIG_KEYS` + `extends`). The CLI does **not** load this file at runtime — validation stays in `config.py` (no schema dependency).
