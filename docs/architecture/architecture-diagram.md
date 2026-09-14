@@ -17,7 +17,7 @@ flowchart LR
   end
 
   subgraph out [Output]
-    R[table / JSON / CSV / SARIF / HTML]
+    R[table / JSON / CSV / SARIF / HTML / Markdown]
   end
 
   subgraph automation [GitHub]

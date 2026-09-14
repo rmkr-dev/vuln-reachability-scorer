@@ -24,6 +24,7 @@ vrscore -t examples/topology.json --asset-report --format csv -o assets.csv
 vrscore -t examples/topology.json -f examples/findings.json --format csv -o scores.csv
 vrscore -t examples/topology.json -f examples/findings.json --format sarif -o scores.sarif
 vrscore -t examples/topology.json -f examples/findings.json --format html -o report.html
+vrscore -t examples/topology.json -f examples/findings.json --format markdown -o report.md
 ```
 
 ## Focus triage
@@ -102,7 +103,7 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | --- | --- |
 | `-t` / `--topology` | Topology JSON (required) |
 | `-f` / `--findings` | Findings JSON (required unless `--asset-report`) |
-| `--format` | `table` \| `json` \| `csv` \| `sarif` \| `html` |
+| `--format` | `table` \| `json` \| `csv` \| `sarif` \| `html` \| `markdown` |
 | `-o` / `--output` | Write to file |
 | `--asset-report` | Per-asset reachability inventory |
 | `--explain` | Human rationale + shortest path |

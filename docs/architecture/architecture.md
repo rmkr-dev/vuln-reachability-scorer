@@ -10,7 +10,7 @@ Data flow:
 2. **Findings JSON** — vulnerability records bound to an asset id with a numeric `base_score` (`loaders.load_findings`).
 3. **Graph** — adjacency + shortest hop distance from ingress nodes (`graph.py`).
 4. **Scoring** — `priority = base_score × reachability_factor × exposure_factor` (`scoring.py`; see [ADR-001](../decisions/ADR-001-scoring-model.md)).
-5. **CLI** — `vrscore` / `vuln-reachability` prints a ranked table, JSON, CSV, SARIF 2.1.0, or HTML (`cli.py`, `sarif.py`, `html_report.py`). Optional finding `epss` is applied in scoring ([ADR-004](../decisions/ADR-004-epss-factor.md)).
+5. **CLI** — `vrscore` / `vuln-reachability` prints a ranked table, JSON, CSV, SARIF 2.1.0, HTML, or Markdown (`cli.py`, `sarif.py`, `html_report.py`, `markdown_report.py`). Optional finding `epss` is applied in scoring ([ADR-004](../decisions/ADR-004-epss-factor.md)).
 
 Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0.3.0`.
 
@@ -24,6 +24,7 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 | `loaders.py` | JSON → models |
 | `sarif.py` | SARIF 2.1.0 document builder |
 | `html_report.py` | Self-contained HTML report |
+| `markdown_report.py` | GitHub-flavored Markdown table report |
 | `asset_report.py` | Per-asset reachability inventory |
 | `explain.py` | Human-readable score rationales |
 | `paths.py` | Shortest ingress→asset path reconstruction |
