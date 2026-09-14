@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Example `vrscore-epss.toml` layers an EPSS floor on triage via `extends`.
 - Guard test that `examples/overlays/README.md` indexes overlay configs.
 - Ignore generated `examples/**/*.sarif` demo artifacts in `.gitignore`.
+- Example `vrscore-hop-window.toml` encodes a hop window via `extends`.
+- Tests for `./` relative `extends`, object `extends`, and unknown overlay keys.
 
 ## [0.3.9] - 2026-09-14
 
