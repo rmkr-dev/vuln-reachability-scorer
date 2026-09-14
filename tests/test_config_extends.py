@@ -329,3 +329,39 @@ def test_example_epss_overlay():
     assert cfg.get("explain") is True
     rc = main(["--config", str(root / "examples" / "vrscore-epss.toml"), "--limit", "5"])
     assert rc == 0
+
+
+def test_extends_dot_slash_relative(tmp_path: Path):
+    base = tmp_path / "base.toml"
+    base.write_text('format = "table"\nsummary = true\n', encoding="utf-8")
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "./base.toml"\nformat = "json"\n', encoding="utf-8")
+    cfg = load_config(child)
+    assert cfg["format"] == "json"
+    assert cfg["summary"] is True
+
+
+def test_extends_object_rejected(tmp_path: Path):
+    p = tmp_path / "bad.json"
+    p.write_text(json.dumps({"extends": {"path": "x.toml"}, "format": "json"}), encoding="utf-8")
+    with pytest.raises(ConfigError, match="extends must be a non-empty string"):
+        load_config(p)
+
+
+def test_extends_unknown_key_in_overlay(tmp_path: Path):
+    base = tmp_path / "base.toml"
+    base.write_text('format = "json"\n', encoding="utf-8")
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "base.toml"\nnot_a_real_key = true\n', encoding="utf-8")
+    with pytest.raises(ConfigError, match="unknown key"):
+        load_config(child)
+
+
+def test_example_hop_window_overlay():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "vrscore-hop-window.toml")
+    assert cfg["min_hops"] == 1
+    assert cfg["max_hops"] == 2
+    assert Path(cfg["topology"]) == (root / "examples" / "topology.json").resolve()
+    rc = main(["--config", str(root / "examples" / "vrscore-hop-window.toml"), "--limit", "5"])
+    assert rc == 0

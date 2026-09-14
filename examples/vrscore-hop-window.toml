@@ -1,0 +1,9 @@
+# Hop-window overlay — extends base; sets min/max hops without flag spam (ADR-007).
+extends = "vrscore-base.toml"
+min_hops = 1
+max_hops = 2
+only_reachable = true
+format = "table"
+summary = true
+sort = "hops"
+dedupe = true
