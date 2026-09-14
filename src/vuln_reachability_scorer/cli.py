@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import time
 import csv
 import json
@@ -284,7 +285,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--config",
         "-c",
         type=Path,
-        help="JSON or TOML config file with CLI defaults (flags override)",
+        help="JSON or TOML config file with CLI defaults (flags override; or VRSCORE_CONFIG)",
     )
     parser.add_argument(
         "--version",
@@ -651,17 +652,23 @@ def main(argv: list[str] | None = None) -> int:
     pre.add_argument("--config", "-c", type=Path)
     pre_args, _ = pre.parse_known_args(argv)
 
+    config_path = pre_args.config
+    if config_path is None:
+        env_cfg = os.environ.get("VRSCORE_CONFIG", "").strip()
+        if env_cfg:
+            config_path = Path(env_cfg)
+
     parser = build_parser()
     config_defaults: dict = {}
     resolved_defaults: dict = {}
-    if pre_args.config is not None:
+    if config_path is not None:
         try:
-            config_defaults = load_config(pre_args.config)
+            config_defaults = load_config(config_path)
         except ConfigError as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         resolved_defaults = apply_config_defaults(
-            parser, config_defaults, config_dir=pre_args.config.parent
+            parser, config_defaults, config_dir=config_path.parent
         )
     args = parser.parse_args(argv)
     if resolved_defaults:

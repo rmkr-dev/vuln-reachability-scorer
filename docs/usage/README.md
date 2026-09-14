@@ -230,7 +230,7 @@ vrscore -c examples/vrscore.json --format table --band low
 vrscore -c examples/vrscore.toml --fail-under 7 --summary
 ```
 
-There is no automatic cwd discovery; omit `--config` to keep today's flag-only behavior.
+There is no automatic cwd discovery. Set `VRSCORE_CONFIG=/path/to/vrscore.toml` as an alternative to `--config` (the flag wins if both are set).
 
 ## Timing stats
 
