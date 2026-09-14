@@ -42,7 +42,7 @@ vrscore -t examples/topology.json --asset-report
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0), `html` (self-contained report), `markdown` (GFM table). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--summary` for band counts on stderr. Use `--fail-under SCORE` as a CI gate. Use `--show-title` to include titles in the table. Use `--only-kev` to filter to KEV findings. Use `--only-reachable` to drop findings on unreachable assets. Use `--max-hops N` to keep findings within N hops of ingress. Use `--strict` to fail on edges that reference unknown assets. Use `--asset-report` for a per-asset reachability inventory (no findings file).
+Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0), `html` (self-contained report), `markdown` (GFM table). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--summary` for band counts on stderr. Use `--fail-under SCORE` as a CI gate. Use `--show-title` to include titles in the table. Use `--only-kev` to filter to KEV findings. Use `--only-reachable` to drop findings on unreachable assets. Use `--max-hops N` to keep findings within N hops of ingress. Use `--band critical` (repeatable) to filter by priority band. Use `--strict` to fail on edges that reference unknown assets. Use `--asset-report` for a per-asset reachability inventory (no findings file).
 
 Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 

@@ -94,6 +94,14 @@ vrscore -t examples/topology.json -f examples/findings.json --max-hops 1 --expla
 
 Keeps findings with `hop_distance <= N` and drops unreachable assets. `--max-hops 0` is ingress-only.
 
+## Filter by priority band
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --band critical --band high --summary
+```
+
+Bands match `--summary`: `critical` ≥ 9, `high` ≥ 7, `medium` ≥ 4, `low` < 4. Repeat `--band` to union bands.
+
 ## Topology pitfalls
 
 Edges are **directed**. A path `db -> api` does not make `db` reachable from an ingress `api`. Other cases the scorer already covers:
@@ -128,5 +136,6 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--only-kev` | Keep `kev: true` findings only |
 | `--only-reachable` | Drop unreachable assets |
 | `--max-hops N` | Keep hop_distance <= N |
+| `--band BAND` | Keep priority band(s); repeatable |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |
