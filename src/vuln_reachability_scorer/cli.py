@@ -12,6 +12,7 @@ from pathlib import Path
 from vuln_reachability_scorer import __version__
 from vuln_reachability_scorer.asset_report import report_assets
 from vuln_reachability_scorer.explain import explain_score
+from vuln_reachability_scorer.paths import format_path, shortest_path
 from vuln_reachability_scorer.loaders import (
     load_findings,
     load_tag_boosts,
@@ -103,7 +104,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _print_table(scored: list, sink, explain: bool = False) -> None:
+def _print_table(scored: list, sink, explain: bool = False, path_by_asset: dict | None = None) -> None:
     headers = (
         "PRIORITY",
         "BASE",
@@ -140,7 +141,11 @@ def _print_table(scored: list, sink, explain: bool = False) -> None:
     for idx, row in enumerate(rows):
         print(fmt(row), file=sink)
         if explain:
-            print(f"  # {explain_score(scored[idx])}", file=sink)
+            asset_id = scored[idx].finding.asset_id
+            path_txt = None
+            if path_by_asset is not None:
+                path_txt = format_path(path_by_asset.get(asset_id))
+            print(f"  # {explain_score(scored[idx], path_txt)}", file=sink)
 
 
 def _render_csv(scored: list) -> str:
@@ -176,13 +181,27 @@ def _render_csv(scored: list) -> str:
     return buf.getvalue()
 
 
-def _render(scored: list, fmt: str, explain: bool = False) -> str:
+def _render(scored: list, fmt: str, explain: bool = False, path_by_asset: dict | None = None) -> str:
     if fmt == "json":
         payload = {
             "version": __version__,
             "formula": "priority = base_score * reachability_factor * exposure_factor",
             "results": [
-                {**s.as_dict(), **({"explain": explain_score(s)} if explain else {})}
+                {
+                    **s.as_dict(),
+                    **(
+                        {
+                            "explain": explain_score(
+                                s,
+                                format_path(path_by_asset.get(s.finding.asset_id))
+                                if path_by_asset is not None
+                                else None,
+                            )
+                        }
+                        if explain
+                        else {}
+                    ),
+                }
                 for s in scored
             ],
         }
@@ -335,15 +354,27 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit > 0:
         scored = scored[: args.limit]
 
+    path_by_asset = None
+    if args.explain:
+        path_by_asset = {
+            a.id: shortest_path(a.id, assets, edges) for a in assets
+        }
+
     try:
         if args.format == "table":
             if args.output is not None:
                 with args.output.open("w", encoding="utf-8") as fh:
-                    _print_table(scored, fh, explain=args.explain)
+                    _print_table(
+                        scored, fh, explain=args.explain, path_by_asset=path_by_asset
+                    )
             else:
-                _print_table(scored, sys.stdout, explain=args.explain)
+                _print_table(
+                    scored, sys.stdout, explain=args.explain, path_by_asset=path_by_asset
+                )
         else:
-            text = _render(scored, args.format, explain=args.explain)
+            text = _render(
+                scored, args.format, explain=args.explain, path_by_asset=path_by_asset
+            )
             if args.output is not None:
                 args.output.write_text(text, encoding="utf-8")
             else:
