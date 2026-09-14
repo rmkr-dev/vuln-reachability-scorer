@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.3.2** — extends hop-window merge validation, defining-file path resolve, layered/cross-dir examples. See [CHANGELOG.md](CHANGELOG.md).
+**v0.3.3** — draft config JSON Schema + sync guards, overlays README, medium-band example, clearer extends directory errors. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
