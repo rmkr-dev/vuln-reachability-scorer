@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Example `vrscore-tag-focus.toml` layers a `tag` list-replace on triage via `extends`.
+- Tests for TOML←JSON `extends` and non-string `extends` rejection.
 
 ## [0.3.8] - 2026-09-14
 

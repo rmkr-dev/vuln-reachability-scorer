@@ -275,7 +275,7 @@ vrscore -c examples/vrscore-triage.toml
 vrscore -c examples/vrscore-ci.toml -o /tmp/reachability.sarif
 ```
 
-Child keys overlay the base; list values replace (they do not concatenate). Cycles, missing `extends` targets, hop windows that disagree across base/overlay (`min_hops` > `max_hops`), and chains deeper than 8 are errors (exit 2).
+Child keys overlay the base; list values replace (they do not concatenate). Cross-format chains work (TOML↔JSON). Cycles, missing `extends` targets, non-string `extends`, hop windows that disagree across base/overlay (`min_hops` > `max_hops`), and chains deeper than 8 are errors (exit 2).
 
 ### Layered overlays
 
