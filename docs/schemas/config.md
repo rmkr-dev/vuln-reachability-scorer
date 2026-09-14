@@ -46,6 +46,7 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 
 - Unknown keys are errors (exit 2).
 - `format` / `sort` must match CLI choices; `band` entries must be `critical` / `high` / `medium` / `low`.
+- `min_epss` must be in `[0, 1]`; `min_priority` / `fail_under` / `min_base` / `limit` / `max_hops` / `min_hops` must be `>= 0`.
 - List keys apply only when the matching CLI flag is absent.
 
 ## Examples
