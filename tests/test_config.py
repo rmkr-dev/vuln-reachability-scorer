@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 
+from vuln_reachability_scorer.cli import main
 from vuln_reachability_scorer.config import ConfigError, load_config
 
 
@@ -31,6 +32,43 @@ def test_unknown_key_rejected(tmp_path: Path):
     p.write_text('{"topology": "t.json", "nope": 1}', encoding="utf-8")
     with pytest.raises(ConfigError, match="unknown key"):
         load_config(p)
+
+
+def test_cli_config_runs_examples(tmp_path: Path):
+    root = Path(__file__).resolve().parents[1]
+    cfg = root / "examples" / "vrscore.toml"
+    assert cfg.is_file()
+    rc = main(["--config", str(cfg), "--format", "json", "--limit", "2"])
+    assert rc == 0
+
+
+def test_cli_overrides_config(tmp_path: Path, capsys):
+    root = Path(__file__).resolve().parents[1]
+    cfg = root / "examples" / "vrscore.json"
+    # config asks for json + band filter; CLI forces table and drops band via full rescore path
+    rc = main(["--config", str(cfg), "--format", "table", "--band", "low"])
+    assert rc == 0
+    out = capsys.readouterr().out
+    assert "PRIORITY" in out
+
+
+def test_config_relative_paths(tmp_path: Path):
+    # copy mini topology/findings next to config
+    topo = {
+        "assets": [{"id": "i", "name": "I", "ingress": True, "criticality": 1.0}],
+        "edges": [],
+    }
+    findings = {
+        "findings": [
+            {"id": "f1", "asset_id": "i", "base_score": 9.0, "cve_id": "CVE-1"}
+        ]
+    }
+    (tmp_path / "t.json").write_text(json.dumps(topo), encoding="utf-8")
+    (tmp_path / "f.json").write_text(json.dumps(findings), encoding="utf-8")
+    cfg = tmp_path / "c.toml"
+    cfg.write_text('topology = "t.json"\nfindings = "f.json"\nformat = "json"\n', encoding="utf-8")
+    rc = main(["--config", str(cfg)])
+    assert rc == 0
 
 
 def test_unsupported_extension(tmp_path: Path):

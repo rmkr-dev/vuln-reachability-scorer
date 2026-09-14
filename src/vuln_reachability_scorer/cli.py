@@ -25,6 +25,12 @@ from vuln_reachability_scorer.junit_report import to_junit
 from vuln_reachability_scorer.sarif import to_sarif
 from vuln_reachability_scorer.scoring import score_findings
 from vuln_reachability_scorer.summary import format_summary_line, summarize
+from vuln_reachability_scorer.config import (
+    ConfigError,
+    apply_config_defaults,
+    load_config,
+    merge_list_defaults,
+)
 
 
 
@@ -95,8 +101,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--topology",
         "-t",
         type=Path,
-        required=True,
-        help="Path to topology JSON (assets + edges)",
+        help="Path to topology JSON (assets + edges); may come from --config",
     )
     parser.add_argument(
         "--findings",
@@ -238,6 +243,12 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         metavar="TAG",
         help="Keep findings on assets that have this tag (repeatable; OR semantics)",
+    )
+    parser.add_argument(
+        "--config",
+        "-c",
+        type=Path,
+        help="JSON or TOML config file with CLI defaults (flags override)",
     )
     parser.add_argument(
         "--version",
@@ -599,8 +610,27 @@ def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    pre = argparse.ArgumentParser(add_help=False)
+    pre.add_argument("--config", "-c", type=Path)
+    pre_args, _ = pre.parse_known_args(argv)
+
     parser = build_parser()
+    config_defaults: dict = {}
+    if pre_args.config is not None:
+        try:
+            config_defaults = load_config(pre_args.config)
+        except ConfigError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        apply_config_defaults(parser, config_defaults, config_dir=pre_args.config.parent)
     args = parser.parse_args(argv)
+    if config_defaults:
+        merge_list_defaults(args, config_defaults)
+
+    if args.topology is None:
+        print("error: --topology is required (pass -t or set topology in --config)", file=sys.stderr)
+        return 2
 
     if not args.asset_report and args.findings is None:
         parser.error("--findings is required unless --asset-report is set")
