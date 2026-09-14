@@ -62,6 +62,27 @@ def _sort_scored(scored: list, key: str) -> list:
     return scored
 
 
+
+def _dedupe_scored(scored: list) -> list:
+    best: dict[tuple[str, str], object] = {}
+    order: list[tuple[str, str]] = []
+    for s in scored:
+        cve = (s.finding.cve_id or "").strip() or s.finding.id
+        key = (cve.upper(), s.finding.asset_id)
+        prev = best.get(key)
+        if prev is None:
+            best[key] = s
+            order.append(key)
+        elif s.priority_score > prev.priority_score:  # type: ignore[union-attr]
+            best[key] = s
+        elif (
+            s.priority_score == prev.priority_score  # type: ignore[union-attr]
+            and s.finding.id < prev.finding.id  # type: ignore[union-attr]
+        ):
+            best[key] = s
+    return [best[k] for k in order]  # type: ignore[misc]
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="vrscore",
@@ -205,6 +226,11 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("priority", "base", "hops", "asset", "cve"),
         default="priority",
         help="Sort results (default: priority desc; hops asc with nulls last)",
+    )
+    parser.add_argument(
+        "--dedupe",
+        action="store_true",
+        help="Keep highest-priority finding per (cve_id, asset_id); empty cve uses finding id",
     )
     parser.add_argument(
         "--version",
@@ -556,6 +582,8 @@ def main(argv: list[str] | None = None) -> int:
         scored = [s for s in scored if s.finding.base_score >= args.min_base]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
+    if args.dedupe:
+        scored = _dedupe_scored(scored)
     if args.sort != "priority":
         scored = _sort_scored(scored, args.sort)
     if args.limit > 0:
