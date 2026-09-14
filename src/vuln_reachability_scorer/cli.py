@@ -8,7 +8,11 @@ import sys
 from pathlib import Path
 
 from vuln_reachability_scorer import __version__
-from vuln_reachability_scorer.loaders import load_findings, load_topology
+from vuln_reachability_scorer.loaders import (
+    load_findings,
+    load_topology,
+    unknown_edge_endpoints,
+)
 from vuln_reachability_scorer.sarif import to_sarif
 from vuln_reachability_scorer.explain import explain_score
 from vuln_reachability_scorer.scoring import score_findings
@@ -64,6 +68,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--explain",
         action="store_true",
         help="Include human-readable score explanations (table notes / JSON explain field)",
+    )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Treat unknown edge endpoints as errors instead of warnings",
     )
     parser.add_argument(
         "--version",
@@ -184,6 +193,13 @@ def main(argv: list[str] | None = None) -> int:
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+
+    edge_warnings = unknown_edge_endpoints(assets, edges)
+    if edge_warnings:
+        for msg in edge_warnings:
+            print(f"{'error' if args.strict else 'warning'}: {msg}", file=sys.stderr)
+        if args.strict:
+            return 2
 
     scored = score_findings(findings, assets, edges)
     if args.min_priority > 0:

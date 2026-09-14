@@ -44,3 +44,7 @@ Either a bare array or an object with a `findings` array:
   ]
 }
 ```
+
+## Edge endpoint checks
+
+Edges whose `source` or `target` is not in `assets` produce a CLI **warning**. Pass `--strict` to treat those as errors (exit code 2).

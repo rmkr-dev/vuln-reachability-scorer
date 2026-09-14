@@ -33,6 +33,20 @@ def load_topology(path: Path) -> tuple[list[Asset], list[Edge]]:
     return assets, edges
 
 
+def unknown_edge_endpoints(assets: list[Asset], edges: list[Edge]) -> list[str]:
+    """Return warning strings for edges that reference missing asset ids."""
+    known = {a.id for a in assets}
+    warnings: list[str] = []
+    for edge in edges:
+        missing = [n for n in (edge.source, edge.target) if n not in known]
+        if missing:
+            warnings.append(
+                f"edge {edge.source}->{edge.target} references unknown "
+                f"asset id(s): {', '.join(missing)}"
+            )
+    return warnings
+
+
 def load_findings(path: Path) -> list[Finding]:
     raw = _read_json(path)
     if isinstance(raw, dict):
