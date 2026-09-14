@@ -37,15 +37,16 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-Core library, CLI, unit tests, and sample inputs are present. CI, Dependabot, and an ADR for the scoring model follow.
+Core library, CLI, unit tests, sample inputs, and GitHub Actions CI (reusable Python workflow `@v0.2.0`) are present. An ADR for the scoring model and a `v0.1.0` tag follow.
 
 ## Docs
 
 - [AGENTS.md](AGENTS.md) — human and agent guardrails
 - [CONTRIBUTING.md](CONTRIBUTING.md) — how to propose changes
+- [SECURITY.md](SECURITY.md) — vulnerability reporting
 - [docs/architecture/](docs/architecture/) — system shape and Mermaid diagram
 - [docs/security/security.md](docs/security/security.md) — security posture
-- [docs/development/development.md](docs/development/development.md) — contributor workflow
+- [docs/development/development.md](docs/development/development.md) — contributor workflow and CI
 
 ## License
 
