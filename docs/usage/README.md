@@ -36,6 +36,7 @@ vrscore -t examples/topology.json -f examples/findings.json --min-priority 4 --l
 vrscore -t examples/topology.json -f examples/findings.json --min-base 7 --explain
 vrscore -t examples/topology.json -f examples/findings.json --sort hops --explain
 vrscore -t examples/topology.json -f examples/findings.json --dedupe --summary
+vrscore -t examples/topology.json -f examples/findings.json --tag pii --tag identity --explain
 vrscore -t examples/topology.json -f examples/findings.json --summary
 # stderr includes kev= and epss= counts alongside bands
 ```
@@ -184,3 +185,4 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--min-base` | Omit low base_score findings |
 | `--sort` | `priority` \| `base` \| `hops` \| `asset` \| `cve` |
 | `--dedupe` | Highest priority per CVE+asset |
+| `--tag TAG` | Keep assets with tag(s); OR; repeatable |
