@@ -256,6 +256,19 @@ vrscore -c examples/vrscore.toml --fail-under 7 --summary
 
 There is no automatic cwd discovery. Set `VRSCORE_CONFIG=/path/to/vrscore.toml` as an alternative to `--config` (the flag wins if both are set).
 
+## Config extends
+
+Share estate paths once, specialize per workflow:
+
+```bash
+# vrscore-triage.toml and vrscore-ci.toml both `extends = "vrscore-base.toml"`
+vrscore -c examples/vrscore-triage.toml
+vrscore -c examples/vrscore-ci.toml -o /tmp/reachability.sarif
+```
+
+Child keys overlay the base; list values replace (they do not concatenate). Cycles and chains deeper than 8 are errors (exit 2).
+
+
 ## Timing stats
 
 ```bash
