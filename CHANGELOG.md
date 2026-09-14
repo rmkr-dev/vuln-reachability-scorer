@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Guard test that config `ALLOWED_FORMATS` / `ALLOWED_SORTS` / `ALLOWED_BANDS` stay synced with CLI choices.
 - Example `vrscore-multi.toml` + `findings-extra.json` for config-first multi-findings merge.
 - Config rejects `min_hops` > `max_hops`; example `vrscore-exclude.toml` for exclude filters without flag spam.
+- [ADR-007](docs/decisions/ADR-007-config-first-cli.md): prefer config / cookbook over new CLI flags.
 
 ## [0.2.6] - 2026-09-14
 

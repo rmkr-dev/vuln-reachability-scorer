@@ -21,3 +21,4 @@ Operators repeat long `vrscore` flag sets across local triage and CI. We want a 
 
 - Examples ship `examples/vrscore.toml` and `examples/vrscore.json`.
 - Toward v0.2.0 this is the primary “project defaults” mechanism; auto-discovery can be a later ADR if needed.
+- Follow-up: [ADR-007](ADR-007-config-first-cli.md) prefers growing configs/cookbook over new flags.
