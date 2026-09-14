@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-09-14
+
 ### Added
 
 - `--exclude-tag TAG` (repeatable, OR, case-insensitive) drops findings on tagged assets; ordered after `--tag` ([ADR-005](docs/decisions/ADR-005-triage-filter-order.md)).
