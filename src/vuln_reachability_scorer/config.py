@@ -176,15 +176,21 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
             out[key] = value
         else:
             out[key] = value
+    _validate_hop_window(out, path)
+    return out
+
+
+
+def _validate_hop_window(data: dict[str, Any], path: Path) -> None:
+    """Reject min_hops > max_hops on a (possibly merged) config dict."""
     if (
-        "min_hops" in out
-        and "max_hops" in out
-        and out["min_hops"] > out["max_hops"]
+        "min_hops" in data
+        and "max_hops" in data
+        and data["min_hops"] > data["max_hops"]
     ):
         raise ConfigError(
             f"config: min_hops cannot exceed max_hops in {path}"
         )
-    return out
 
 
 def load_config(
@@ -211,9 +217,15 @@ def load_config(
         if not isinstance(extends, str) or not extends.strip():
             raise ConfigError(f"config: extends must be a non-empty string in {path}")
         base_path = (path.parent / extends).resolve()
+        if not base_path.is_file():
+            raise ConfigError(
+                f"config: extends target not found: {base_path} (from {path})"
+            )
         base = load_config(base_path, _stack=stack + (path,))
     overlay = _validate_and_normalize(raw, path)
-    return {**base, **overlay}
+    merged = {**base, **overlay}
+    _validate_hop_window(merged, path)
+    return merged
 
 
 def resolve_path_defaults(

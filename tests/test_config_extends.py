@@ -60,3 +60,30 @@ def test_extends_max_depth(tmp_path: Path):
         prev = f
     with pytest.raises(ConfigError, match="max depth"):
         load_config(prev)
+
+
+def test_extends_hop_window_across_files(tmp_path: Path):
+    """min_hops in base + max_hops in overlay must still validate (merged)."""
+    base = tmp_path / "base.toml"
+    base.write_text("min_hops = 5\n", encoding="utf-8")
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "base.toml"\nmax_hops = 2\n', encoding="utf-8")
+    with pytest.raises(ConfigError, match="min_hops cannot exceed max_hops"):
+        load_config(child)
+
+
+def test_extends_target_missing(tmp_path: Path):
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "missing.toml"\nformat = "json"\n', encoding="utf-8")
+    with pytest.raises(ConfigError, match="extends target not found"):
+        load_config(child)
+
+
+def test_extends_hop_window_valid_split(tmp_path: Path):
+    base = tmp_path / "base.toml"
+    base.write_text("min_hops = 1\n", encoding="utf-8")
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "base.toml"\nmax_hops = 3\n', encoding="utf-8")
+    cfg = load_config(child)
+    assert cfg["min_hops"] == 1
+    assert cfg["max_hops"] == 3
