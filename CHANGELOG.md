@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Example configs `vrscore-triage.toml` / `vrscore-ci.toml` and config-first cookbook recipes (prefer config over flag chains).
 - Config rejects unknown `format` / `sort` / `band` values (aligned with CLI choices).
 
+### Changed
+
+- README quick start prefers config-first examples; architecture module map lists `config.py`; AGENTS.md discourages new CLI flags without need.
+
 ## [0.2.5] - 2026-09-14
 
 ### Changed
