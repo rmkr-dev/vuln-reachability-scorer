@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--min-base` to omit findings whose `base_score` is below a threshold.
 - `--quiet` / `-q` to suppress non-error stderr warnings (edge endpoint warnings).
 
 ## [0.1.7] - 2026-09-14

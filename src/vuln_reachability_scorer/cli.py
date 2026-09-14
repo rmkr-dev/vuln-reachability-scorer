@@ -172,6 +172,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Suppress non-error stderr messages (edge warnings; --summary still prints)",
     )
     parser.add_argument(
+        "--min-base",
+        type=float,
+        default=0.0,
+        help="Omit findings with base_score below this threshold (default: 0)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -444,6 +450,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.min_priority < 0:
         print("error: --min-priority must be >= 0", file=sys.stderr)
         return 2
+    if args.min_base < 0:
+        print("error: --min-base must be >= 0", file=sys.stderr)
+        return 2
     if args.limit < 0:
         print("error: --limit must be >= 0", file=sys.stderr)
         return 2
@@ -506,6 +515,8 @@ def main(argv: list[str] | None = None) -> int:
             for s in scored
             if (s.finding.cve_id or "").upper() in wanted_cves
         ]
+    if args.min_base > 0:
+        scored = [s for s in scored if s.finding.base_score >= args.min_base]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:
