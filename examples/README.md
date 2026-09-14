@@ -36,12 +36,14 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 | `vrscore.json` | JSON + band + reachable filters |
 | `vrscore-triage.toml` | Explain + hop window + high/critical bands + dedupe |
 | `vrscore-ci.toml` | Quiet SARIF export + `fail_under` for Actions |
+| `vrscore-multi.toml` | Merge `findings.json` + `findings-extra.json` with dedupe |
 
 ```bash
 vrscore --config examples/vrscore.toml
 vrscore -c examples/vrscore.json
 vrscore -c examples/vrscore-triage.toml
 vrscore -c examples/vrscore-ci.toml
+vrscore -c examples/vrscore-multi.toml
 # Override one knob without re-listing filters:
 vrscore -c examples/vrscore-triage.toml --format json --limit 10
 ```

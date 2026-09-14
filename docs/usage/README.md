@@ -225,13 +225,14 @@ Use `--quiet` in CI logs when edge warnings are expected noise; keep `--strict` 
 
 ## Multiple findings files
 
-Repeat `-f` / `--findings` to merge scanner exports (order preserved; later files append):
+Repeat `-f` / `--findings` to merge scanner exports (order preserved; later files append). For a stable merge set, prefer config:
 
 ```bash
+vrscore -c examples/vrscore-multi.toml
 vrscore -t examples/topology.json -f scan-a.json -f scan-b.json --dedupe --summary
 ```
 
-In a config file, `findings` may be a string or a list of paths.
+In a config file, `findings` may be a string or a list of paths (see `examples/vrscore-multi.toml` + `findings-extra.json`).
 
 Duplicate finding `id` values across files warn on stderr; `--strict` makes them errors; `--quiet` hides the warning.
 
