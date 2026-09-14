@@ -24,20 +24,20 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-## Usage
+## Quick start
 
 ```bash
-vrscore --topology topology.json --findings findings.json
-vrscore -t topology.json -f findings.json --format json
+vrscore --topology examples/topology.json --findings examples/findings.json
+vrscore -t examples/topology.json -f examples/findings.json --format json
 # alias:
-vuln-reachability -t topology.json -f findings.json
+vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Sample inputs ship in a follow-up PR under `examples/`.
+See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-Core library, CLI (`vrscore` / `vuln-reachability`), and unit tests are present. Examples, CI, and ADR follow.
+Core library, CLI, unit tests, and sample inputs are present. CI, Dependabot, and an ADR for the scoring model follow.
 
 ## Docs
 
