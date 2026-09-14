@@ -32,6 +32,7 @@ vrscore -t examples/topology.json -f examples/findings.json --format markdown -o
 
 ```bash
 vrscore -t examples/topology.json -f examples/findings.json --min-priority 4 --limit 10 --explain
+vrscore -t examples/topology.json -f examples/findings.json --min-base 7 --explain
 vrscore -t examples/topology.json -f examples/findings.json --summary
 # stderr includes kev= and epss= counts alongside bands
 ```
@@ -177,3 +178,4 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--cve CVE` | Keep matching CVE id(s); repeatable |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |
+| `--min-base` | Omit low base_score findings |
