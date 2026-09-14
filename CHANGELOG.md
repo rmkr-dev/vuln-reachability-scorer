@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Example `vrscore-epss.toml` layers an EPSS floor on triage via `extends`.
+
 ## [0.3.9] - 2026-09-14
 
 ### Changed
