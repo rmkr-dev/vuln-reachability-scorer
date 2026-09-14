@@ -29,15 +29,18 @@ pip install -e ".[dev]"
 ```bash
 vrscore --topology examples/topology.json --findings examples/findings.json
 vrscore -t examples/topology.json -f examples/findings.json --format json
+vrscore -t examples/topology.json -f examples/findings.json --format sarif
 # alias:
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
+
+Output formats: `table` (default), `json`, `sarif` (SARIF 2.1.0).
 
 See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.1.0** — core library, CLI, examples, tests, CI, and ADR-001 are shipped. See [CHANGELOG.md](CHANGELOG.md).
+**v0.1.0+** — core library, CLI (table / JSON / SARIF), examples, tests, CI, and ADR-001. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
