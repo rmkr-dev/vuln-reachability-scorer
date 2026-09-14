@@ -58,6 +58,14 @@ vrscore -t topology.json -f findings.json --strict
 
 Fails (exit 2) if any edge references an unknown asset id.
 
+## Quiet mode
+
+```bash
+vrscore -t topology.json -f findings.json --quiet --format json
+```
+
+Suppresses non-error stderr warnings (unknown edge endpoints). `--strict` errors and `--summary` still print.
+
 ## Mark Known Exploited findings
 
 Set `"kev": true` on a finding to apply the 1.15 KEV multiplier (see [ADR-003](../decisions/ADR-003-kev-multiplier.md)).
@@ -158,6 +166,7 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--explain` | Human rationale + shortest path |
 | `--summary` | Band counts + kev/epss counts on stderr |
 | `--strict` | Unknown edge endpoints are errors |
+| `--quiet` / `-q` | Suppress non-error warnings |
 | `--fail-under SCORE` | Exit 1 if any priority >= SCORE |
 | `--only-kev` | Keep `kev: true` findings only |
 | `--only-reachable` | Drop unreachable assets |
