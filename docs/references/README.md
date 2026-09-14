@@ -12,3 +12,9 @@ Future work may optionally ingest KEV membership as an additional factor; that w
 
 | [CISA Known Exploited Vulnerabilities Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) | Motivates optional `kev` finding flag ([ADR-003](../decisions/ADR-003-kev-multiplier.md)); catalog is not fetched by this CLI |
 | [FIRST EPSS](https://www.first.org/epss/) | Motivates optional `epss` finding field ([ADR-004](../decisions/ADR-004-epss-factor.md)); scores are not fetched by this CLI |
+
+## Config tooling
+
+- [Config key reference](../schemas/config.md)
+- [Draft JSON Schema](../schemas/vrscore.schema.json) for editors (not loaded at runtime)
+- [ADR-007](../decisions/ADR-007-config-first-cli.md) / [ADR-008](../decisions/ADR-008-config-extends.md)
