@@ -186,10 +186,29 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
     return out
 
 
-def load_config(path: Path) -> dict[str, Any]:
-    """Load and validate a config file; return argparse-ready defaults."""
+def load_config(
+    path: Path, *, _stack: tuple[Path, ...] | None = None
+) -> dict[str, Any]:
+    """Load and validate a config file; return argparse-ready defaults.
+
+    Optional ``extends`` (string path relative to this file) loads a base
+    config first; keys in this file overlay the base (lists replace, not merge).
+    """
+    path = path.resolve()
+    stack = _stack or ()
+    if path in stack:
+        chain = " -> ".join(str(p) for p in stack + (path,))
+        raise ConfigError(f"config: extends cycle detected: {chain}")
     raw = _load_raw(path)
-    return _validate_and_normalize(raw, path)
+    extends = raw.pop("extends", None)
+    base: dict[str, Any] = {}
+    if extends is not None:
+        if not isinstance(extends, str) or not extends.strip():
+            raise ConfigError(f"config: extends must be a non-empty string in {path}")
+        base_path = (path.parent / extends).resolve()
+        base = load_config(base_path, _stack=stack + (path,))
+    overlay = _validate_and_normalize(raw, path)
+    return {**base, **overlay}
 
 
 def resolve_path_defaults(

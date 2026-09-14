@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Config `extends` composes base + overlay files ([ADR-008](docs/decisions/ADR-008-config-extends.md)); examples share `vrscore-base.toml`.
+
 ### Changed
 
 - Actions gate cookbook uses config-first `vrscore-ci.toml` pattern (`VRSCORE_CONFIG` / `--config`) instead of a flag wall.

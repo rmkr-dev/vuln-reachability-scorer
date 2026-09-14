@@ -13,6 +13,7 @@ def test_example_configs_load():
     for name in (
         "vrscore.toml",
         "vrscore.json",
+        "vrscore-base.toml",
         "vrscore-triage.toml",
         "vrscore-ci.toml",
         "vrscore-multi.toml",
