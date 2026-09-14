@@ -33,6 +33,11 @@ Default tag boosts (overridable via topology ``tag_boosts`` object):
 | secrets | 0.20 |
 
 Asset criticality is supplied in the topology (0 = negligible, 1 = crown jewel).
+
+KEV multiplier
+--------------
+When a finding sets ``kev: true`` (Known Exploited Vulnerability), the priority is
+multiplied by ``KEV_FACTOR`` (1.15) and clamped to 10.0.
 """
 
 from __future__ import annotations
@@ -49,6 +54,8 @@ _REACHABILITY_BY_HOPS: dict[int, float] = {
 
 _UNREACHABLE_FACTOR = 0.10
 _DEEP_FACTOR = 0.20  # 4+ hops
+
+KEV_FACTOR = 1.15
 
 DEFAULT_TAG_BOOSTS: dict[str, float] = {
     "pii": 0.15,
@@ -118,6 +125,9 @@ def score_findings(
                 notes.append("topology has no ingress assets or internet_facing edges")
 
         priority = compute_priority(finding.base_score, r, e)
+        if finding.kev:
+            priority = min(10.0, round(priority * KEV_FACTOR, 2))
+            notes.append(f"KEV multiplier applied (x{KEV_FACTOR})")
         scored.append(
             ScoredFinding(
                 finding=finding,

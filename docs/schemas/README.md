@@ -40,7 +40,8 @@ Either a bare array or an object with a `findings` array:
       "asset_id": "string (required)",
       "cve_id": "string (optional; alias cve)",
       "base_score": "number 0..10 (required)",
-      "title": "string (optional)"
+      "title": "string (optional)",
+      "kev": "boolean (optional; default false — Known Exploited Vulnerability multiplier)"
     }
   ]
 }

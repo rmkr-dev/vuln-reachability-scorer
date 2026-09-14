@@ -12,7 +12,8 @@
       "asset_id": "web-app",
       "cve_id": "CVE-2021-44228",
       "base_score": 10.0,
-      "title": "Apache Log4j2 JNDI injection"
+      "title": "Apache Log4j2 JNDI injection",
+      "kev": true
     },
     {
       "id": "finding-003",
