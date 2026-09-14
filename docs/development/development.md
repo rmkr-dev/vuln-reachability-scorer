@@ -65,7 +65,7 @@ Config loading is covered without adding CLI flags ([ADR-007](../decisions/ADR-0
 | `tests/test_config_enums.py` | `format` / `sort` / `band` choices |
 | `tests/test_config_ranges.py` | Numeric ranges |
 | `tests/test_config_hop_window.py` | `min_hops` ≤ `max_hops` |
-| `tests/test_config_extends.py` | `extends` overlay, cycles, max depth |
+| `tests/test_config_extends.py` | `extends` overlay, cycles, max depth, hop-window merge, defining-file paths, examples |
 | `tests/test_config_cli_enum_sync.py` | ALLOWED_* stays synced with argparse |
 | `tests/test_example_configs.py` | Shipped `examples/vrscore-*.toml` load/run |
 

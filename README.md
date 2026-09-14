@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.3.1** — extends max-depth guard + config test index in development docs. See [CHANGELOG.md](CHANGELOG.md).
+**v0.3.2** — extends hop-window merge validation, defining-file path resolve, layered/cross-dir examples. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
