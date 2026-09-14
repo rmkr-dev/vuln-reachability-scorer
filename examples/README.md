@@ -41,6 +41,7 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 | `vrscore-exclude.toml` | Drop `batch-worker` + `dmz`-tagged assets via config excludes |
 | `vrscore-kev.toml` | Extends triage with `only_kev` (layered overlay demo) |
 | `overlays/vrscore-ci.toml` | Extends `../vrscore-base.toml` from a subdirectory |
+| `overlays/README.md` | How defining-file path resolve works for overlays |
 
 ```bash
 vrscore --config examples/vrscore.toml

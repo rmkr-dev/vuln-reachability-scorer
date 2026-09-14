@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `examples/overlays/README.md` documents cross-directory extends path roots.
+- Tests for absolute `extends` paths and findings list-replace across directories.
+
 ## [0.3.2] - 2026-09-14
 
 ### Added
