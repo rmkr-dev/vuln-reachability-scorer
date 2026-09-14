@@ -20,6 +20,8 @@ def explain_score(item: ScoredFinding, path_text: str | None = None) -> str:
     )
     if item.finding.kev:
         text += "; KEV multiplier applied"
+    if item.finding.epss is not None:
+        text += f"; EPSS {item.finding.epss:.2f} applied"
     if path_text:
         text += f"; path {path_text}"
     return text

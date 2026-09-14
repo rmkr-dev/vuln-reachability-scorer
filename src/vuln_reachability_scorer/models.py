@@ -69,6 +69,7 @@ class Finding:
     base_score: float
     title: str = ""
     kev: bool = False
+    epss: float | None = None
 
     def __post_init__(self) -> None:
         if not self.id:
@@ -77,9 +78,13 @@ class Finding:
             raise ValueError("finding asset_id must be non-empty")
         if not 0.0 <= self.base_score <= 10.0:
             raise ValueError(f"base_score must be in [0, 10], got {self.base_score}")
+        if self.epss is not None and not 0.0 <= self.epss <= 1.0:
+            raise ValueError(f"epss must be in [0, 1], got {self.epss}")
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Finding:
+        epss_raw = data.get("epss")
+        epss = None if epss_raw is None else float(epss_raw)
         return cls(
             id=str(data["id"]),
             asset_id=str(data["asset_id"]),
@@ -87,6 +92,7 @@ class Finding:
             base_score=float(data["base_score"]),
             title=str(data.get("title") or ""),
             kev=bool(data.get("kev", False)),
+            epss=epss,
         )
 
 
@@ -113,5 +119,6 @@ class ScoredFinding:
             "priority_score": self.priority_score,
             "hop_distance": self.hop_distance,
             "kev": self.finding.kev,
+            "epss": self.finding.epss,
             "notes": list(self.notes),
         }

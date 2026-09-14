@@ -180,6 +180,7 @@ def _render_csv(scored: list) -> str:
             "asset_id",
             "id",
             "title",
+            "epss",
         ]
     )
     for s in scored:
@@ -194,6 +195,7 @@ def _render_csv(scored: list) -> str:
                 s.finding.asset_id,
                 s.finding.id,
                 s.finding.title,
+                "" if s.finding.epss is None else f"{s.finding.epss:.3f}",
             ]
         )
     return buf.getvalue()
