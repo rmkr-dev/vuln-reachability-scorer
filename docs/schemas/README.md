@@ -68,3 +68,7 @@ Optional finding field `epss` is a FIRST Exploit Prediction Scoring System proba
 - missing file → `topology file not found: <path>` (or `findings file not found`)
 - empty / non-UTF-8 / invalid JSON → message includes the path and, for JSON, line/column
 - missing required fields → `topology.assets[i]:` / `findings[i]:` plus the field names
+
+## Config file
+
+See [config.md](config.md) for `--config` / `-c` JSON and TOML keys ([ADR-006](../decisions/ADR-006-config-file.md)).
