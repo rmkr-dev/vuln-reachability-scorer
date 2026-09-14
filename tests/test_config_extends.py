@@ -212,3 +212,10 @@ def test_example_medium_band_replace():
     assert cfg.get("explain") is True  # from triage
     rc = main(["--config", str(root / "examples" / "vrscore-medium.toml"), "--limit", "5"])
     assert rc == 0
+
+
+def test_extends_whitespace_rejected(tmp_path: Path):
+    p = tmp_path / "bad.toml"
+    p.write_text('extends = "   "\nformat = "json"\n', encoding="utf-8")
+    with pytest.raises(ConfigError, match="extends must be a non-empty string"):
+        load_config(p)
