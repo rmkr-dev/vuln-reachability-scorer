@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.2.6** — config validation (enums/ranges), config-first cookbook examples, README/AGENTS flag-spam guardrails. See [CHANGELOG.md](CHANGELOG.md).
+**v0.2.7** — multi/exclude example configs, config hop-window check, ADR-007 config-first policy, enum sync test. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
