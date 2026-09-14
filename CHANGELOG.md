@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--cve CVE` (repeatable, case-insensitive) to keep findings matching CVE id(s).
 - `--asset ID` (repeatable) to keep findings for selected asset id(s).
 - `--min-epss P` to keep findings with `epss >= P` (omitters dropped).
 - `--band BAND` (repeatable) to keep findings in priority bands matching `--summary` thresholds.

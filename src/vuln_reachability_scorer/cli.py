@@ -159,6 +159,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep findings for this asset id only (repeatable)",
     )
     parser.add_argument(
+        "--cve",
+        action="append",
+        default=None,
+        metavar="CVE",
+        help="Keep findings matching this CVE id (repeatable; case-insensitive)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -464,6 +471,13 @@ def main(argv: list[str] | None = None) -> int:
     if args.asset:
         wanted = set(args.asset)
         scored = [s for s in scored if s.finding.asset_id in wanted]
+    if args.cve:
+        wanted_cves = {c.upper() for c in args.cve}
+        scored = [
+            s
+            for s in scored
+            if (s.finding.cve_id or "").upper() in wanted_cves
+        ]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:
