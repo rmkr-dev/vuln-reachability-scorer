@@ -1,0 +1,39 @@
+{
+  "findings": [
+    {
+      "id": "finding-001",
+      "asset_id": "edge-lb",
+      "cve_id": "CVE-2023-44487",
+      "base_score": 7.5,
+      "title": "HTTP/2 Rapid Reset"
+    },
+    {
+      "id": "finding-002",
+      "asset_id": "web-app",
+      "cve_id": "CVE-2021-44228",
+      "base_score": 10.0,
+      "title": "Apache Log4j2 JNDI injection"
+    },
+    {
+      "id": "finding-003",
+      "asset_id": "db-primary",
+      "cve_id": "CVE-2012-1823",
+      "base_score": 7.5,
+      "title": "PHP-CGI query string parameter injection (illustrative)"
+    },
+    {
+      "id": "finding-004",
+      "asset_id": "batch-worker",
+      "cve_id": "CVE-2022-22965",
+      "base_score": 9.8,
+      "title": "Spring Framework RCE (Spring4Shell)"
+    },
+    {
+      "id": "finding-005",
+      "asset_id": "auth",
+      "cve_id": "CVE-2020-1472",
+      "base_score": 10.0,
+      "title": "Netlogon elevation of privilege (Zerologon)"
+    }
+  ]
+}

@@ -19,8 +19,6 @@ python -m compileall -q src
 vrscore --topology examples/topology.json --findings examples/findings.json
 ```
 
-(`examples/` lands in a follow-up PR; until then use fixtures under `tests/` or ad-hoc JSON.)
-
 ## Workflow
 
 1. Branch from `main`.
