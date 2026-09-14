@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Usage and development docs for CLI exit codes (`0` / `1` / `2`).
+
 ## [0.1.9] - 2026-09-14
 
 ### Added

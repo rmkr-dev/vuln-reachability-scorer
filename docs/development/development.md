@@ -44,3 +44,7 @@ Dependabot watches GitHub Actions and pip dependencies weekly (`.github/dependab
 ```bash
 vrscore -t examples/topology.json -f examples/findings.json --fail-under 9
 ```
+
+## Exit codes
+
+See [usage cookbook](../usage/README.md#exit-codes) for `0` / `1` / `2` semantics used by CI gates and loaders.
