@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Ship `py.typed` (PEP 561) and clarify SECURITY supported versions for 0.2.x.
+
 ## [0.2.2] - 2026-09-14
 
 ### Added

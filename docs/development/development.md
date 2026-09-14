@@ -49,3 +49,7 @@ vrscore -t examples/topology.json -f examples/findings.json --fail-under 9
 ## Exit codes
 
 See [usage cookbook](../usage/README.md#exit-codes) for `0` / `1` / `2` semantics used by CI gates and loaders.
+
+## Typing
+
+The package includes `src/vuln_reachability_scorer/py.typed` (PEP 561) so type checkers can use inline annotations when the wheel/sdist is installed.

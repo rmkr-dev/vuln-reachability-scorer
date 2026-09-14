@@ -7,7 +7,8 @@ Security fixes apply to the default branch (`main`) and to the latest released t
 | Version | Supported |
 | --- | --- |
 | main | yes |
-| latest release tag | yes |
+| 0.2.x | yes |
+| < 0.2 | no |
 
 ## Reporting a vulnerability
 
