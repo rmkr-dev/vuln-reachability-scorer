@@ -161,10 +161,17 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
         elif key in ("min_priority", "fail_under", "min_epss", "min_base"):
             if not isinstance(value, (int, float)) or isinstance(value, bool):
                 raise ConfigError(f"config: {key} must be a number in {path}")
-            out[key] = float(value)
+            num = float(value)
+            if key == "min_epss" and not 0.0 <= num <= 1.0:
+                raise ConfigError(f"config: min_epss must be in [0, 1] in {path}")
+            if key in ("min_priority", "fail_under", "min_base") and num < 0:
+                raise ConfigError(f"config: {key} must be >= 0 in {path}")
+            out[key] = num
         elif key in ("limit", "max_hops", "min_hops"):
             if not isinstance(value, int) or isinstance(value, bool):
                 raise ConfigError(f"config: {key} must be an integer in {path}")
+            if value < 0:
+                raise ConfigError(f"config: {key} must be >= 0 in {path}")
             out[key] = value
         else:
             out[key] = value
