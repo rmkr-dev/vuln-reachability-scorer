@@ -218,6 +218,8 @@ vrscore -t examples/topology.json -f scan-a.json -f scan-b.json --dedupe --summa
 
 In a config file, `findings` may be a string or a list of paths.
 
+Duplicate finding `id` values across files warn on stderr; `--strict` makes them errors; `--quiet` hides the warning.
+
 ## Config file defaults
 
 Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the config file's directory. See [ADR-006](../decisions/ADR-006-config-file.md) and the [config schema](../schemas/config.md).
