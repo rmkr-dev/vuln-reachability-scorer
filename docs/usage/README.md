@@ -290,11 +290,14 @@ vrscore -c examples/vrscore-kev.toml
 
 `examples/vrscore-kev.toml` sets `extends = "vrscore-triage.toml"` plus `only_kev = true`. Override format/output on the CLI when needed.
 
-List keys **replace** on overlay — they do not concatenate. To switch triage from high/critical to medium-only:
+List keys **replace** on overlay — they do not concatenate. To switch triage from high/critical to medium-only, or focus on sensitivity tags:
 
 ```bash
 vrscore -c examples/vrscore-medium.toml
+vrscore -c examples/vrscore-tag-focus.toml   # tag = ["pii", "identity"] replaces
 ```
+
+`examples/vrscore-exclude.toml` and `vrscore-multi.toml` also `extends` the shared base so estate paths stay in one place.
 
 Place overlays in a subdirectory when teams share one estate folder:
 

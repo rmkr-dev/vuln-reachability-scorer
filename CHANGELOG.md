@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `examples/vrscore-exclude.toml` and `vrscore-multi.toml` now `extends` `vrscore-base.toml` (shared estate paths).
+
+### Added
+
+- Example `vrscore-tag-focus.toml` layers a `tag` list-replace on triage via `extends`.
+
 ## [0.3.8] - 2026-09-14
 
 ### Added
