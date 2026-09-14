@@ -23,3 +23,7 @@ htmlcov/
 .vscode/
 *.swp
 .DS_Store
+
+# Generated demo outputs under examples
+examples/**/*.sarif
+examples/**/reachability.*
