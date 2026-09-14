@@ -40,3 +40,33 @@ def test_cycle_does_not_loop_forever():
         ]
     )
     assert hop_distance("c", adj, {"a"}) == 2
+
+
+def test_all_hop_distances_matches_single_lookups():
+    from vuln_reachability_scorer.graph import all_hop_distances
+
+    assets = [
+        Asset(id="i", name="I", ingress=True),
+        Asset(id="x", name="X"),
+        Asset(id="y", name="Y"),
+        Asset(id="z", name="Z"),
+        Asset(id="orphan", name="O"),
+    ]
+    edges = [
+        Edge(source="i", target="x"),
+        Edge(source="x", target="y"),
+        Edge(source="y", target="z"),
+    ]
+    adj = build_adjacency(edges)
+    ingress = ingress_asset_ids(assets, edges)
+    all_d = all_hop_distances(adj, ingress)
+    assert all_d == {"i": 0, "x": 1, "y": 2, "z": 3}
+    for aid in ("i", "x", "y", "z", "orphan"):
+        assert all_d.get(aid) == hop_distance(aid, adj, ingress)
+
+
+def test_all_hop_distances_empty_ingress():
+    from vuln_reachability_scorer.graph import all_hop_distances
+
+    adj = build_adjacency([Edge(source="a", target="b")])
+    assert all_hop_distances(adj, set()) == {}
