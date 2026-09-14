@@ -166,6 +166,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep findings matching this CVE id (repeatable; case-insensitive)",
     )
     parser.add_argument(
+        "--quiet",
+        "-q",
+        action="store_true",
+        help="Suppress non-error stderr messages (edge warnings; --summary still prints)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -462,7 +468,9 @@ def main(argv: list[str] | None = None) -> int:
     edge_warnings = unknown_edge_endpoints(assets, edges)
     if edge_warnings:
         for msg in edge_warnings:
-            print(f"{'error' if args.strict else 'warning'}: {msg}", file=sys.stderr)
+            label = "error" if args.strict else "warning"
+            if args.strict or not args.quiet:
+                print(f"{label}: {msg}", file=sys.stderr)
         if args.strict:
             return 2
 

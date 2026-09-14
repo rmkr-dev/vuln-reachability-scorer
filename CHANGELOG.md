@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `--quiet` / `-q` to suppress non-error stderr warnings (edge endpoint warnings).
+
 ## [0.1.7] - 2026-09-14
 
 ### Added
