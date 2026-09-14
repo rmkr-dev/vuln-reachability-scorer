@@ -247,6 +247,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep findings on assets that have this tag (repeatable; OR semantics)",
     )
     parser.add_argument(
+        "--exclude-tag",
+        action="append",
+        default=None,
+        metavar="TAG",
+        help="Drop findings on assets that have this tag (repeatable; OR semantics)",
+    )
+    parser.add_argument(
         "--config",
         "-c",
         type=Path,
@@ -723,6 +730,15 @@ def main(argv: list[str] | None = None) -> int:
             asset = assets_by_id.get(s.finding.asset_id)
             tags = {tg.lower() for tg in (asset.tags if asset is not None else ())}
             if wanted.intersection(tags):
+                filtered.append(s)
+        scored = filtered
+    if args.exclude_tag:
+        blocked = {t.lower() for t in args.exclude_tag}
+        filtered = []
+        for s in scored:
+            asset = assets_by_id.get(s.finding.asset_id)
+            tags = {tg.lower() for tg in (asset.tags if asset is not None else ())}
+            if not blocked.intersection(tags):
                 filtered.append(s)
         scored = filtered
     if args.dedupe:
