@@ -211,11 +211,25 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep findings for this asset id only (repeatable)",
     )
     parser.add_argument(
+        "--exclude-asset",
+        action="append",
+        default=None,
+        metavar="ID",
+        help="Drop findings for this asset id (repeatable)",
+    )
+    parser.add_argument(
         "--cve",
         action="append",
         default=None,
         metavar="CVE",
         help="Keep findings matching this CVE id (repeatable; case-insensitive)",
+    )
+    parser.add_argument(
+        "--exclude-cve",
+        action="append",
+        default=None,
+        metavar="CVE",
+        help="Drop findings matching this CVE id (repeatable; case-insensitive)",
     )
     parser.add_argument(
         "--quiet",
@@ -769,12 +783,22 @@ def main(argv: list[str] | None = None) -> int:
     if args.asset:
         wanted = set(args.asset)
         scored = [s for s in scored if s.finding.asset_id in wanted]
+    if args.exclude_asset:
+        blocked = set(args.exclude_asset)
+        scored = [s for s in scored if s.finding.asset_id not in blocked]
     if args.cve:
         wanted_cves = {c.upper() for c in args.cve}
         scored = [
             s
             for s in scored
             if (s.finding.cve_id or "").upper() in wanted_cves
+        ]
+    if args.exclude_cve:
+        blocked_cves = {c.upper() for c in args.exclude_cve}
+        scored = [
+            s
+            for s in scored
+            if (s.finding.cve_id or "").upper() not in blocked_cves
         ]
     if args.min_base > 0:
         scored = [s for s in scored if s.finding.base_score >= args.min_base]
