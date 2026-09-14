@@ -33,10 +33,11 @@ CONFIG_KEYS: dict[str, type | tuple[type, ...]] = {
     "sort": (str,),
     "dedupe": (bool,),
     "tag": (list,),
+    "exclude_tag": (list,),
 }
 
-_LIST_KEYS = {"band", "asset", "cve", "tag"}
-_MERGE_LIST_KEYS = {"band", "asset", "cve", "tag", "findings"}
+_LIST_KEYS = {"band", "asset", "cve", "tag", "exclude_tag"}
+_MERGE_LIST_KEYS = {"band", "asset", "cve", "tag", "exclude_tag", "findings"}
 _PATH_KEYS = {"topology", "output"}
 _FINDINGS_KEY = "findings"
 _BOOL_KEYS = {
