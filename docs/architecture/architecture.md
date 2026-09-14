@@ -25,6 +25,8 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 | `sarif.py` | SARIF 2.1.0 document builder |
 | `asset_report.py` | Per-asset reachability inventory |
 | `explain.py` | Human-readable score rationales |
+| `paths.py` | Shortest ingress→asset path reconstruction |
+| `summary.py` | Priority band aggregates |
 | `cli.py` | argparse entrypoint |
 
 ## CI and hygiene
