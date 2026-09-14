@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Actions gate cookbook uses config-first `vrscore-ci.toml` pattern (`VRSCORE_CONFIG` / `--config`) instead of a flag wall.
+
 ## [0.2.7] - 2026-09-14
 
 ### Added
