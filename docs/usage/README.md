@@ -212,13 +212,16 @@ Filter composition order is fixed; see [ADR-005](../decisions/ADR-005-triage-fil
 
 ## GitHub Actions gate with a config file
 
-Commit a project config (for example `vrscore.toml` next to your topology) and call the CLI in CI:
+Commit a project config next to your topology (start from `examples/vrscore-ci.toml`: SARIF, `fail_under`, quiet, dedupe). Override only what differs:
 
 ```yaml
 - name: Reachability triage gate
+  env:
+    VRSCORE_CONFIG: vrscore.toml   # optional; --config still wins
   run: |
     pip install .
-    vrscore --config vrscore.toml --fail-under 7 --summary --format sarif -o reachability.sarif
+    # Filters and fail_under live in the config — no flag wall
+    vrscore --config vrscore.toml -o reachability.sarif
 - name: Upload SARIF (optional)
   uses: github/codeql-action/upload-sarif@v3
   if: always()
@@ -226,7 +229,7 @@ Commit a project config (for example `vrscore.toml` next to your topology) and c
     sarif_file: reachability.sarif
 ```
 
-Use `--quiet` in CI logs when edge warnings are expected noise; keep `--strict` when topology hygiene is a hard requirement. Pin this repo's reusable Python CI at `@v0.4.0` (see [development](../development/development.md)).
+Copy `examples/vrscore-ci.toml` as `vrscore.toml` and point `topology` / `findings` at your estate. Use `--quiet` only if you need it beyond the config; keep `--strict` when topology hygiene is a hard requirement. Pin this repo's reusable Python CI at `@v0.4.0` (see [development](../development/development.md)).
 
 ## Multiple findings files
 
