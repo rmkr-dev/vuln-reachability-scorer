@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.3.4** — architecture/CONTRIBUTING config-first notes, example config load sweep, whitespace extends test. See [CHANGELOG.md](CHANGELOG.md).
+**v0.3.5** — references/ADR-008 polish, output path resolve test under extends. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
