@@ -54,7 +54,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.2.4** — `VRSCORE_CONFIG` env default for `--config`; builds on 0.2.3 exclude filters and typing. See [CHANGELOG.md](CHANGELOG.md).
+**v0.2.5** — architecture docs for config + BFS precompute (CI pin @v0.4.0); builds on 0.2.4 `VRSCORE_CONFIG`. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
