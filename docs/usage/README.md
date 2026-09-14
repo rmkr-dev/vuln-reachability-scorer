@@ -31,6 +31,15 @@ vrscore -t examples/topology.json -f examples/findings.json --format markdown -o
 vrscore -t examples/topology.json -f examples/findings.json --format junit -o report.xml
 ```
 
+## Triage playbook (sample estate)
+
+1. Inventory reachability: `vrscore -t examples/topology.json --asset-report --only-reachable`
+2. Score with explanations: `vrscore --config examples/vrscore.toml --explain --summary`
+3. Keep attacker-relevant rows: `--only-reachable --max-hops 2 --band critical --band high`
+4. Deduplicate noisy scanners: `--dedupe --sort hops`
+5. Gate CI: `--fail-under 7` (exit `1` on offenders)
+6. Export for tracking: `--format sarif` or `--format junit`
+
 ## Focus triage
 
 ```bash
@@ -173,6 +182,24 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 `--quiet` only suppresses non-error warnings; it does not change exit codes.
 
 Filter composition order is fixed; see [ADR-005](../decisions/ADR-005-triage-filter-order.md).
+
+## GitHub Actions gate with a config file
+
+Commit a project config (for example `vrscore.toml` next to your topology) and call the CLI in CI:
+
+```yaml
+- name: Reachability triage gate
+  run: |
+    pip install .
+    vrscore --config vrscore.toml --fail-under 7 --summary --format sarif -o reachability.sarif
+- name: Upload SARIF (optional)
+  uses: github/codeql-action/upload-sarif@v3
+  if: always()
+  with:
+    sarif_file: reachability.sarif
+```
+
+Use `--quiet` in CI logs when edge warnings are expected noise; keep `--strict` when topology hygiene is a hard requirement. Pin this repo's reusable Python CI at `@v0.4.0` (see [development](../development/development.md)).
 
 ## Config file defaults
 
