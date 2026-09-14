@@ -30,7 +30,11 @@ class AssetReachability:
         }
 
 
-def report_assets(assets: list[Asset], edges: list[Edge]) -> list[AssetReachability]:
+def report_assets(
+    assets: list[Asset],
+    edges: list[Edge],
+    tag_boosts: dict[str, float] | None = None,
+) -> list[AssetReachability]:
     adj = build_adjacency(edges)
     ingress = ingress_asset_ids(assets, edges)
     rows: list[AssetReachability] = []
@@ -41,7 +45,7 @@ def report_assets(assets: list[Asset], edges: list[Edge]) -> list[AssetReachabil
                 asset=asset,
                 hop_distance=dist,
                 reachability_factor=reachability_factor(dist),
-                exposure_factor=exposure_factor(asset),
+                exposure_factor=exposure_factor(asset, tag_boosts),
             )
         )
     rows.sort(

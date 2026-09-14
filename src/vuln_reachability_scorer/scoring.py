@@ -22,7 +22,15 @@ Derived from shortest hop distance from an ingress / internet-facing entry:
 
 Exposure factor
 ---------------
-``exposure_factor = clamp(asset.criticality, 0, 1)``
+``exposure_factor = clamp(asset.criticality + sum(tag_boosts), 0, 1)``
+
+Default tag boosts (overridable via topology ``tag_boosts`` object):
+
+| Tag | Boost |
+| --- | --- |
+| pii | 0.15 |
+| identity | 0.20 |
+| secrets | 0.20 |
 
 Asset criticality is supplied in the topology (0 = negligible, 1 = crown jewel).
 """
@@ -42,6 +50,12 @@ _REACHABILITY_BY_HOPS: dict[int, float] = {
 _UNREACHABLE_FACTOR = 0.10
 _DEEP_FACTOR = 0.20  # 4+ hops
 
+DEFAULT_TAG_BOOSTS: dict[str, float] = {
+    "pii": 0.15,
+    "identity": 0.20,
+    "secrets": 0.20,
+}
+
 
 def reachability_factor(distance: int | None) -> float:
     if distance is None:
@@ -53,10 +67,17 @@ def reachability_factor(distance: int | None) -> float:
     return _DEEP_FACTOR
 
 
-def exposure_factor(asset: Asset | None) -> float:
+def exposure_factor(
+    asset: Asset | None,
+    tag_boosts: dict[str, float] | None = None,
+) -> float:
     if asset is None:
         return 0.5
-    return max(0.0, min(1.0, asset.criticality))
+    boosts = DEFAULT_TAG_BOOSTS if tag_boosts is None else tag_boosts
+    bonus = 0.0
+    for tag in asset.tags:
+        bonus += float(boosts.get(tag, 0.0))
+    return max(0.0, min(1.0, asset.criticality + bonus))
 
 
 def compute_priority(base_score: float, r_factor: float, e_factor: float) -> float:
@@ -67,11 +88,13 @@ def score_findings(
     findings: list[Finding],
     assets: list[Asset],
     edges: list[Edge],
+    tag_boosts: dict[str, float] | None = None,
 ) -> list[ScoredFinding]:
     """Score each finding and return results sorted by priority descending."""
     by_id = {a.id: a for a in assets}
     adj = build_adjacency(edges)
     ingress = ingress_asset_ids(assets, edges)
+    boosts = DEFAULT_TAG_BOOSTS if tag_boosts is None else tag_boosts
 
     scored: list[ScoredFinding] = []
     for finding in findings:
@@ -85,7 +108,10 @@ def score_findings(
         else:
             dist = hop_distance(finding.asset_id, adj, ingress)
             r = reachability_factor(dist)
-            e = exposure_factor(asset)
+            e = exposure_factor(asset, boosts)
+            applied = [t for t in asset.tags if t in boosts and boosts[t]]
+            if applied:
+                notes.append(f"tag boosts applied: {', '.join(applied)}")
             if dist is None:
                 notes.append("asset not reachable from any ingress node")
             if not ingress:
