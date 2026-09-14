@@ -26,6 +26,19 @@ from vuln_reachability_scorer.scoring import score_findings
 from vuln_reachability_scorer.summary import format_summary_line, summarize
 
 
+
+_BAND_PREDICATES = {
+    "critical": lambda p: p >= 9.0,
+    "high": lambda p: 7.0 <= p < 9.0,
+    "medium": lambda p: 4.0 <= p < 7.0,
+    "low": lambda p: p < 4.0,
+}
+
+
+def _in_selected_bands(priority: float, bands: list[str]) -> bool:
+    return any(_BAND_PREDICATES[b](priority) for b in bands)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="vrscore",
@@ -119,6 +132,17 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         metavar="N",
         help="Keep only findings with hop_distance <= N (excludes unreachable)",
+    )
+    parser.add_argument(
+        "--band",
+        action="append",
+        choices=("critical", "high", "medium", "low"),
+        default=None,
+        metavar="BAND",
+        help=(
+            "Keep findings in priority band(s): critical>=9, high>=7, medium>=4, low<4. "
+            "Repeatable."
+        ),
     )
     parser.add_argument(
         "--version",
@@ -412,6 +436,8 @@ def main(argv: list[str] | None = None) -> int:
             for s in scored
             if s.hop_distance is not None and s.hop_distance <= args.max_hops
         ]
+    if args.band:
+        scored = [s for s in scored if _in_selected_bands(s.priority_score, args.band)]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:
