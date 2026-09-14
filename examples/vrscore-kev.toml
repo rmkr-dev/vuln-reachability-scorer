@@ -1,0 +1,5 @@
+# KEV-only overlay — extends triage defaults (ADR-007 / ADR-008).
+extends = "vrscore-triage.toml"
+only_kev = true
+format = "json"
+explain = true

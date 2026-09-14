@@ -129,3 +129,14 @@ def test_extends_depth_at_max_succeeds(tmp_path: Path):
     cfg = load_config(tip)
     assert cfg["format"] == "json"
     assert cfg["limit"] == MAX_EXTENDS_DEPTH - 1
+
+
+def test_example_kev_extends_triage():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "vrscore-kev.toml")
+    assert cfg["only_kev"] is True
+    assert cfg["topology"].endswith("topology.json") or cfg["topology"] == "topology.json"
+    assert cfg.get("explain") is True
+    assert cfg.get("band") == ["critical", "high"]
+    rc = main(["--config", str(root / "examples" / "vrscore-kev.toml"), "--limit", "5"])
+    assert rc == 0
