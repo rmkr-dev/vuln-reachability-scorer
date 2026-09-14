@@ -6,6 +6,7 @@ Informal schemas for the JSON documents `vrscore` accepts. There is no JSON Sche
 
 ```json
 {
+  "tag_boosts": {"pii": 0.15, "identity": 0.2, "secrets": 0.2},
   "assets": [
     {
       "id": "string (required, unique)",
@@ -48,3 +49,7 @@ Either a bare array or an object with a `findings` array:
 ## Edge endpoint checks
 
 Edges whose `source` or `target` is not in `assets` produce a CLI **warning**. Pass `--strict` to treat those as errors (exit code 2).
+
+## Tag boosts
+
+Optional root object `tag_boosts` maps tag string → additive boost applied to `asset.criticality` before clamping to `[0, 1]`. Defaults live in `scoring.DEFAULT_TAG_BOOSTS` and are merged with any provided values.

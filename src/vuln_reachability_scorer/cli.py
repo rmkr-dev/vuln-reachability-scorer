@@ -14,6 +14,7 @@ from vuln_reachability_scorer.asset_report import report_assets
 from vuln_reachability_scorer.explain import explain_score
 from vuln_reachability_scorer.loaders import (
     load_findings,
+    load_tag_boosts,
     load_topology,
     unknown_edge_endpoints,
 )
@@ -209,8 +210,8 @@ def _print_asset_table(rows: list, sink) -> None:
         print(fmt(row), file=sink)
 
 
-def _emit_asset_report(assets, edges, args) -> int:
-    rows = report_assets(assets, edges)
+def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
+    rows = report_assets(assets, edges, tag_boosts=tag_boosts)
     try:
         if args.format == "json":
             payload = {
@@ -256,6 +257,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         assets, edges = load_topology(args.topology)
+        tag_boosts = load_tag_boosts(args.topology)
         findings = load_findings(args.findings) if args.findings is not None else []
     except (OSError, ValueError, json.JSONDecodeError, KeyError, TypeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -269,9 +271,9 @@ def main(argv: list[str] | None = None) -> int:
             return 2
 
     if args.asset_report:
-        return _emit_asset_report(assets, edges, args)
+        return _emit_asset_report(assets, edges, args, tag_boosts)
 
-    scored = score_findings(findings, assets, edges)
+    scored = score_findings(findings, assets, edges, tag_boosts=tag_boosts)
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:

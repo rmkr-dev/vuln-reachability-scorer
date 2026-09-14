@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from vuln_reachability_scorer.models import Asset, Edge, Finding
+from vuln_reachability_scorer.scoring import DEFAULT_TAG_BOOSTS
 
 
 def _read_json(path: Path) -> Any:
@@ -63,3 +64,18 @@ def load_findings(path: Path) -> list[Finding]:
     if dupes:
         raise ValueError(f"duplicate finding id(s): {', '.join(dupes)}")
     return findings
+
+
+def load_tag_boosts(path: Path) -> dict[str, float]:
+    """Merge topology ``tag_boosts`` over :data:`DEFAULT_TAG_BOOSTS`."""
+    raw = _read_json(path)
+    boosts = dict(DEFAULT_TAG_BOOSTS)
+    if isinstance(raw, dict):
+        custom = raw.get("tag_boosts")
+        if custom is None:
+            return boosts
+        if not isinstance(custom, dict):
+            raise ValueError("topology.tag_boosts must be an object")
+        for key, value in custom.items():
+            boosts[str(key)] = float(value)
+    return boosts
