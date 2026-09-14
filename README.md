@@ -29,18 +29,20 @@ pip install -e ".[dev]"
 ```bash
 vrscore --topology examples/topology.json --findings examples/findings.json
 vrscore -t examples/topology.json -f examples/findings.json --format json
-vrscore -t examples/topology.json -f examples/findings.json --format sarif
+vrscore -t examples/topology.json -f examples/findings.json --format sarif -o results.sarif
 # alias:
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Output formats: `table` (default), `json`, `sarif` (SARIF 2.1.0).
+Output formats: `table` (default), `json`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file.
+
+Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 
 See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.1.0+** — core library, CLI (table / JSON / SARIF), examples, tests, CI, and ADR-001. See [CHANGELOG.md](CHANGELOG.md).
+**v0.1.0+** — core library, CLI (table / JSON / SARIF), file output, examples, tests, CI, and ADR-001. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
@@ -50,6 +52,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 - [CHANGELOG.md](CHANGELOG.md) — release notes
 - [docs/architecture/](docs/architecture/) — system shape and Mermaid diagram
 - [docs/decisions/](docs/decisions/) — ADRs (scoring model)
+- [docs/schemas/](docs/schemas/) — topology and findings field reference
 - [docs/references/](docs/references/) — background links
 - [docs/security/security.md](docs/security/security.md) — security posture
 - [docs/development/development.md](docs/development/development.md) — contributor workflow and CI
