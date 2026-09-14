@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Pin CI to `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.3.0`.
 - Topology graph edge-case tests (self-loops, diamonds, multi-ingress, reverse-only, duplicate edges, 5-hop chains).
 - Clearer loader and CLI errors (file kind, path, JSON line/column, indexed missing fields).
 - `--format html` self-contained report (findings and `--asset-report`).
