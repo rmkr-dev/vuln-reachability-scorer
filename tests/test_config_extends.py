@@ -243,3 +243,10 @@ def test_extends_output_resolves_against_defining_file(tmp_path: Path):
     )
     cfg2 = load_config(overlays / "ci2.toml")
     assert Path(cfg2["output"]) == (overlays / "local.sarif").resolve()
+
+
+def test_extends_self_cycle(tmp_path: Path):
+    a = tmp_path / "a.toml"
+    a.write_text('extends = "a.toml"\nformat = "json"\n', encoding="utf-8")
+    with pytest.raises(ConfigError, match="extends cycle"):
+        load_config(a)
