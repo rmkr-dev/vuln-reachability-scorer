@@ -17,6 +17,7 @@ pip install -e ".[dev]"
 pytest
 python -m compileall -q src
 vrscore --topology examples/topology.json --findings examples/findings.json
+vrscore --config examples/vrscore.toml --summary
 ```
 
 ## CI
