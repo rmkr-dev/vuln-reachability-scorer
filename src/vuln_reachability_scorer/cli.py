@@ -39,6 +39,28 @@ def _in_selected_bands(priority: float, bands: list[str]) -> bool:
     return any(_BAND_PREDICATES[b](priority) for b in bands)
 
 
+
+def _sort_scored(scored: list, key: str) -> list:
+    if key == "priority":
+        return sorted(scored, key=lambda s: (-s.priority_score, s.finding.id))
+    if key == "base":
+        return sorted(scored, key=lambda s: (-s.finding.base_score, s.finding.id))
+    if key == "hops":
+        return sorted(
+            scored,
+            key=lambda s: (
+                s.hop_distance is None,
+                s.hop_distance if s.hop_distance is not None else 0,
+                s.finding.id,
+            ),
+        )
+    if key == "asset":
+        return sorted(scored, key=lambda s: (s.finding.asset_id, s.finding.id))
+    if key == "cve":
+        return sorted(scored, key=lambda s: ((s.finding.cve_id or ""), s.finding.id))
+    return scored
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="vrscore",
@@ -176,6 +198,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=0.0,
         help="Omit findings with base_score below this threshold (default: 0)",
+    )
+    parser.add_argument(
+        "--sort",
+        choices=("priority", "base", "hops", "asset", "cve"),
+        default="priority",
+        help="Sort results (default: priority desc; hops asc with nulls last)",
     )
     parser.add_argument(
         "--version",
@@ -519,6 +547,8 @@ def main(argv: list[str] | None = None) -> int:
         scored = [s for s in scored if s.finding.base_score >= args.min_base]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
+    if args.sort != "priority":
+        scored = _sort_scored(scored, args.sort)
     if args.limit > 0:
         scored = scored[: args.limit]
 
