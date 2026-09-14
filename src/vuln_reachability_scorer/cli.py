@@ -102,6 +102,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Include finding title column in table output",
     )
     parser.add_argument(
+        "--only-kev",
+        action="store_true",
+        help="Keep only findings marked kev=true after scoring",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -362,6 +367,8 @@ def main(argv: list[str] | None = None) -> int:
         return _emit_asset_report(assets, edges, args, tag_boosts)
 
     scored = score_findings(findings, assets, edges, tag_boosts=tag_boosts)
+    if args.only_kev:
+        scored = [s for s in scored if s.finding.kev]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:
