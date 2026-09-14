@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- ADR-003 documenting the KEV multiplier.
+- CSV output for `--asset-report`.
 - Optional finding `kev: true` applies a 1.15 Known Exploited Vulnerability multiplier (clamped at 10.0).
 
 ## [0.1.2] - 2026-09-14
