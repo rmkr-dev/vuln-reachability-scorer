@@ -38,3 +38,9 @@ Dependabot watches GitHub Actions and pip dependencies weekly (`.github/dependab
 - No Node/npm
 - No secrets in fixtures
 - Default code owner: `@rmkr-dev` (`.github/CODEOWNERS`)
+
+## Optional scoring gate
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --fail-under 9
+```

@@ -56,3 +56,11 @@ Fails (exit 2) if any edge references an unknown asset id.
 ## Mark Known Exploited findings
 
 Set `"kev": true` on a finding to apply the 1.15 KEV multiplier (see [ADR-003](../decisions/ADR-003-kev-multiplier.md)).
+
+## CI gate
+
+```bash
+vrscore -t topology.json -f findings.json --fail-under 7 --summary
+```
+
+Exits `1` if any scored finding has `priority_score >= 7`, suitable as a required check.
