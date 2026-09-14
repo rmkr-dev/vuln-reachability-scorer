@@ -37,7 +37,7 @@ vrscore -t examples/topology.json -f examples/findings.json --explain
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales.
+Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--strict` to fail on edges that reference unknown assets.
 
 Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 
