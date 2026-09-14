@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--only-kev` to keep known-exploited findings only.
 - Nothing yet since the last release.
 
 ## [0.1.4] - 2026-09-14
