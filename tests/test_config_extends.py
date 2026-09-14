@@ -87,3 +87,45 @@ def test_extends_hop_window_valid_split(tmp_path: Path):
     cfg = load_config(child)
     assert cfg["min_hops"] == 1
     assert cfg["max_hops"] == 3
+
+
+def test_extends_list_replace_not_concat(tmp_path: Path):
+    base = tmp_path / "base.toml"
+    base.write_text('band = ["critical", "high"]\n', encoding="utf-8")
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "base.toml"\nband = ["medium"]\n', encoding="utf-8")
+    cfg = load_config(child)
+    assert cfg["band"] == ["medium"]
+
+
+def test_extends_json_from_toml(tmp_path: Path):
+    base = tmp_path / "base.toml"
+    base.write_text('topology = "t.json"\nsummary = true\n', encoding="utf-8")
+    child = tmp_path / "child.json"
+    child.write_text(
+        json.dumps({"extends": "base.toml", "format": "json", "limit": 2}),
+        encoding="utf-8",
+    )
+    cfg = load_config(child)
+    assert cfg["topology"] == "t.json"
+    assert cfg["summary"] is True
+    assert cfg["format"] == "json"
+    assert cfg["limit"] == 2
+
+
+def test_extends_depth_at_max_succeeds(tmp_path: Path):
+    from vuln_reachability_scorer.config import MAX_EXTENDS_DEPTH
+
+    prev = None
+    tip = None
+    for i in range(MAX_EXTENDS_DEPTH):
+        f = tmp_path / f"d{i}.toml"
+        if prev is None:
+            f.write_text('format = "json"\n', encoding="utf-8")
+        else:
+            f.write_text(f'extends = "{prev.name}"\nlimit = {i}\n', encoding="utf-8")
+        prev = f
+        tip = f
+    cfg = load_config(tip)
+    assert cfg["format"] == "json"
+    assert cfg["limit"] == MAX_EXTENDS_DEPTH - 1
