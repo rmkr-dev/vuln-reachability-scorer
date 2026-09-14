@@ -49,6 +49,7 @@ Relative `topology` / `findings` / `output` paths resolve against the config fil
 - `format` / `sort` must match CLI choices; `band` entries must be `critical` / `high` / `medium` / `low`.
 - `min_epss` must be in `[0, 1]`; `min_priority` / `fail_under` / `min_base` / `limit` / `max_hops` / `min_hops` must be `>= 0`.
 - When both `min_hops` and `max_hops` are set, `min_hops` must not exceed `max_hops`.
+- `extends` chains detect cycles and cap at depth 8.
 - List keys apply only when the matching CLI flag is absent.
 
 ## Examples

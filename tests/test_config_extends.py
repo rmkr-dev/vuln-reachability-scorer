@@ -43,3 +43,20 @@ def test_example_extends_runs():
     root = Path(__file__).resolve().parents[1]
     rc = main(["--config", str(root / "examples" / "vrscore-triage.toml"), "--format", "json", "--limit", "1"])
     assert rc == 0
+
+def test_extends_max_depth(tmp_path: Path):
+    from vuln_reachability_scorer.config import MAX_EXTENDS_DEPTH
+
+    prev = None
+    for i in range(MAX_EXTENDS_DEPTH + 2):
+        f = tmp_path / f"c{i}.toml"
+        if prev is None:
+            f.write_text('format = "json"\n', encoding="utf-8")
+        else:
+            f.write_text(
+                f'extends = "{prev.name}"\nformat = "json"\n',
+                encoding="utf-8",
+            )
+        prev = f
+    with pytest.raises(ConfigError, match="max depth"):
+        load_config(prev)

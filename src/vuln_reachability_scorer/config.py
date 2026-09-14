@@ -63,6 +63,7 @@ ALLOWED_FORMATS = frozenset(
 )
 ALLOWED_SORTS = frozenset({"priority", "base", "hops", "asset", "cve"})
 ALLOWED_BANDS = frozenset({"critical", "high", "medium", "low"})
+MAX_EXTENDS_DEPTH = 8
 
 
 class ConfigError(ValueError):
@@ -199,6 +200,10 @@ def load_config(
     if path in stack:
         chain = " -> ".join(str(p) for p in stack + (path,))
         raise ConfigError(f"config: extends cycle detected: {chain}")
+    if len(stack) >= MAX_EXTENDS_DEPTH:
+        raise ConfigError(
+            f"config: extends chain exceeds max depth {MAX_EXTENDS_DEPTH} at {path}"
+        )
     raw = _load_raw(path)
     extends = raw.pop("extends", None)
     base: dict[str, Any] = {}
