@@ -20,6 +20,7 @@ from vuln_reachability_scorer.loaders import (
     unknown_edge_endpoints,
 )
 from vuln_reachability_scorer.html_report import to_asset_html, to_html
+from vuln_reachability_scorer.markdown_report import to_asset_markdown, to_markdown
 from vuln_reachability_scorer.sarif import to_sarif
 from vuln_reachability_scorer.scoring import score_findings
 from vuln_reachability_scorer.summary import format_summary_line, summarize
@@ -48,7 +49,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=("table", "json", "sarif", "csv", "html"),
+        choices=("table", "json", "sarif", "csv", "html", "markdown"),
         default="table",
         help="Output format (default: table)",
     )
@@ -233,6 +234,8 @@ def _render(scored: list, fmt: str, explain: bool = False, path_by_asset: dict |
         return _render_csv(scored)
     if fmt == "html":
         return to_html(scored, explain=explain, path_by_asset=path_by_asset)
+    if fmt == "markdown":
+        return to_markdown(scored, explain=explain, path_by_asset=path_by_asset)
     return ""
 
 
@@ -320,6 +323,12 @@ def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
                 sys.stdout.write(text)
         elif args.format == "html":
             text = to_asset_html(rows)
+            if args.output is not None:
+                args.output.write_text(text, encoding="utf-8")
+            else:
+                sys.stdout.write(text)
+        elif args.format == "markdown":
+            text = to_asset_markdown(rows)
             if args.output is not None:
                 args.output.write_text(text, encoding="utf-8")
             else:
