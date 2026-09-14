@@ -42,6 +42,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Output format (default: table)",
     )
     parser.add_argument(
+        "--output",
+        "-o",
+        type=Path,
+        help="Write output to this file instead of stdout",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -49,7 +55,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _print_table(scored: list) -> None:
+def _print_table(scored: list, sink) -> None:
     headers = (
         "PRIORITY",
         "BASE",
@@ -81,10 +87,24 @@ def _print_table(scored: list) -> None:
     def fmt(row: tuple[str, ...]) -> str:
         return "  ".join(cell.ljust(widths[i]) for i, cell in enumerate(row))
 
-    print(fmt(headers))
-    print(fmt(tuple("-" * w for w in widths)))
+    print(fmt(headers), file=sink)
+    print(fmt(tuple("-" * w for w in widths)), file=sink)
     for row in rows:
-        print(fmt(row))
+        print(fmt(row), file=sink)
+
+
+def _render(scored: list, fmt: str) -> str:
+    if fmt == "json":
+        payload = {
+            "version": __version__,
+            "formula": "priority = base_score * reachability_factor * exposure_factor",
+            "results": [s.as_dict() for s in scored],
+        }
+        return json.dumps(payload, indent=2) + "\n"
+    if fmt == "sarif":
+        return json.dumps(to_sarif(scored), indent=2) + "\n"
+    # table rendered via _print_table for streaming; return unused
+    return ""
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -100,19 +120,22 @@ def main(argv: list[str] | None = None) -> int:
 
     scored = score_findings(findings, assets, edges)
 
-    if args.format == "json":
-        payload = {
-            "version": __version__,
-            "formula": "priority = base_score * reachability_factor * exposure_factor",
-            "results": [s.as_dict() for s in scored],
-        }
-        json.dump(payload, sys.stdout, indent=2)
-        sys.stdout.write("\n")
-    elif args.format == "sarif":
-        json.dump(to_sarif(scored), sys.stdout, indent=2)
-        sys.stdout.write("\n")
-    else:
-        _print_table(scored)
+    try:
+        if args.format == "table":
+            if args.output is not None:
+                with args.output.open("w", encoding="utf-8") as fh:
+                    _print_table(scored, fh)
+            else:
+                _print_table(scored, sys.stdout)
+        else:
+            text = _render(scored, args.format)
+            if args.output is not None:
+                args.output.write_text(text, encoding="utf-8")
+            else:
+                sys.stdout.write(text)
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
 
     return 0
 
