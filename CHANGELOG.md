@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.9] - 2026-09-14
+
 ### Changed
 
 - `examples/vrscore-exclude.toml` and `vrscore-multi.toml` now `extends` `vrscore-base.toml` (shared estate paths).
@@ -285,7 +287,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/releases/tag/v0.1.0
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.8...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.9...HEAD
+[0.3.9]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.8...v0.3.9
 [0.3.8]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.7...v0.3.8
 [0.3.7]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.5...v0.3.6

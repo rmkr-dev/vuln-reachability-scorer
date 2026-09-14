@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.3.8** — MAX_EXTENDS_DEPTH docs sync guard. See [CHANGELOG.md](CHANGELOG.md).
+**v0.3.9** — config `extends` example quality: tag-focus, exclude/multi on base, cross-format tests, README index sync, three-layer CI docs. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
