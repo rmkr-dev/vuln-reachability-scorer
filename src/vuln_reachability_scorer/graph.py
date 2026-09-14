@@ -8,8 +8,14 @@ from vuln_reachability_scorer.models import Asset, Edge
 
 
 def build_adjacency(edges: list[Edge]) -> dict[str, list[str]]:
+    """Build directed adjacency; parallel duplicate edges collapse to one neighbor."""
     adj: dict[str, list[str]] = defaultdict(list)
+    seen_pair: set[tuple[str, str]] = set()
     for edge in edges:
+        pair = (edge.source, edge.target)
+        if pair in seen_pair:
+            continue
+        seen_pair.add(pair)
         adj[edge.source].append(edge.target)
     return dict(adj)
 

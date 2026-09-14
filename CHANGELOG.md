@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `build_adjacency` collapses duplicate parallel edges; large-graph performance tests guard O(V+E) scoring.
 - Pin CI reusable workflow to `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.4.0` (compatible inputs; setup composite moves to `@v0.3.0`).
 
 ### Added

@@ -188,7 +188,7 @@ There is no automatic cwd discovery; omit `--config` to keep today's flag-only b
 
 ## Large topologies
 
-Scoring and `--asset-report` run **one** multi-source BFS from all ingress / internet-facing nodes, then look up hop distance per asset (`all_hop_distances`). `--explain` likewise builds every shortest path in one BFS (`all_shortest_paths`). Cost is O(V+E) in the topology size, not O(findings × (V+E)).
+Scoring and `--asset-report` run **one** multi-source BFS from all ingress / internet-facing nodes, then look up hop distance per asset (`all_hop_distances`). `--explain` likewise builds every shortest path in one BFS (`all_shortest_paths`). Cost is O(V+E) in the topology size, not O(findings × (V+E)). Duplicate parallel edges are collapsed when building adjacency.
 
 For estates with tens of thousands of assets, prefer JSON/JSONL/CSV over the table format, drop `--explain` unless needed, and use filters (`--min-priority`, `--band`, `--only-reachable`, `--max-hops`, `--limit`) to shrink output.
 
