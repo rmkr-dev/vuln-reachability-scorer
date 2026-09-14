@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Config file field reference in [docs/schemas/config.md](docs/schemas/config.md).
+
 ## [0.2.0] - 2026-09-14
 
 ### Changed
