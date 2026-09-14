@@ -219,3 +219,27 @@ def test_extends_whitespace_rejected(tmp_path: Path):
     p.write_text('extends = "   "\nformat = "json"\n', encoding="utf-8")
     with pytest.raises(ConfigError, match="extends must be a non-empty string"):
         load_config(p)
+
+
+def test_extends_output_resolves_against_defining_file(tmp_path: Path):
+    estate = tmp_path / "estate"
+    overlays = tmp_path / "overlays"
+    estate.mkdir()
+    overlays.mkdir()
+    (estate / "base.toml").write_text(
+        'topology = "topology.json"\noutput = "scores.json"\n',
+        encoding="utf-8",
+    )
+    (overlays / "ci.toml").write_text(
+        'extends = "../estate/base.toml"\nformat = "json"\n',
+        encoding="utf-8",
+    )
+    cfg = load_config(overlays / "ci.toml")
+    assert Path(cfg["output"]) == (estate / "scores.json").resolve()
+    # overlay can replace output rooted at overlay dir
+    (overlays / "ci2.toml").write_text(
+        'extends = "../estate/base.toml"\noutput = "local.sarif"\n',
+        encoding="utf-8",
+    )
+    cfg2 = load_config(overlays / "ci2.toml")
+    assert Path(cfg2["output"]) == (overlays / "local.sarif").resolve()
