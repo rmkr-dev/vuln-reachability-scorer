@@ -78,6 +78,13 @@ Exits `1` if any scored finding has `priority_score >= 7`, suitable as a require
 vrscore -t examples/topology.json -f examples/findings.json --only-kev --explain --summary
 ```
 
+## Reachable-only triage
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --only-reachable --summary
+```
+
+Drops findings whose asset has no path from an ingress / internet-facing node (`hop_distance` is null / `R = 0.10`).
 
 ## Topology pitfalls
 
@@ -111,5 +118,6 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--strict` | Unknown edge endpoints are errors |
 | `--fail-under SCORE` | Exit 1 if any priority >= SCORE |
 | `--only-kev` | Keep `kev: true` findings only |
+| `--only-reachable` | Drop unreachable assets |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |

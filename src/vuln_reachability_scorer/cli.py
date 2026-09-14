@@ -109,6 +109,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep only findings marked kev=true after scoring",
     )
     parser.add_argument(
+        "--only-reachable",
+        action="store_true",
+        help="Keep only findings on assets reachable from an ingress node",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -389,6 +394,8 @@ def main(argv: list[str] | None = None) -> int:
     scored = score_findings(findings, assets, edges, tag_boosts=tag_boosts)
     if args.only_kev:
         scored = [s for s in scored if s.finding.kev]
+    if args.only_reachable:
+        scored = [s for s in scored if s.hop_distance is not None]
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
     if args.limit > 0:

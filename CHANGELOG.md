@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--only-reachable` to keep findings on assets reachable from an ingress node.
 - `--format markdown` GitHub-flavored table report (findings and `--asset-report`).
 
 ## [0.1.6] - 2026-09-14
