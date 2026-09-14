@@ -32,6 +32,7 @@ vrscore -t examples/topology.json -f examples/findings.json --format markdown -o
 ```bash
 vrscore -t examples/topology.json -f examples/findings.json --min-priority 4 --limit 10 --explain
 vrscore -t examples/topology.json -f examples/findings.json --summary
+# stderr includes kev= and epss= counts alongside bands
 ```
 
 ## Raise exposure for sensitive tags
@@ -154,7 +155,7 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `-o` / `--output` | Write to file |
 | `--asset-report` | Per-asset reachability inventory |
 | `--explain` | Human rationale + shortest path |
-| `--summary` | Band counts on stderr |
+| `--summary` | Band counts + kev/epss counts on stderr |
 | `--strict` | Unknown edge endpoints are errors |
 | `--fail-under SCORE` | Exit 1 if any priority >= SCORE |
 | `--only-kev` | Keep `kev: true` findings only |
