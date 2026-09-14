@@ -49,7 +49,7 @@ Relative `topology` / `findings` / `output` paths resolve against the directory 
 - `format` / `sort` must match CLI choices; `band` entries must be `critical` / `high` / `medium` / `low`.
 - `min_epss` must be in `[0, 1]`; `min_priority` / `fail_under` / `min_base` / `limit` / `max_hops` / `min_hops` must be `>= 0`.
 - When both `min_hops` and `max_hops` are set (including after `extends` merge), `min_hops` must not exceed `max_hops`.
-- `extends` chains detect cycles, reject missing targets, and cap at depth 8.
+- `extends` chains detect cycles, reject missing targets / directories, and cap at depth `MAX_EXTENDS_DEPTH` (8).
 - List keys apply only when the matching CLI flag is absent.
 
 ## Examples
