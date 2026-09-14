@@ -308,6 +308,17 @@ vrscore -c examples/overlays/vrscore-ci.toml -o /tmp/reachability.sarif
 
 `topology` / `findings` from the base still resolve under `examples/`, not under `overlays/` (defining-file path resolve).
 
+### Three-layer CI chain
+
+Stack estate paths → CI gate → strict topology hygiene without new flags:
+
+```bash
+# base (examples/) ← overlays/vrscore-ci.toml ← overlays/vrscore-strict-ci.toml
+vrscore -c examples/overlays/vrscore-strict-ci.toml -o /tmp/reachability.sarif
+```
+
+`strict-ci` sets `strict = true` on top of the CI overlay (`fail_under`, SARIF, quiet defaults from the middle layer).
+
 
 ## Timing stats
 
