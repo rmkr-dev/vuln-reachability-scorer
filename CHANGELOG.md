@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Architecture notes for defining-file path resolve under `extends`.
+- Test rejecting whitespace-only `extends` values.
+
 ## [0.3.3] - 2026-09-14
 
 ### Added
