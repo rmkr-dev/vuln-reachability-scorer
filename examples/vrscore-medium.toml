@@ -1,0 +1,5 @@
+# Medium-band overlay — replaces triage bands (list replace; ADR-008).
+extends = "vrscore-triage.toml"
+band = ["medium"]
+format = "table"
+summary = true

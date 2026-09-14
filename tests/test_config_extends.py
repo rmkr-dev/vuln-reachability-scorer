@@ -203,3 +203,12 @@ def test_extends_target_is_directory(tmp_path: Path):
     child.write_text('extends = "subdir"\nformat = "json"\n', encoding="utf-8")
     with pytest.raises(ConfigError, match="extends target is a directory"):
         load_config(child)
+
+
+def test_example_medium_band_replace():
+    root = Path(__file__).resolve().parents[1]
+    cfg = load_config(root / "examples" / "vrscore-medium.toml")
+    assert cfg["band"] == ["medium"]
+    assert cfg.get("explain") is True  # from triage
+    rc = main(["--config", str(root / "examples" / "vrscore-medium.toml"), "--limit", "5"])
+    assert rc == 0
