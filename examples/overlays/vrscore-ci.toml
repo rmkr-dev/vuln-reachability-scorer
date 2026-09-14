@@ -1,0 +1,12 @@
+# Cross-directory extends demo — paths in the base stay rooted at examples/
+# (defining-file resolve; ADR-008). No new CLI flags (ADR-007).
+extends = "../vrscore-base.toml"
+format = "sarif"
+output = "reachability.sarif"
+summary = true
+quiet = true
+only_reachable = true
+max_hops = 3
+fail_under = 7.0
+dedupe = true
+sort = "priority"
