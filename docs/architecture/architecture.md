@@ -10,7 +10,7 @@ Data flow:
 2. **Findings JSON** — vulnerability records bound to an asset id with a numeric `base_score` (`loaders.load_findings`).
 3. **Graph** — adjacency + shortest hop distance from ingress nodes (`graph.py`).
 4. **Scoring** — `priority = base_score × reachability_factor × exposure_factor` (`scoring.py`; see [ADR-001](../decisions/ADR-001-scoring-model.md)).
-5. **CLI** — `vrscore` / `vuln-reachability` prints a ranked table or JSON (`cli.py`).
+5. **CLI** — `vrscore` / `vuln-reachability` prints a ranked table, JSON, or SARIF 2.1.0 (`cli.py`, `sarif.py`).
 
 Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0.2.0`.
 
@@ -22,6 +22,7 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 | `graph.py` | Adjacency, ingress detection, hop distance |
 | `scoring.py` | Factor tables and `score_findings` |
 | `loaders.py` | JSON → models |
+| `sarif.py` | SARIF 2.1.0 document builder |
 | `cli.py` | argparse entrypoint |
 
 ## CI and hygiene

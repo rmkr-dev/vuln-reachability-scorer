@@ -9,6 +9,7 @@ from pathlib import Path
 
 from vuln_reachability_scorer import __version__
 from vuln_reachability_scorer.loaders import load_findings, load_topology
+from vuln_reachability_scorer.sarif import to_sarif
 from vuln_reachability_scorer.scoring import score_findings
 
 
@@ -36,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=("table", "json"),
+        choices=("table", "json", "sarif"),
         default="table",
         help="Output format (default: table)",
     )
@@ -106,6 +107,9 @@ def main(argv: list[str] | None = None) -> int:
             "results": [s.as_dict() for s in scored],
         }
         json.dump(payload, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    elif args.format == "sarif":
+        json.dump(to_sarif(scored), sys.stdout, indent=2)
         sys.stdout.write("\n")
     else:
         _print_table(scored)

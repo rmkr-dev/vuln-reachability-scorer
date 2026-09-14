@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Nothing yet since the last release.
+- SARIF 2.1.0 output via `--format sarif` (`vuln_reachability_scorer.sarif`).
+- Additional unit tests for graph hop-distance, loaders, scoring edge cases, and SARIF emission.
 
 ## [0.1.0] - 2026-09-14
 
