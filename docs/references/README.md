@@ -9,3 +9,5 @@ Background material that informed the scoring model. None of these are runtime d
 | [NIST SP 800-40](https://csrc.nist.gov/publications/detail/sp/800-40/rev-4/final) | Guide for vulnerability management programs where reachability context is expected |
 
 Future work may optionally ingest KEV membership as an additional factor; that would need a new ADR.
+
+| [CISA Known Exploited Vulnerabilities Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) | Motivates optional `kev` finding flag ([ADR-003](../decisions/ADR-003-kev-multiplier.md)); catalog is not fetched by this CLI |
