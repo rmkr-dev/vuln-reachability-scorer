@@ -54,7 +54,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.2.3** — exclude filters (`--exclude-asset`/`--exclude-cve`/`--exclude-tag`), `py.typed`, plus prior 0.2.x config/perf. See [CHANGELOG.md](CHANGELOG.md).
+**v0.2.4** — `VRSCORE_CONFIG` env default for `--config`; builds on 0.2.3 exclude filters and typing. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
