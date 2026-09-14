@@ -8,6 +8,7 @@ flowchart LR
   end
 
   subgraph core [src/vuln_reachability_scorer]
+    CFG[config + extends]
     L[loaders]
     G[graph / paths]
     S[scoring + tag boosts + KEV + EPSS]
@@ -26,6 +27,7 @@ flowchart LR
 
   T --> L
   F --> L
+  CFG --> C
   L --> G
   G --> S
   S --> E
@@ -39,4 +41,4 @@ flowchart LR
 
 CLI flags that shape scoring/output: `--asset-report`, `--explain`, `--summary`, `--strict`, `--fail-under`, `--only-kev`, `--show-title`, `--min-priority`, `--limit`, `--format`, `--output`.
 
-Config (`--config` / `VRSCORE_CONFIG`) feeds CLI defaults before scoring; graph hop maps are precomputed once per run.
+Config (`--config` / `VRSCORE_CONFIG`, optional `extends`) feeds CLI defaults before scoring; path keys resolve per defining file. Graph hop maps are precomputed once per run. Prefer config/examples over new CLI flags (ADR-007).

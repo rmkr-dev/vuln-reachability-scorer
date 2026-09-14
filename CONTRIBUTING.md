@@ -24,3 +24,7 @@ Thanks for improving vuln-reachability-scorer. Keep changes small, complete, and
 - Fake or stub implementations presented as working scorers
 
 Questions about process belong in the pull request. Scoring-model or architecture choices belong in an ADR under `docs/decisions/` when that tree exists.
+
+## Config-first changes
+
+Before proposing a new CLI flag, check [ADR-007](docs/decisions/ADR-007-config-first-cli.md): encode defaults in `--config` / examples and grow the [usage cookbook](docs/usage/README.md). Prefer `extends` overlays ([ADR-008](docs/decisions/ADR-008-config-extends.md)) for layered triage vs CI.
