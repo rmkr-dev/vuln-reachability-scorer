@@ -70,6 +70,7 @@ Config loading is covered without adding CLI flags ([ADR-007](../decisions/ADR-0
 | `tests/test_config_schema_sync.py` | `vrscore.schema.json` properties ↔ `CONFIG_KEYS` + `extends` |
 | `tests/test_example_config_extends_load.py` | Every `examples/**/vrscore*` config loads via `load_config` |
 | `tests/test_examples_readme_sync.py` | `examples/README.md` lists every shipped `vrscore*` config |
+| `tests/test_overlays_readme_sync.py` | `examples/overlays/README.md` lists every overlay `vrscore*` |
 | `tests/test_extends_docs_sync.py` | Docs mention `MAX_EXTENDS_DEPTH` matching `config.py` |
 | `tests/test_example_configs.py` | Shipped `examples/vrscore-*.toml` load/run |
 
