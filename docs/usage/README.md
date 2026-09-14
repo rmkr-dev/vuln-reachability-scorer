@@ -23,6 +23,7 @@ vrscore -t examples/topology.json --asset-report --format csv -o assets.csv
 ```bash
 vrscore -t examples/topology.json -f examples/findings.json --format csv -o scores.csv
 vrscore -t examples/topology.json -f examples/findings.json --format sarif -o scores.sarif
+vrscore -t examples/topology.json -f examples/findings.json --format html -o report.html
 ```
 
 ## Focus triage
@@ -82,7 +83,7 @@ vrscore -t examples/topology.json -f examples/findings.json --only-kev --explain
 | --- | --- |
 | `-t` / `--topology` | Topology JSON (required) |
 | `-f` / `--findings` | Findings JSON (required unless `--asset-report`) |
-| `--format` | `table` \| `json` \| `csv` \| `sarif` |
+| `--format` | `table` \| `json` \| `csv` \| `sarif` \| `html` |
 | `-o` / `--output` | Write to file |
 | `--asset-report` | Per-asset reachability inventory |
 | `--explain` | Human rationale + shortest path |
