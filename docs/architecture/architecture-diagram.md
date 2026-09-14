@@ -21,7 +21,7 @@ flowchart LR
   end
 
   subgraph automation [GitHub]
-    CI[python-ci.yml@v0.2.0]
+    CI[python-ci.yml@v0.3.0]
   end
 
   T --> L
