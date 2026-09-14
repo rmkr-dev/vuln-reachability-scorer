@@ -30,3 +30,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.setuptools.package-data]
+vuln_reachability_scorer = ["py.typed"]
+
