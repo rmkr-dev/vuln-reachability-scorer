@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Usage cookbook under `docs/usage/`.
-- ADR-002 documenting tag-based exposure boosts.
-- Tag-based exposure boosts (`pii` / `identity` / `secrets` defaults; override via topology `tag_boosts`).
+- Nothing yet since the last release.
+
+## [0.1.2] - 2026-09-14
+
+### Added
+
 - `--asset-report` per-asset reachability inventory (topology only).
-- `--explain` to attach human-readable score rationales (table comments / JSON `explain` field).
+- Tag-based exposure boosts (`pii` / `identity` / `secrets` defaults; override via topology `tag_boosts`) ([ADR-002](docs/decisions/ADR-002-tag-exposure-boosts.md)).
+- `--explain` human-readable score rationales.
 - Warnings (and `--strict` errors) when topology edges reference unknown asset ids.
+- Usage cookbook under `docs/usage/`.
 
 ## [0.1.1] - 2026-09-14
 
@@ -41,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions CI via `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.2.0`.
 - Dependabot, CODEOWNERS, SECURITY.md, PR template, and foundation docs.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/releases/tag/v0.1.0
