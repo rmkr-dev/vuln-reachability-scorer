@@ -72,3 +72,7 @@ Config loading is covered without adding CLI flags ([ADR-007](../decisions/ADR-0
 | `tests/test_example_configs.py` | Shipped `examples/vrscore-*.toml` load/run |
 
 Prefer growing these tests when changing `config.py`.
+
+## Config-first local runs
+
+Set `VRSCORE_CONFIG` to an example overlay (see [usage cookbook](../usage/README.md#config-file-defaults)) instead of inventing new CLI flags.
