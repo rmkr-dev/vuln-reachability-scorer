@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.10] - 2026-09-14
+
 ### Fixed
 
 - ADR index table includes ADR-005 as a proper Accepted row.
@@ -104,7 +106,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial package, scoring formula ([ADR-001](docs/decisions/ADR-001-scoring-model.md)), CLI, examples, CI.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.9...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.10...HEAD
+[0.1.10]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.9...v0.1.10
 [0.1.9]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.8...v0.1.9
 [0.1.8]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.6...v0.1.7
