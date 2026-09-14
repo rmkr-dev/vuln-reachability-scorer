@@ -29,6 +29,7 @@ pip install -e ".[dev]"
 ```bash
 vrscore --topology examples/topology.json --findings examples/findings.json
 vrscore -t examples/topology.json -f examples/findings.json --format json
+vrscore -t examples/topology.json -f examples/findings.json --format jsonl -o scores.jsonl
 vrscore -t examples/topology.json -f examples/findings.json --format csv -o scores.csv
 vrscore -t examples/topology.json -f examples/findings.json --format sarif -o results.sarif
 vrscore -t examples/topology.json -f examples/findings.json --format html -o report.html
@@ -42,7 +43,7 @@ vrscore -t examples/topology.json --asset-report
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0), `html` (self-contained report), `markdown` (GFM table). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--summary` for band counts on stderr. Use `--fail-under SCORE` as a CI gate. Use `--show-title` to include titles in the table. Use `--only-kev` to filter to KEV findings. Use `--only-reachable` to drop findings on unreachable assets. Use `--max-hops N` to keep findings within N hops of ingress. Use `--band critical` (repeatable) to filter by priority band. Use `--min-epss P` to keep findings with EPSS at or above P. Use `--asset ID` (repeatable) to scope to specific assets. Use `--cve CVE` (repeatable) to filter by CVE id. Use `--strict` to fail on edges that reference unknown assets. Use `--asset-report` for a per-asset reachability inventory (no findings file).
+Output formats: `table` (default), `json`, `jsonl` (NDJSON), `csv`, `sarif` (SARIF 2.1.0), `html` (self-contained report), `markdown` (GFM table). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--summary` for band counts on stderr. Use `--fail-under SCORE` as a CI gate. Use `--show-title` to include titles in the table. Use `--only-kev` to filter to KEV findings. Use `--only-reachable` to drop findings on unreachable assets. Use `--max-hops N` to keep findings within N hops of ingress. Use `--band critical` (repeatable) to filter by priority band. Use `--min-epss P` to keep findings with EPSS at or above P. Use `--asset ID` (repeatable) to scope to specific assets. Use `--cve CVE` (repeatable) to filter by CVE id. Use `--strict` to fail on edges that reference unknown assets. Use `--asset-report` for a per-asset reachability inventory (no findings file).
 
 Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 
@@ -50,7 +51,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.1.6** — core library, CLI (table / JSON / CSV / SARIF / HTML), optional EPSS, KEV, filters, examples, tests, CI `@v0.3.0`, ADR-001–004. See [CHANGELOG.md](CHANGELOG.md).
+**v0.1.6** — core library, CLI (table / JSON / JSONL / CSV / SARIF / HTML / Markdown), optional EPSS, KEV, filters, examples, tests, CI `@v0.3.0`, ADR-001–004. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
