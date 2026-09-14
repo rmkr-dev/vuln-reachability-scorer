@@ -58,8 +58,16 @@ _BOOL_KEYS = {
 }
 
 
+ALLOWED_FORMATS = frozenset(
+    {"table", "json", "jsonl", "sarif", "csv", "tsv", "html", "markdown", "junit"}
+)
+ALLOWED_SORTS = frozenset({"priority", "base", "hops", "asset", "cve"})
+ALLOWED_BANDS = frozenset({"critical", "high", "medium", "low"})
+
+
 class ConfigError(ValueError):
     """Invalid config file contents or unsupported format."""
+
 
 
 def _load_raw(path: Path) -> dict[str, Any]:
@@ -113,6 +121,13 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
                 raise ConfigError(
                     f"config: {key} must be a list of strings in {path}"
                 )
+            if key == "band":
+                bad = sorted({x for x in value if x not in ALLOWED_BANDS})
+                if bad:
+                    raise ConfigError(
+                        f"config: band values must be one of {sorted(ALLOWED_BANDS)} "
+                        f"in {path}; unknown: {', '.join(bad)}"
+                    )
             out[key] = list(value)
         elif key == "findings":
             if isinstance(value, str) and value.strip():
@@ -130,10 +145,18 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
         elif key == "format":
             if not isinstance(value, str):
                 raise ConfigError(f"config: format must be a string in {path}")
+            if value not in ALLOWED_FORMATS:
+                raise ConfigError(
+                    f"config: format must be one of {sorted(ALLOWED_FORMATS)} in {path}"
+                )
             out[key] = value
         elif key == "sort":
             if not isinstance(value, str):
                 raise ConfigError(f"config: sort must be a string in {path}")
+            if value not in ALLOWED_SORTS:
+                raise ConfigError(
+                    f"config: sort must be one of {sorted(ALLOWED_SORTS)} in {path}"
+                )
             out[key] = value
         elif key in ("min_priority", "fail_under", "min_epss", "min_base"):
             if not isinstance(value, (int, float)) or isinstance(value, bool):
