@@ -54,7 +54,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.2.0** — config files (`--config`), single-BFS large-graph scoring, CI `@v0.4.0`, cookbook playbook/Actions gate, ADR-001–006. See [CHANGELOG.md](CHANGELOG.md).
+**v0.2.1** — config schema docs, multi `--findings`, `--exclude-tag`, plus v0.2.0 reachability/config/CI base. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
