@@ -1,0 +1,44 @@
+# Config file schema (`--config`)
+
+Optional JSON or TOML defaults for the CLI ([ADR-006](../decisions/ADR-006-config-file.md)). Pass `--config` / `-c`; there is no cwd auto-discovery.
+
+## Precedence
+
+built-in defaults < config file < explicit CLI flags
+
+Relative `topology` / `findings` / `output` paths resolve against the config file's directory.
+
+## Keys
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `topology` | string (path) | Topology JSON |
+| `findings` | string (path) | Findings JSON |
+| `format` | string | `table` \| `json` \| `jsonl` \| `csv` \| `tsv` \| `sarif` \| `html` \| `markdown` \| `junit` |
+| `output` | string (path) | Write results to file |
+| `min_priority` | number | Omit below threshold |
+| `min_base` | number | Omit low base_score |
+| `limit` | integer | Cap results |
+| `explain` | bool | Rationales + paths |
+| `strict` | bool | Unknown edges are errors |
+| `asset_report` | bool | Per-asset inventory |
+| `summary` | bool | Band counts on stderr |
+| `fail_under` | number | CI gate threshold |
+| `show_title` | bool | TITLE column |
+| `only_kev` | bool | KEV-only |
+| `only_reachable` | bool | Drop unreachable |
+| `max_hops` | integer | Hop ceiling |
+| `band` | list of string | `critical` / `high` / `medium` / `low` |
+| `min_epss` | number in `[0,1]` | EPSS floor |
+| `asset` | list of string | Asset id filter |
+| `cve` | list of string | CVE id filter |
+| `tag` | list of string | Tag filter (OR) |
+| `quiet` | bool | Suppress warnings |
+| `sort` | string | `priority` \| `base` \| `hops` \| `asset` \| `cve` |
+| `dedupe` | bool | Best per CVE+asset |
+
+Unknown keys are errors (exit 2). List keys apply only when the matching CLI flag is absent.
+
+## Examples
+
+See `examples/vrscore.toml` and `examples/vrscore.json`.

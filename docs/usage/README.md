@@ -203,7 +203,7 @@ Use `--quiet` in CI logs when edge warnings are expected noise; keep `--strict` 
 
 ## Config file defaults
 
-Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the config file's directory. See [ADR-006](../decisions/ADR-006-config-file.md).
+Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the config file's directory. See [ADR-006](../decisions/ADR-006-config-file.md) and the [config schema](../schemas/config.md).
 
 ```bash
 vrscore --config examples/vrscore.toml
