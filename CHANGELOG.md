@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Test that `output` path resolve follows defining-file rules under `extends`.
 - References index links draft config JSON Schema and ADR-007/008; table cleaned up.
 - ADR-008 notes rejection of directory `extends` targets.
 
