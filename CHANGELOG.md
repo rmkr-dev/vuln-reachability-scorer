@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Architecture diagram + CONTRIBUTING note config `extends` / ADR-007.
 - Architecture notes for defining-file path resolve under `extends`.
 - Test rejecting whitespace-only `extends` values.
 
