@@ -37,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=("table", "json", "sarif"),
+        choices=("table", "json", "sarif", "csv"),
         default="table",
         help="Output format (default: table)",
     )
@@ -52,6 +52,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=0.0,
         help="Omit findings with priority_score below this threshold (default: 0)",
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=0,
+        help="Emit at most N results after sorting/filtering (0 = no limit)",
     )
     parser.add_argument(
         "--version",
@@ -99,6 +105,42 @@ def _print_table(scored: list, sink) -> None:
         print(fmt(row), file=sink)
 
 
+def _render_csv(scored: list) -> str:
+    import csv
+    from io import StringIO
+
+    buf = StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(
+        [
+            "priority_score",
+            "base_score",
+            "reachability_factor",
+            "exposure_factor",
+            "hop_distance",
+            "cve_id",
+            "asset_id",
+            "id",
+            "title",
+        ]
+    )
+    for s in scored:
+        writer.writerow(
+            [
+                f"{s.priority_score:.2f}",
+                f"{s.finding.base_score:.1f}",
+                f"{s.reachability_factor:.2f}",
+                f"{s.exposure_factor:.2f}",
+                "" if s.hop_distance is None else s.hop_distance,
+                s.finding.cve_id,
+                s.finding.asset_id,
+                s.finding.id,
+                s.finding.title,
+            ]
+        )
+    return buf.getvalue()
+
+
 def _render(scored: list, fmt: str) -> str:
     if fmt == "json":
         payload = {
@@ -109,6 +151,8 @@ def _render(scored: list, fmt: str) -> str:
         return json.dumps(payload, indent=2) + "\n"
     if fmt == "sarif":
         return json.dumps(to_sarif(scored), indent=2) + "\n"
+    if fmt == "csv":
+        return _render_csv(scored)
     return ""
 
 
@@ -118,6 +162,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.min_priority < 0:
         print("error: --min-priority must be >= 0", file=sys.stderr)
+        return 2
+    if args.limit < 0:
+        print("error: --limit must be >= 0", file=sys.stderr)
         return 2
 
     try:
@@ -130,6 +177,8 @@ def main(argv: list[str] | None = None) -> int:
     scored = score_findings(findings, assets, edges)
     if args.min_priority > 0:
         scored = [s for s in scored if s.priority_score >= args.min_priority]
+    if args.limit > 0:
+        scored = scored[: args.limit]
 
     try:
         if args.format == "table":
