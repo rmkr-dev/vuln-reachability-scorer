@@ -37,6 +37,7 @@ Do not add a file that nothing references, or a doc that describes a file that d
 
 - **In scope:** offline Python CLI that loads topology + findings JSON and emits reachability-aware priority scores.
 - **Out of scope:** live scanner integrations, cloud APIs, Node/npm, secrets, company-specific branding.
+- **Prefer config over flag spam:** encode repeatable filters in `--config` / `VRSCORE_CONFIG` (ADR-006) and cookbook examples. Do not add a new CLI flag unless an ADR or clear gap requires it; grow `examples/vrscore-*.toml` and docs instead.
 
 ## Tests and CI
 

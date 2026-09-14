@@ -27,30 +27,22 @@ pip install -e ".[dev]"
 ## Quick start
 
 ```bash
-vrscore --topology examples/topology.json --findings examples/findings.json
-vrscore -t examples/topology.json -f examples/findings.json --format json
-vrscore -t examples/topology.json -f examples/findings.json --format jsonl -o scores.jsonl
-vrscore -t examples/topology.json -f examples/findings.json --format csv -o scores.csv
-vrscore -t examples/topology.json -f examples/findings.json --format tsv -o scores.tsv
-vrscore -t examples/topology.json -f examples/findings.json --format sarif -o results.sarif
-vrscore -t examples/topology.json -f examples/findings.json --format html -o report.html
-vrscore -t examples/topology.json -f examples/findings.json --format markdown -o report.md
-vrscore -t examples/topology.json -f examples/findings.json --format junit -o report.xml
-vrscore -t examples/topology.json -f examples/findings.json --min-priority 4.0 --limit 20
-vrscore -t examples/topology.json -f examples/findings.json --explain
-vrscore -t examples/topology.json -f examples/findings.json --summary
-vrscore -t examples/topology.json -f examples/findings.json --fail-under 7
-vrscore -t examples/topology.json --asset-report
+# Prefer a config file over long flag chains (ADR-006)
 vrscore --config examples/vrscore.toml
+vrscore -c examples/vrscore-triage.toml
+vrscore -c examples/vrscore-ci.toml
+# Explicit paths still work
+vrscore -t examples/topology.json -f examples/findings.json --explain --summary
+vrscore -t examples/topology.json --asset-report
 # alias:
-vuln-reachability -t examples/topology.json -f examples/findings.json
+vuln-reachability -c examples/vrscore.toml
 ```
 
-Output formats: `table` (default), `json`, `jsonl` (NDJSON), `csv`, `tsv`, `sarif` (SARIF 2.1.0), `html` (self-contained report), `markdown` (GFM table), `junit` (JUnit XML). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales. Use `--summary` for band counts on stderr. Use `--fail-under SCORE` as a CI gate. Use `--show-title` to include titles in the table. Use `--only-kev` to filter to KEV findings. Use `--only-reachable` to drop findings on unreachable assets. Use `--max-hops N` to keep findings within N hops of ingress. Use `--band critical` (repeatable) to filter by priority band. Use `--min-epss P` to keep findings with EPSS at or above P. Use `--asset ID` (repeatable) to scope to specific assets. Use `--cve CVE` (repeatable) to filter by CVE id. Use `--strict` to fail on edges that reference unknown assets. Use `--quiet` / `-q` to suppress non-error warnings. Use `--min-base` to filter on raw CVSS-like base score. Use `--sort hops` (or base/asset/cve) to reorder results. Use `--dedupe` to keep the top finding per CVE+asset. Use `--tag TAG` (repeatable) to keep findings on tagged assets. Use `--asset-report` for a per-asset reachability inventory (no findings file); it also honors `--limit`, `--max-hops`, and `--only-reachable`.
+Output formats: `table` (default), `json`, `jsonl`, `csv`, `tsv`, `sarif`, `html`, `markdown`, `junit`. Put repeatable filters in `--config` / `VRSCORE_CONFIG`; override one-off knobs on the CLI. Full recipes: [docs/usage/](docs/usage/) (config-first triage, Actions gate). Flag cheatsheet lives there too — this README stays short on purpose.
 
 Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 
-See [examples/README.md](examples/README.md) for the sample topology narrative.
+See [examples/README.md](examples/README.md) for the sample topology narrative and config samples.
 
 ## Status
 
