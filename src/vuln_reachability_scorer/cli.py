@@ -12,7 +12,7 @@ from pathlib import Path
 from vuln_reachability_scorer import __version__
 from vuln_reachability_scorer.asset_report import report_assets
 from vuln_reachability_scorer.explain import explain_score
-from vuln_reachability_scorer.paths import format_path, shortest_path
+from vuln_reachability_scorer.paths import all_shortest_paths, format_path
 from vuln_reachability_scorer.loaders import (
     load_findings,
     load_tag_boosts,
@@ -696,9 +696,7 @@ def main(argv: list[str] | None = None) -> int:
 
     path_by_asset = None
     if args.explain:
-        path_by_asset = {
-            a.id: shortest_path(a.id, assets, edges) for a in assets
-        }
+        path_by_asset = all_shortest_paths(assets, edges)
 
     try:
         if args.format == "table":

@@ -56,3 +56,28 @@ def hop_distance(
             seen.add(nxt)
             queue.append((nxt, dist + 1))
     return None
+
+
+def all_hop_distances(
+    adjacency: dict[str, list[str]],
+    ingress_ids: set[str],
+) -> dict[str, int]:
+    """Map every reachable asset id to its shortest hop distance from ingress.
+
+    Runs one multi-source BFS. Assets absent from the result are unreachable
+    (or there were no ingress nodes). Ingress nodes themselves map to ``0``.
+    """
+    if not ingress_ids:
+        return {}
+    distances: dict[str, int] = {i: 0 for i in ingress_ids}
+    queue: deque[str] = deque(ingress_ids)
+    while queue:
+        node = queue.popleft()
+        dist = distances[node]
+        for nxt in adjacency.get(node, []):
+            if nxt in distances:
+                continue
+            distances[nxt] = dist + 1
+            queue.append(nxt)
+    return distances
+

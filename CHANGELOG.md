@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Pin CI reusable workflow to `rmkr-dev/gha-reusable-workflows` `python-ci.yml@v0.4.0` (compatible inputs; setup composite moves to `@v0.3.0`).
 
+### Added
+
+- `all_hop_distances` / `all_shortest_paths` precompute reachability in one multi-source BFS; scoring, `--asset-report`, and `--explain` use them (O(V+E) instead of per-finding BFS).
 ## [0.1.10] - 2026-09-14
 
 ### Fixed

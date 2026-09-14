@@ -53,3 +53,26 @@ def test_cli_explain_json_includes_path(tmp_path: Path, capsys):
     assert main(["-t", str(t), "-f", str(f), "--format", "json", "--explain"]) == 0
     payload = json.loads(capsys.readouterr().out)
     assert "lb -> app" in payload["results"][0]["explain"]
+
+
+def test_all_shortest_paths_matches_single():
+    from vuln_reachability_scorer.models import Asset, Edge
+    from vuln_reachability_scorer.paths import all_shortest_paths, shortest_path
+
+    assets = [
+        Asset(id="i", name="I", ingress=True),
+        Asset(id="x", name="X"),
+        Asset(id="y", name="Y"),
+        Asset(id="orphan", name="O"),
+    ]
+    edges = [
+        Edge(source="i", target="x"),
+        Edge(source="x", target="y"),
+    ]
+    bulk = all_shortest_paths(assets, edges)
+    assert bulk["i"] == ["i"]
+    assert bulk["x"] == ["i", "x"]
+    assert bulk["y"] == ["i", "x", "y"]
+    assert "orphan" not in bulk
+    for aid in ("i", "x", "y", "orphan"):
+        assert bulk.get(aid) == shortest_path(aid, assets, edges)
