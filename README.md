@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.3.7** — strict-ci layered overlay; changelog/dev tips for VRSCORE_CONFIG. See [CHANGELOG.md](CHANGELOG.md).
+**v0.3.8** — MAX_EXTENDS_DEPTH docs sync guard. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
