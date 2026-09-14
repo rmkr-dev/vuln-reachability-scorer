@@ -37,6 +37,7 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 | `vrscore-triage.toml` | Explain + hop window + high/critical bands + dedupe |
 | `vrscore-ci.toml` | Quiet SARIF export + `fail_under` for Actions |
 | `vrscore-multi.toml` | Merge `findings.json` + `findings-extra.json` with dedupe |
+| `vrscore-exclude.toml` | Drop `batch-worker` + `dmz`-tagged assets via config excludes |
 
 ```bash
 vrscore --config examples/vrscore.toml
@@ -44,6 +45,7 @@ vrscore -c examples/vrscore.json
 vrscore -c examples/vrscore-triage.toml
 vrscore -c examples/vrscore-ci.toml
 vrscore -c examples/vrscore-multi.toml
+vrscore -c examples/vrscore-exclude.toml
 # Override one knob without re-listing filters:
 vrscore -c examples/vrscore-triage.toml --format json --limit 10
 ```

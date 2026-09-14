@@ -55,6 +55,11 @@ vrscore -c examples/vrscore-triage.toml --band medium --format json
 
 Exclude noise via config keys `exclude_tag` / `exclude_asset` / `exclude_cve` (or the matching flags when you need a one-shot drop). Prefer growing `examples/vrscore-*.toml` over new CLI switches.
 
+```bash
+vrscore -c examples/vrscore-exclude.toml
+```
+
+
 ## Focus triage
 
 ```bash
