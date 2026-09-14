@@ -57,5 +57,6 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 - [../decisions/ADR-001-scoring-model.md](../decisions/ADR-001-scoring-model.md)
 - [../decisions/ADR-002-tag-exposure-boosts.md](../decisions/ADR-002-tag-exposure-boosts.md)
 - [../decisions/ADR-004-epss-factor.md](../decisions/ADR-004-epss-factor.md)
+- [../decisions/ADR-005-triage-filter-order.md](../decisions/ADR-005-triage-filter-order.md)
 - [../usage/README.md](../usage/README.md)
 - [../references/README.md](../references/README.md)

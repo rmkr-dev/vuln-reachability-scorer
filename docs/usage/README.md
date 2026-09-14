@@ -172,6 +172,8 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 
 `--quiet` only suppresses non-error warnings; it does not change exit codes.
 
+Filter composition order is fixed; see [ADR-005](../decisions/ADR-005-triage-filter-order.md).
+
 ## Flag cheatsheet
 
 | Flag | Purpose |
