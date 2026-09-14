@@ -30,11 +30,12 @@ pip install -e ".[dev]"
 vrscore --topology examples/topology.json --findings examples/findings.json
 vrscore -t examples/topology.json -f examples/findings.json --format json
 vrscore -t examples/topology.json -f examples/findings.json --format sarif -o results.sarif
+vrscore -t examples/topology.json -f examples/findings.json --min-priority 4.0
 # alias:
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Output formats: `table` (default), `json`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file.
+Output formats: `table` (default), `json`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file. Use `--min-priority` to drop low scores.
 
 Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 
@@ -42,7 +43,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.1.0+** — core library, CLI (table / JSON / SARIF), file output, examples, tests, CI, and ADR-001. See [CHANGELOG.md](CHANGELOG.md).
+**v0.1.0+** — core library, CLI (table / JSON / SARIF), filters, file output, examples, tests, CI, and ADR-001. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 

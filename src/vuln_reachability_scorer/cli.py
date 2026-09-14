@@ -48,6 +48,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Write output to this file instead of stdout",
     )
     parser.add_argument(
+        "--min-priority",
+        type=float,
+        default=0.0,
+        help="Omit findings with priority_score below this threshold (default: 0)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -103,13 +109,16 @@ def _render(scored: list, fmt: str) -> str:
         return json.dumps(payload, indent=2) + "\n"
     if fmt == "sarif":
         return json.dumps(to_sarif(scored), indent=2) + "\n"
-    # table rendered via _print_table for streaming; return unused
     return ""
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if args.min_priority < 0:
+        print("error: --min-priority must be >= 0", file=sys.stderr)
+        return 2
 
     try:
         assets, edges = load_topology(args.topology)
@@ -119,6 +128,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     scored = score_findings(findings, assets, edges)
+    if args.min_priority > 0:
+        scored = [s for s in scored if s.priority_score >= args.min_priority]
 
     try:
         if args.format == "table":

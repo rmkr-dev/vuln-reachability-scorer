@@ -11,8 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - SARIF 2.1.0 output via `--format sarif` (`vuln_reachability_scorer.sarif`).
 - `--output` / `-o` to write table, JSON, or SARIF to a file.
+- `--min-priority` to filter results below a priority threshold.
 - Informal input field reference under `docs/schemas/`.
-- Additional unit tests for graph hop-distance, loaders, scoring edge cases, SARIF emission, file output, and examples smoke tests.
+- Duplicate asset/finding id validation in loaders.
+- Additional unit tests for graph hop-distance, loaders, scoring edge cases, SARIF emission, file output, min-priority, and examples smoke tests.
 
 ## [0.1.0] - 2026-09-14
 

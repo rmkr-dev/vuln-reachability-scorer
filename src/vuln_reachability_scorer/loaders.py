@@ -25,6 +25,10 @@ def load_topology(path: Path) -> tuple[list[Asset], list[Edge]]:
     if not isinstance(edges_raw, list):
         raise ValueError("topology.edges must be a list")
     assets = [Asset.from_dict(a) for a in assets_raw]
+    ids = [a.id for a in assets]
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    if dupes:
+        raise ValueError(f"duplicate asset id(s): {', '.join(dupes)}")
     edges = [Edge.from_dict(e) for e in edges_raw]
     return assets, edges
 
@@ -39,4 +43,9 @@ def load_findings(path: Path) -> list[Finding]:
         items = raw
     else:
         raise ValueError(f"findings root must be an object or list: {path}")
-    return [Finding.from_dict(f) for f in items]
+    findings = [Finding.from_dict(f) for f in items]
+    ids = [f.id for f in findings]
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    if dupes:
+        raise ValueError(f"duplicate finding id(s): {', '.join(dupes)}")
+    return findings
