@@ -16,6 +16,7 @@ def test_example_configs_load():
         "vrscore-triage.toml",
         "vrscore-ci.toml",
         "vrscore-multi.toml",
+        "vrscore-exclude.toml",
     ):
         cfg = load_config(EXAMPLES / name)
         assert "topology" in cfg

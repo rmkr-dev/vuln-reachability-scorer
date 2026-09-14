@@ -1,0 +1,11 @@
+# Drop noise via config excludes (ADR-005 order) instead of flag spam.
+topology = "topology.json"
+findings = "findings.json"
+format = "table"
+summary = true
+only_reachable = true
+exclude_asset = ["batch-worker"]
+exclude_tag = ["dmz"]
+# Optional: exclude_cve = ["CVE-1999-0001"]
+sort = "priority"
+dedupe = true
