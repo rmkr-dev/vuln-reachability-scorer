@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--max-hops N` to keep findings with hop_distance <= N (excludes unreachable).
 - `--only-reachable` to keep findings on assets reachable from an ingress node.
 - `--format markdown` GitHub-flavored table report (findings and `--asset-report`).
 

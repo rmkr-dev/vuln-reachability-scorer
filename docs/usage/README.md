@@ -86,6 +86,14 @@ vrscore -t examples/topology.json -f examples/findings.json --only-reachable --s
 
 Drops findings whose asset has no path from an ingress / internet-facing node (`hop_distance` is null / `R = 0.10`).
 
+## Limit by hop distance
+
+```bash
+vrscore -t examples/topology.json -f examples/findings.json --max-hops 1 --explain
+```
+
+Keeps findings with `hop_distance <= N` and drops unreachable assets. `--max-hops 0` is ingress-only.
+
 ## Topology pitfalls
 
 Edges are **directed**. A path `db -> api` does not make `db` reachable from an ingress `api`. Other cases the scorer already covers:
@@ -119,5 +127,6 @@ Exit code `2` is an input/usage error. Messages name the file kind (`topology` /
 | `--fail-under SCORE` | Exit 1 if any priority >= SCORE |
 | `--only-kev` | Keep `kev: true` findings only |
 | `--only-reachable` | Drop unreachable assets |
+| `--max-hops N` | Keep hop_distance <= N |
 | `--show-title` | TITLE column in table |
 | `--min-priority` / `--limit` | Filter / cap results |
