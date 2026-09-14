@@ -14,7 +14,7 @@ priority_score = round(base_score × reachability_factor × exposure_factor, 2)
 - **reachability_factor** — from shortest hop distance to an ingress / internet-facing asset (`1.0` at ingress → `0.1` if unreachable)
 - **exposure_factor** — asset `criticality` in `[0, 1]`
 
-Factor tables live in `src/vuln_reachability_scorer/scoring.py`.
+See [ADR-001](docs/decisions/ADR-001-scoring-model.md) and `src/vuln_reachability_scorer/scoring.py`.
 
 ## Install
 
@@ -37,14 +37,17 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-Core library, CLI, unit tests, sample inputs, and GitHub Actions CI (reusable Python workflow `@v0.2.0`) are present. An ADR for the scoring model and a `v0.1.0` tag follow.
+**v0.1.0** — core library, CLI, examples, tests, CI, and ADR-001 are shipped. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
 - [AGENTS.md](AGENTS.md) — human and agent guardrails
 - [CONTRIBUTING.md](CONTRIBUTING.md) — how to propose changes
 - [SECURITY.md](SECURITY.md) — vulnerability reporting
+- [CHANGELOG.md](CHANGELOG.md) — release notes
 - [docs/architecture/](docs/architecture/) — system shape and Mermaid diagram
+- [docs/decisions/](docs/decisions/) — ADRs (scoring model)
+- [docs/references/](docs/references/) — background links
 - [docs/security/security.md](docs/security/security.md) — security posture
 - [docs/development/development.md](docs/development/development.md) — contributor workflow and CI
 
