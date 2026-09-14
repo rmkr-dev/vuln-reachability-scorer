@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Draft `docs/schemas/vrscore.schema.json` for editor tooling (not used at runtime).
+- Guard test `test_config_schema_sync` keeps schema properties aligned with `CONFIG_KEYS`.
 - `examples/overlays/README.md` documents cross-directory extends path roots.
 - Tests for absolute `extends` paths and findings list-replace across directories.
 
