@@ -163,3 +163,35 @@ def test_example_overlay_subdir_extends_base():
     rc = main(["--config", str(overlay), "--limit", "2"])
     # fail_under may trip; accept 0 or 1
     assert rc in (0, 1)
+
+
+def test_extends_absolute_path(tmp_path: Path):
+    base = tmp_path / "base.toml"
+    base.write_text('format = "table"\nsummary = true\n', encoding="utf-8")
+    child = tmp_path / "child.toml"
+    child.write_text(f'extends = "{base.resolve()}"\nformat = "json"\n', encoding="utf-8")
+    cfg = load_config(child)
+    assert cfg["format"] == "json"
+    assert cfg["summary"] is True
+
+
+def test_extends_findings_list_replace_cross_dir(tmp_path: Path):
+    estate = tmp_path / "estate"
+    overlays = tmp_path / "overlays"
+    estate.mkdir()
+    overlays.mkdir()
+    (estate / "base.toml").write_text(
+        'findings = "shared.json"\ntopology = "topology.json"\n',
+        encoding="utf-8",
+    )
+    (overlays / "team.toml").write_text(
+        'extends = "../estate/base.toml"\n'
+        'findings = ["a.json", "b.json"]\n',
+        encoding="utf-8",
+    )
+    cfg = load_config(overlays / "team.toml")
+    assert Path(cfg["topology"]) == (estate / "topology.json").resolve()
+    assert cfg["findings"] == [
+        str((overlays / "a.json").resolve()),
+        str((overlays / "b.json").resolve()),
+    ]
