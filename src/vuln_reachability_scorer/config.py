@@ -175,6 +175,14 @@ def _validate_and_normalize(data: dict[str, Any], path: Path) -> dict[str, Any]:
             out[key] = value
         else:
             out[key] = value
+    if (
+        "min_hops" in out
+        and "max_hops" in out
+        and out["min_hops"] > out["max_hops"]
+    ):
+        raise ConfigError(
+            f"config: min_hops cannot exceed max_hops in {path}"
+        )
     return out
 
 
