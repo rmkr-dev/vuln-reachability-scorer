@@ -28,7 +28,7 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 | `asset_report.py` | Per-asset reachability inventory |
 | `explain.py` | Human-readable score rationales |
 | `paths.py` | Shortest ingress→asset path reconstruction |
-| `summary.py` | Priority band aggregates |
+| `summary.py` | Priority band aggregates (incl. kev/epss counts) |
 | `cli.py` | argparse entrypoint |
 
 ## CI and hygiene
