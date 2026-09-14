@@ -287,3 +287,35 @@ def test_example_tag_focus_overlay():
     assert cfg["band"] == ["critical", "high"]
     rc = main(["--config", str(root / "examples" / "vrscore-tag-focus.toml"), "--limit", "5"])
     assert rc == 0
+
+
+def test_extends_toml_from_json(tmp_path: Path):
+    base = tmp_path / "base.json"
+    base.write_text(
+        json.dumps({"topology": "t.json", "summary": True, "format": "table"}),
+        encoding="utf-8",
+    )
+    child = tmp_path / "child.toml"
+    child.write_text(
+        'extends = "base.json"\nformat = "json"\nlimit = 4\n',
+        encoding="utf-8",
+    )
+    cfg = load_config(child)
+    assert Path(cfg["topology"]) == (tmp_path / "t.json").resolve()
+    assert cfg["summary"] is True
+    assert cfg["format"] == "json"
+    assert cfg["limit"] == 4
+
+
+def test_extends_boolean_rejected(tmp_path: Path):
+    p = tmp_path / "bad.json"
+    p.write_text(json.dumps({"extends": True, "format": "json"}), encoding="utf-8")
+    with pytest.raises(ConfigError, match="extends must be a non-empty string"):
+        load_config(p)
+
+
+def test_extends_integer_rejected(tmp_path: Path):
+    p = tmp_path / "bad.json"
+    p.write_text(json.dumps({"extends": 1, "format": "json"}), encoding="utf-8")
+    with pytest.raises(ConfigError, match="extends must be a non-empty string"):
+        load_config(p)

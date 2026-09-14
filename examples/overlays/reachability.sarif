@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "vuln-reachability-scorer",
+          "version": "0.3.8",
+          "informationUri": "https://github.com/rmkr-dev/vuln-reachability-scorer",
+          "rules": []
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CVE-2021-44228",
+          "level": "error",
+          "message": {
+            "text": "CVE-2021-44228: priority 8.24 (base=10.0, R=0.80, E=0.75, hops=1)"
+          },
+          "properties": {
+            "priority_score": 8.24,
+            "base_score": 10.0,
+            "reachability_factor": 0.8,
+            "exposure_factor": 0.75,
+            "hop_distance": 1,
+            "asset_id": "web-app",
+            "finding_id": "finding-002",
+            "notes": [
+              "KEV multiplier applied (x1.15)",
+              "EPSS 0.97 multiplier applied (x1.19)"
+            ]
+          }
+        },
+        {
+          "ruleId": "CVE-2021-44228",
+          "level": "warning",
+          "message": {
+            "text": "CVE-2021-44228: priority 5.35 (base=6.5, R=1.00, E=0.60, hops=0)"
+          },
+          "properties": {
+            "priority_score": 5.35,
+            "base_score": 6.5,
+            "reachability_factor": 1.0,
+            "exposure_factor": 0.6,
+            "hop_distance": 0,
+            "asset_id": "edge-lb",
+            "finding_id": "finding-006",
+            "notes": [
+              "KEV multiplier applied (x1.15)",
+              "EPSS 0.97 multiplier applied (x1.19)"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
