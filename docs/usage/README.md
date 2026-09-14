@@ -246,7 +246,7 @@ Duplicate finding `id` values across files warn on stderr; `--strict` makes them
 
 ## Config file defaults
 
-Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the directory of the file that defines them (important when `extends` crosses directories). Optional `extends` loads a base config first (child keys overlay; [ADR-008](../decisions/ADR-008-config-extends.md)). See [ADR-006](../decisions/ADR-006-config-file.md) and the [config schema](../schemas/config.md).
+Pass `--config` / `-c` with a JSON or TOML file. Flags on the command line always win. Relative paths inside the file are resolved against the directory of the file that defines them (important when `extends` crosses directories). Optional `extends` loads a base config first (child keys overlay; [ADR-008](../decisions/ADR-008-config-extends.md)). See [ADR-006](../decisions/ADR-006-config-file.md), the [config schema](../schemas/config.md), and the optional editor draft [`vrscore.schema.json`](../schemas/vrscore.schema.json) (not loaded at runtime).
 
 ```bash
 vrscore --config examples/vrscore.toml
