@@ -25,7 +25,13 @@ class Asset:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Asset:
+        if not isinstance(data, dict):
+            raise ValueError(f"asset must be an object, got {type(data).__name__}")
+        if "id" not in data:
+            raise ValueError("asset missing required field(s): id")
         tags = data.get("tags") or []
+        if tags and not isinstance(tags, list):
+            raise ValueError("asset.tags must be a list")
         return cls(
             id=str(data["id"]),
             name=str(data.get("name") or data["id"]),
@@ -51,6 +57,11 @@ class Edge:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Edge:
+        if not isinstance(data, dict):
+            raise ValueError(f"edge must be an object, got {type(data).__name__}")
+        missing = [k for k in ("source", "target") if k not in data]
+        if missing:
+            raise ValueError(f"edge missing required field(s): {', '.join(missing)}")
         return cls(
             source=str(data["source"]),
             target=str(data["target"]),
@@ -83,6 +94,11 @@ class Finding:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Finding:
+        if not isinstance(data, dict):
+            raise ValueError(f"finding must be an object, got {type(data).__name__}")
+        missing = [k for k in ("id", "asset_id", "base_score") if k not in data]
+        if missing:
+            raise ValueError(f"finding missing required field(s): {', '.join(missing)}")
         epss_raw = data.get("epss")
         epss = None if epss_raw is None else float(epss_raw)
         return cls(
