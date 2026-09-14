@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Config `extends` re-validates `min_hops` ≤ `max_hops` on the merged result (split across base/overlay no longer slips through).
+- Clearer error when an `extends` target path does not exist.
+
 ## [0.3.1] - 2026-09-14
 
 ### Added
