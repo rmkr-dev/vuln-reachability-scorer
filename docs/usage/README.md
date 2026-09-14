@@ -40,6 +40,21 @@ vrscore -t examples/topology.json -f examples/findings.json --format junit -o re
 5. Gate CI: `--fail-under 7` (exit `1` on offenders)
 6. Export for tracking: `--format sarif` or `--format junit`
 
+## Config-first triage
+
+Encode repeatable filters in a config file instead of pasting every flag (see [ADR-006](../decisions/ADR-006-config-file.md)):
+
+```bash
+# Interactive triage (explain + hop window + high/critical)
+vrscore -c examples/vrscore-triage.toml
+# CI-shaped run (SARIF + fail_under); override output path if needed
+vrscore -c examples/vrscore-ci.toml -o /tmp/reachability.sarif
+# One-off override without re-listing filters
+vrscore -c examples/vrscore-triage.toml --band medium --format json
+```
+
+Exclude noise via config keys `exclude_tag` / `exclude_asset` / `exclude_cve` (or the matching flags when you need a one-shot drop). Prefer growing `examples/vrscore-*.toml` over new CLI switches.
+
 ## Focus triage
 
 ```bash

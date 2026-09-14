@@ -1,0 +1,17 @@
+# Config-first triage — prefer this over long flag chains (ADR-006).
+# Paths are relative to this file's directory.
+topology = "topology.json"
+findings = "findings.json"
+format = "table"
+summary = true
+explain = true
+only_reachable = true
+max_hops = 2
+min_hops = 0
+band = ["critical", "high"]
+sort = "hops"
+dedupe = true
+# Optional noise reduction (uncomment when sample tags/assets match):
+# exclude_tag = ["experimental"]
+# exclude_asset = ["lab-vm"]
+# exclude_cve = ["CVE-1999-0001"]
