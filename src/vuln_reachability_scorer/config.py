@@ -193,6 +193,29 @@ def _validate_hop_window(data: dict[str, Any], path: Path) -> None:
         )
 
 
+
+def _resolve_defining_paths(data: dict[str, Any], config_dir: Path) -> dict[str, Any]:
+    """Resolve relative topology/findings/output against the file that defined them."""
+    out = dict(data)
+
+    def one(val: str) -> str:
+        p = Path(val)
+        if p.is_absolute():
+            return str(p)
+        return str((config_dir / p).resolve())
+
+    if "findings" in out:
+        fval = out["findings"]
+        if isinstance(fval, list):
+            out["findings"] = [one(x) for x in fval]
+        elif isinstance(fval, str):
+            out["findings"] = one(fval)
+    for key in ("topology", "output"):
+        if key in out and isinstance(out[key], str):
+            out[key] = one(out[key])
+    return out
+
+
 def load_config(
     path: Path, *, _stack: tuple[Path, ...] | None = None
 ) -> dict[str, Any]:
@@ -200,6 +223,8 @@ def load_config(
 
     Optional ``extends`` (string path relative to this file) loads a base
     config first; keys in this file overlay the base (lists replace, not merge).
+    Relative ``topology`` / ``findings`` / ``output`` paths resolve against the
+    directory of the file that defines them (important for cross-directory extends).
     """
     path = path.resolve()
     stack = _stack or ()
@@ -223,6 +248,7 @@ def load_config(
             )
         base = load_config(base_path, _stack=stack + (path,))
     overlay = _validate_and_normalize(raw, path)
+    overlay = _resolve_defining_paths(overlay, path.parent)
     merged = {**base, **overlay}
     _validate_hop_window(merged, path)
     return merged
