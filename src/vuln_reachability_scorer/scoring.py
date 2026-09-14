@@ -49,7 +49,7 @@ Omitted ``epss`` is a no-op. See ADR-004.
 
 from __future__ import annotations
 
-from vuln_reachability_scorer.graph import build_adjacency, hop_distance, ingress_asset_ids
+from vuln_reachability_scorer.graph import build_adjacency, all_hop_distances, ingress_asset_ids
 from vuln_reachability_scorer.models import Asset, Edge, Finding, ScoredFinding
 
 _REACHABILITY_BY_HOPS: dict[int, float] = {
@@ -116,6 +116,7 @@ def score_findings(
     by_id = {a.id: a for a in assets}
     adj = build_adjacency(edges)
     ingress = ingress_asset_ids(assets, edges)
+    distances = all_hop_distances(adj, ingress)
     boosts = DEFAULT_TAG_BOOSTS if tag_boosts is None else tag_boosts
 
     scored: list[ScoredFinding] = []
@@ -128,7 +129,7 @@ def score_findings(
             r = reachability_factor(None)
             e = exposure_factor(None)
         else:
-            dist = hop_distance(finding.asset_id, adj, ingress)
+            dist = distances.get(finding.asset_id)
             r = reachability_factor(dist)
             e = exposure_factor(asset, boosts)
             applied = [t for t in asset.tags if t in boosts and boosts[t]]

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from vuln_reachability_scorer.graph import build_adjacency, hop_distance, ingress_asset_ids
+from vuln_reachability_scorer.graph import build_adjacency, all_hop_distances, ingress_asset_ids
 from vuln_reachability_scorer.models import Asset, Edge
 from vuln_reachability_scorer.scoring import exposure_factor, reachability_factor
 
@@ -37,9 +37,10 @@ def report_assets(
 ) -> list[AssetReachability]:
     adj = build_adjacency(edges)
     ingress = ingress_asset_ids(assets, edges)
+    distances = all_hop_distances(adj, ingress)
     rows: list[AssetReachability] = []
     for asset in assets:
-        dist = hop_distance(asset.id, adj, ingress)
+        dist = distances.get(asset.id)
         rows.append(
             AssetReachability(
                 asset=asset,
