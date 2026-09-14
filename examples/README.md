@@ -40,6 +40,7 @@ Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR
 | `vrscore-multi.toml` | Merge `findings.json` + `findings-extra.json` with dedupe |
 | `vrscore-exclude.toml` | Drop `batch-worker` + `dmz`-tagged assets via config excludes |
 | `vrscore-kev.toml` | Extends triage with `only_kev` (layered overlay demo) |
+| `vrscore-medium.toml` | Extends triage; **replaces** `band` with medium only |
 | `overlays/vrscore-ci.toml` | Extends `../vrscore-base.toml` from a subdirectory |
 | `overlays/README.md` | How defining-file path resolve works for overlays |
 
@@ -51,6 +52,7 @@ vrscore -c examples/vrscore-ci.toml
 vrscore -c examples/vrscore-multi.toml
 vrscore -c examples/vrscore-exclude.toml
 vrscore -c examples/vrscore-kev.toml
+vrscore -c examples/vrscore-medium.toml
 vrscore -c examples/overlays/vrscore-ci.toml -o /tmp/reachability.sarif
 # Override one knob without re-listing filters:
 vrscore -c examples/vrscore-triage.toml --format json --limit 10

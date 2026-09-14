@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Example `vrscore-medium.toml` shows list-replace of `band` via extends.
 - Draft `docs/schemas/vrscore.schema.json` for editor tooling (not used at runtime).
 - Guard test `test_config_schema_sync` keeps schema properties aligned with `CONFIG_KEYS`.
 - Schema sync guard also checks `format` / `sort` / `band` enums vs `ALLOWED_*`.
