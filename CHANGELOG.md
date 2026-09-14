@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-09-14
+
 ### Added
 
 - `--dedupe` keeps the highest-priority finding per `(cve_id, asset_id)`.
@@ -84,7 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial package, scoring formula ([ADR-001](docs/decisions/ADR-001-scoring-model.md)), CLI, examples, CI.
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.7...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.8...HEAD
+[0.1.8]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.4...v0.1.5
