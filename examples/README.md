@@ -28,12 +28,22 @@ vrscore -t examples/topology.json -f examples/findings.json --format junit -o /t
 
 ## Config samples
 
-- `vrscore.toml` — table defaults for the sample estate
-- `vrscore.json` — JSON format with band + reachable filters
+Prefer checked-in configs over long flag chains ([ADR-006](../docs/decisions/ADR-006-config-file.md)):
+
+| File | Intent |
+| --- | --- |
+| `vrscore.toml` | Table defaults for the sample estate |
+| `vrscore.json` | JSON + band + reachable filters |
+| `vrscore-triage.toml` | Explain + hop window + high/critical bands + dedupe |
+| `vrscore-ci.toml` | Quiet SARIF export + `fail_under` for Actions |
 
 ```bash
 vrscore --config examples/vrscore.toml
 vrscore -c examples/vrscore.json
+vrscore -c examples/vrscore-triage.toml
+vrscore -c examples/vrscore-ci.toml
+# Override one knob without re-listing filters:
+vrscore -c examples/vrscore-triage.toml --format json --limit 10
 ```
 
-See the [usage cookbook triage playbook](../docs/usage/README.md#triage-playbook-sample-estate) for a full recipe chain.
+See the [usage cookbook](../docs/usage/README.md#config-first-triage) for recipes.
