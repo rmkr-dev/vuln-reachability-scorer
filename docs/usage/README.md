@@ -256,6 +256,15 @@ vrscore -c examples/vrscore.toml --fail-under 7 --summary
 
 There is no automatic cwd discovery. Set `VRSCORE_CONFIG=/path/to/vrscore.toml` as an alternative to `--config` (the flag wins if both are set).
 
+With `extends`, the env default can point at a specialized overlay:
+
+```bash
+export VRSCORE_CONFIG=examples/vrscore-ci.toml   # extends vrscore-base.toml
+vrscore -o /tmp/reachability.sarif
+# one-off override still wins:
+vrscore --config examples/vrscore-kev.toml --limit 5
+```
+
 ## Config extends
 
 Share estate paths once, specialize per workflow:
