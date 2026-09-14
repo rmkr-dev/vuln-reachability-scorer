@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Tests for config `extends` list-replace, JSON←TOML composition, and depth-at-max success.
+- Example `vrscore-kev.toml` + cookbook layered-overlay recipe (extends triage with `only_kev`).
+- Example `examples/overlays/vrscore-ci.toml` demonstrates cross-directory `extends` with defining-file path resolve.
 
 ### Fixed
 

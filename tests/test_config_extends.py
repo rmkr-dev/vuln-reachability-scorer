@@ -151,3 +151,15 @@ def test_extends_paths_resolve_against_defining_file(tmp_path: Path):
     assert Path(cfg["topology"]) == (estate / "topology.json").resolve()
     assert Path(cfg["findings"]) == (estate / "findings.json").resolve()
     assert cfg["format"] == "sarif"
+
+
+def test_example_overlay_subdir_extends_base():
+    root = Path(__file__).resolve().parents[1]
+    overlay = root / "examples" / "overlays" / "vrscore-ci.toml"
+    cfg = load_config(overlay)
+    assert Path(cfg["topology"]) == (root / "examples" / "topology.json").resolve()
+    assert cfg["format"] == "sarif"
+    assert cfg["fail_under"] == 7.0
+    rc = main(["--config", str(overlay), "--limit", "2"])
+    # fail_under may trip; accept 0 or 1
+    assert rc in (0, 1)

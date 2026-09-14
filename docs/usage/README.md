@@ -268,6 +268,28 @@ vrscore -c examples/vrscore-ci.toml -o /tmp/reachability.sarif
 
 Child keys overlay the base; list values replace (they do not concatenate). Cycles, missing `extends` targets, hop windows that disagree across base/overlay (`min_hops` > `max_hops`), and chains deeper than 8 are errors (exit 2).
 
+### Layered overlays
+
+Stack specialization without flag spam: shared paths → triage → KEV-only.
+
+```bash
+# triage: explain + hop window + high/critical (extends base)
+vrscore -c examples/vrscore-triage.toml
+# kev: same triage filters, keep Known Exploited only (extends triage)
+vrscore -c examples/vrscore-kev.toml
+```
+
+`examples/vrscore-kev.toml` sets `extends = "vrscore-triage.toml"` plus `only_kev = true`. Override format/output on the CLI when needed.
+
+Place overlays in a subdirectory when teams share one estate folder:
+
+```bash
+# examples/overlays/vrscore-ci.toml → extends = "../vrscore-base.toml"
+vrscore -c examples/overlays/vrscore-ci.toml -o /tmp/reachability.sarif
+```
+
+`topology` / `findings` from the base still resolve under `examples/`, not under `overlays/` (defining-file path resolve).
+
 
 ## Timing stats
 
