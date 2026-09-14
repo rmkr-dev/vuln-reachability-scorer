@@ -10,6 +10,7 @@ from pathlib import Path
 from vuln_reachability_scorer import __version__
 from vuln_reachability_scorer.loaders import load_findings, load_topology
 from vuln_reachability_scorer.sarif import to_sarif
+from vuln_reachability_scorer.explain import explain_score
 from vuln_reachability_scorer.scoring import score_findings
 
 
@@ -60,6 +61,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Emit at most N results after sorting/filtering (0 = no limit)",
     )
     parser.add_argument(
+        "--explain",
+        action="store_true",
+        help="Include human-readable score explanations (table notes / JSON explain field)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -67,7 +73,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _print_table(scored: list, sink) -> None:
+def _print_table(scored: list, sink, explain: bool = False) -> None:
     headers = (
         "PRIORITY",
         "BASE",
@@ -101,8 +107,10 @@ def _print_table(scored: list, sink) -> None:
 
     print(fmt(headers), file=sink)
     print(fmt(tuple("-" * w for w in widths)), file=sink)
-    for row in rows:
+    for idx, row in enumerate(rows):
         print(fmt(row), file=sink)
+        if explain:
+            print(f"  # {explain_score(scored[idx])}", file=sink)
 
 
 def _render_csv(scored: list) -> str:
@@ -141,12 +149,15 @@ def _render_csv(scored: list) -> str:
     return buf.getvalue()
 
 
-def _render(scored: list, fmt: str) -> str:
+def _render(scored: list, fmt: str, explain: bool = False) -> str:
     if fmt == "json":
         payload = {
             "version": __version__,
             "formula": "priority = base_score * reachability_factor * exposure_factor",
-            "results": [s.as_dict() for s in scored],
+            "results": [
+                {**s.as_dict(), **({"explain": explain_score(s)} if explain else {})}
+                for s in scored
+            ],
         }
         return json.dumps(payload, indent=2) + "\n"
     if fmt == "sarif":
@@ -184,11 +195,11 @@ def main(argv: list[str] | None = None) -> int:
         if args.format == "table":
             if args.output is not None:
                 with args.output.open("w", encoding="utf-8") as fh:
-                    _print_table(scored, fh)
+                    _print_table(scored, fh, explain=args.explain)
             else:
-                _print_table(scored, sys.stdout)
+                _print_table(scored, sys.stdout, explain=args.explain)
         else:
-            text = _render(scored, args.format)
+            text = _render(scored, args.format, explain=args.explain)
             if args.output is not None:
                 args.output.write_text(text, encoding="utf-8")
             else:

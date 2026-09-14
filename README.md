@@ -32,11 +32,12 @@ vrscore -t examples/topology.json -f examples/findings.json --format json
 vrscore -t examples/topology.json -f examples/findings.json --format csv -o scores.csv
 vrscore -t examples/topology.json -f examples/findings.json --format sarif -o results.sarif
 vrscore -t examples/topology.json -f examples/findings.json --min-priority 4.0 --limit 20
+vrscore -t examples/topology.json -f examples/findings.json --explain
 # alias:
 vuln-reachability -t examples/topology.json -f examples/findings.json
 ```
 
-Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report.
+Output formats: `table` (default), `json`, `csv`, `sarif` (SARIF 2.1.0). Use `-o` / `--output` to write to a file. Use `--min-priority` and `--limit` to focus the report. Use `--explain` for per-finding rationales.
 
 Input field reference: [docs/schemas/README.md](docs/schemas/README.md).
 

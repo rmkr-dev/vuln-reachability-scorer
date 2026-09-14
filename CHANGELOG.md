@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Nothing yet since the last release.
+- `--explain` to attach human-readable score rationales (table comments / JSON `explain` field).
 
 ## [0.1.1] - 2026-09-14
 
