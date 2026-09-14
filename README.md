@@ -54,7 +54,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.2.1** — config schema docs, multi `--findings`, `--exclude-tag`, plus v0.2.0 reachability/config/CI base. See [CHANGELOG.md](CHANGELOG.md).
+**v0.2.2** — `--min-hops`, `--stats`, cross-file duplicate finding id checks; builds on v0.2.1 config/multi-findings. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 
