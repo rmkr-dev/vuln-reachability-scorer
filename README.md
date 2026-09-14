@@ -46,7 +46,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative a
 
 ## Status
 
-**v0.2.7** — multi/exclude example configs, config hop-window check, ADR-007 config-first policy, enum sync test. See [CHANGELOG.md](CHANGELOG.md).
+**v0.3.0** — config `extends` (ADR-008), config-first cookbook/Actions recipes, validation hardening (enums/ranges/hop window). See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 

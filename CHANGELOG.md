@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-14
+
 ### Added
 
 - Config `extends` composes base + overlay files ([ADR-008](docs/decisions/ADR-008-config-extends.md)); examples share `vrscore-base.toml`.
@@ -197,7 +199,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.1.1]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/releases/tag/v0.1.0
 
-[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.2.7...HEAD
+[Unreleased]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.2.7...v0.3.0
 [0.2.7]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/rmkr-dev/vuln-reachability-scorer/compare/v0.2.4...v0.2.5
