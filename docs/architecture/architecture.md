@@ -12,7 +12,7 @@ Data flow:
 4. **Scoring** — `priority = base_score × reachability_factor × exposure_factor` (`scoring.py`; see [ADR-001](../decisions/ADR-001-scoring-model.md)).
 5. **CLI** — `vrscore` / `vuln-reachability` prints a ranked table, JSON, CSV, SARIF 2.1.0, or HTML (`cli.py`, `sarif.py`, `html_report.py`). Optional finding `epss` is applied in scoring ([ADR-004](../decisions/ADR-004-epss-factor.md)).
 
-Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0.2.0`.
+Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0.3.0`.
 
 ## Module map
 
@@ -34,7 +34,7 @@ Sample inputs live under `examples/`. CI calls the reusable Python workflow `@v0
 
 | Surface | Role |
 | --- | --- |
-| `.github/workflows/ci.yml` | Calls reusable `python-ci.yml@v0.2.0` |
+| `.github/workflows/ci.yml` | Calls reusable `python-ci.yml@v0.3.0` |
 | `.github/dependabot.yml` | Weekly Actions + pip |
 | `.github/CODEOWNERS` | `@rmkr-dev` |
 | `SECURITY.md` | Private advisory reporting |
