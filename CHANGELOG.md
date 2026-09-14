@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Repeatable `--findings` / `-f` merges multiple findings files; config `findings` may be a list of paths.
 - Config file field reference in [docs/schemas/config.md](docs/schemas/config.md).
 
 ## [0.2.0] - 2026-09-14
