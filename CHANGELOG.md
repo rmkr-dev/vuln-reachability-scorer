@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--fail-under SCORE` CI gate (exit 1 when any priority >= SCORE).
 - `--summary` aggregate band counts on stderr after scoring.
 - ADR-003 documenting the KEV multiplier.
 - CSV output for `--asset-report`.

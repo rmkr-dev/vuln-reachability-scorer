@@ -89,6 +89,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Print aggregate band counts to stderr after scoring",
     )
     parser.add_argument(
+        "--fail-under",
+        type=float,
+        default=None,
+        metavar="SCORE",
+        help="Exit 1 if any result has priority_score >= SCORE (CI gate)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -300,6 +307,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit < 0:
         print("error: --limit must be >= 0", file=sys.stderr)
         return 2
+    if args.fail_under is not None and args.fail_under < 0:
+        print("error: --fail-under must be >= 0", file=sys.stderr)
+        return 2
 
     try:
         assets, edges = load_topology(args.topology)
@@ -344,6 +354,16 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.summary:
         print(format_summary_line(summarize(scored)), file=sys.stderr)
+
+    if args.fail_under is not None:
+        offenders = [s for s in scored if s.priority_score >= args.fail_under]
+        if offenders:
+            print(
+                f"error: {len(offenders)} finding(s) at or above --fail-under "
+                f"{args.fail_under}",
+                file=sys.stderr,
+            )
+            return 1
 
     return 0
 
