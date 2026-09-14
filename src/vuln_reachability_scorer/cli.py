@@ -522,6 +522,16 @@ def _render_asset_tsv(rows: list) -> str:
 
 def _emit_asset_report(assets, edges, args, tag_boosts=None) -> int:
     rows = report_assets(assets, edges, tag_boosts=tag_boosts)
+    if getattr(args, "max_hops", None) is not None:
+        rows = [
+            r
+            for r in rows
+            if r.hop_distance is not None and r.hop_distance <= args.max_hops
+        ]
+    if getattr(args, "only_reachable", False):
+        rows = [r for r in rows if r.hop_distance is not None]
+    if args.limit > 0:
+        rows = rows[: args.limit]
     try:
         if args.format == "json":
             payload = {
