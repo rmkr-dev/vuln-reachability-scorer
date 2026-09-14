@@ -54,7 +54,7 @@ See [examples/README.md](examples/README.md) for the sample topology narrative.
 
 ## Status
 
-**v0.1.10** — core library, CLI (table / JSON / JSONL / CSV / TSV / SARIF / HTML / Markdown / JUnit), optional EPSS, KEV, filters, examples, tests, CI `@v0.4.0`, ADR-001–004. See [CHANGELOG.md](CHANGELOG.md).
+**v0.2.0** — config files (`--config`), single-BFS large-graph scoring, CI `@v0.4.0`, cookbook playbook/Actions gate, ADR-001–006. See [CHANGELOG.md](CHANGELOG.md).
 
 ## Docs
 

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-14
+
 ### Changed
 
 - `build_adjacency` collapses duplicate parallel edges; large-graph performance tests guard O(V+E) scoring.
